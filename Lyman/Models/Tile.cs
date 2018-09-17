@@ -11,6 +11,11 @@ namespace Lyman.Models
     public static class Tile
     {
         /// <summary>
+        /// 赤ドラを示す文字列
+        /// </summary>
+        private const string RedFive = "赤";
+
+        /// <summary>
         /// 種類
         /// </summary>
         public enum Kind : uint
@@ -207,11 +212,27 @@ namespace Lyman.Models
         /// <param name="str">牌を示す文字列</param>
         public static uint BuildTile(string str)
         {
-            Debug.Assert(str.Length == 1 || str.Length == 2, $"文字列の長さが不正です。{str}");
-            var _str = str.Length == 2 ? str : "0" + str;
+            Debug.Assert(0 < str.Length && str.Length < 4, $"文字列の長さが不正です。{str}");
+            var _str = string.Empty;
+            var isRed = false;
+
+            switch(str.Length)
+            {
+                case 1:
+                    _str = "0" + str;
+                    break;
+                case 2:
+                    _str = str;
+                    break;
+                case 3:
+                    _str = str;
+                    Debug.Assert(str.Substring(2, 1) == RedFive, $"文字が不正です。{str}");
+                    isRed = true;
+                    break;
+            }
             var kind = JapaneseName.Get(_str.Substring(1, 1));
             var num = int.Parse(_str.Substring(0, 1));
-            return BuildTile(kind, num);
+            return BuildTile(kind, num, isRed);
         }
     }
 }

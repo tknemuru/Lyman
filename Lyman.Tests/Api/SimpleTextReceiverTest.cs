@@ -35,7 +35,7 @@ namespace Lyman.Tests.Api
             expected.Hands[Wind.Index.East.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
             expected.Hands[Wind.Index.East.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
             expected.Hands[Wind.Index.East.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
-            expected.Hands[Wind.Index.East.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5);
+            expected.Hands[Wind.Index.East.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
             expected.Hands[Wind.Index.East.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
 
             Assert.AreEqual(expected, actual);
