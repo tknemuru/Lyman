@@ -21,6 +21,7 @@ namespace Lyman.Tests
         [TestMethod]
         public void 手牌の読み込みができる()
         {
+            // 001:全ての風が存在する
             var input = FileHelper.ReadTextLines(this.GetResourcePath(1, 1, ResourceType.In));
             var actual = this.Target.Receive(input);
             var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
@@ -40,7 +41,25 @@ namespace Lyman.Tests
                 expected.Hands[wind.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
                 expected.Hands[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             });
+            Assert.AreEqual(expected, actual);
 
+            // 002:一部の風のみ存在する
+            input = FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.Hands[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            expected.Hands[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            expected.Hands[Wind.Index.South.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            expected.Hands[Wind.Index.South.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            expected.Hands[Wind.Index.South.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Hands[Wind.Index.South.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Hands[Wind.Index.South.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Hands[Wind.Index.South.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            expected.Hands[Wind.Index.South.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            expected.Hands[Wind.Index.South.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            expected.Hands[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            expected.Hands[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            expected.Hands[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             Assert.AreEqual(expected, actual);
         }
     }

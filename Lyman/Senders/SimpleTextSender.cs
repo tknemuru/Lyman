@@ -26,19 +26,24 @@ namespace Lyman.Senders
         private string HandToString(FieldContext context)
         {
             var hand = new StringBuilder();
-            Wind.ForEach(wind =>
+            for (var wind = 0; wind < Wind.Length; wind++)
             {
-                hand.Append($"{SimpleText.Key.Hand}{SimpleText.ValueSeparator}{Wind.JapaneseName.Get(wind)}{SimpleText.KeyValueSeparator}");
+                if (context.Hands[wind].All(tile => tile <= 0))
+                {
+                    continue;
+                }
+
+                hand.Append($"{SimpleText.Key.Hand}{SimpleText.ValueSeparator}{Wind.JapaneseName.Get((Wind.Index)wind)}{SimpleText.KeyValueSeparator}");
                 Hand.ForEach(i =>
                 {
                     if (i > 0)
                     {
                         hand.Append(SimpleText.ValueSeparator);
                     }
-                    hand.Append(context.Hands[wind.ToInt()][i].ToStringTile());
+                    hand.Append(context.Hands[wind][i].ToStringTile());
                 });
                 hand.AppendLine(string.Empty);
-            });
+            }
             return hand.ToString();
         }
     }
