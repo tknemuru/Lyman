@@ -15,15 +15,22 @@ namespace Lyman.Models
         public uint[][] Hands { get; set; }
 
         /// <summary>
+        /// 壁牌
+        /// </summary>
+        public uint[][] Walls { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public FieldContext()
         {
             this.Hands = new uint[Wind.Length][];
+            this.Walls = new uint[Wind.Length][];
 
             Wind.ForEach((wind) =>
             {
                 this.Hands[wind.ToInt()] = new uint[Hand.Length];
+                this.Walls[wind.ToInt()] = new uint[Wall.Length];
             });
         }
 
@@ -44,9 +51,14 @@ namespace Lyman.Models
 
             Wind.ForEach((wind) =>
             {
-                Hand.ForEach((i) =>
+                Hand.ForEach(i =>
                 {
                     equals.Add($"Hands{wind}{i}", this.Hands[wind.ToInt()][i] == context.Hands[wind.ToInt()][i]);
+                });
+
+                Wall.ForEach(i =>
+                {
+                    equals.Add($"Walls{wind}{i}", this.Walls[wind.ToInt()][i] == context.Walls[wind.ToInt()][i]);
                 });
             });
 
@@ -59,7 +71,7 @@ namespace Lyman.Models
         /// <returns>現在のオブジェクトのハッシュ コード。</returns>
         public override int GetHashCode()
         {
-            return this.Hands.GetHashCode();
+            return this.Hands.GetHashCode() ^ this.Walls.GetHashCode();
         }
     }
 }

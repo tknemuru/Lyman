@@ -27,6 +27,11 @@ namespace Lyman.Models
             /// 手牌
             /// </summary>
             public const string Hand = "手牌";
+
+            /// <summary>
+            /// 壁牌
+            /// </summary>
+            public const string Wall = "壁牌";
         }
     }
 }

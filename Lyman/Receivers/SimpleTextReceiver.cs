@@ -36,6 +36,9 @@ namespace Lyman.Receivers
                     case SimpleText.Key.Hand:
                         context.Hands[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseHand(keyValue[1]);
                         break;
+                    case SimpleText.Key.Wall:
+                        context.Walls[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseWall(keyValue[1]);
+                        break;
                     default:
                         throw new ArgumentException($"キーが不正です。{keys[0]}");
                 }
@@ -50,9 +53,31 @@ namespace Lyman.Receivers
         /// <param name="str">手牌を示す文字列</param>
         private static uint[] ParseHand(string str)
         {
-            var hand = str.Split(SimpleText.ValueSeparator).Select(Tile.BuildTile).ToArray();
+            var hand = ParseTileArray(str);
             Debug.Assert(hand.Length == Hand.Length, $"手牌の数が不正です。{hand.Length}/{str}");
             return hand;
+        }
+
+        /// <summary>
+        /// 壁牌への変換を行います。
+        /// </summary>
+        /// <returns>壁牌</returns>
+        /// <param name="str">壁牌を示す文字列</param>
+        private static uint[] ParseWall(string str)
+        {
+            var tiles = ParseTileArray(str);
+            Debug.Assert(tiles.Length <= Wall.Length, $"壁牌の数が不正です。{tiles.Length}/{str}");
+            return tiles;
+        }
+
+        /// <summary>
+        /// 牌の配列へ変換します。
+        /// </summary>
+        /// <returns>牌の配列</returns>
+        /// <param name="str">牌の配列を示す文字列</param>
+        private static uint[] ParseTileArray(string str)
+        {
+            return str.Split(SimpleText.ValueSeparator).Select(Tile.BuildTile).ToArray();
         }
     }
 }

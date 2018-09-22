@@ -62,5 +62,38 @@ namespace Lyman.Tests
             expected.Hands[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// 002:壁牌の読み込みができる
+        /// </summary>
+        [TestMethod]
+        public void 壁牌の読み込みができる()
+        {
+            // 001:全ての風が存在する
+            var input = FileHelper.ReadTextLines(this.GetResourcePath(2, 1, ResourceType.In));
+            var actual = this.Target.Receive(input);
+            var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            Wind.ForEach((wind) =>
+            {
+                expected.Walls[wind.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+                expected.Walls[wind.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+                expected.Walls[wind.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+                expected.Walls[wind.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+                expected.Walls[wind.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                expected.Walls[wind.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                expected.Walls[wind.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                expected.Walls[wind.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+                expected.Walls[wind.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+                expected.Walls[wind.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+                expected.Walls[wind.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+                expected.Walls[wind.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+                expected.Walls[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+                expected.Walls[wind.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+                expected.Walls[wind.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+                expected.Walls[wind.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+                expected.Walls[wind.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+            });
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
