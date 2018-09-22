@@ -1,4 +1,4 @@
-﻿namespace Lyman.Api.Receivers
+﻿namespace Lyman.Receivers
 {
     /// <summary>
     /// 受信機能を提供します。

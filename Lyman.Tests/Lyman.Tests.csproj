@@ -33,8 +33,8 @@
   <ItemGroup>
     <Compile Include="MSTestToNUnit.cs" />
     <Compile Include="BaseUnitTest.cs" />
-    <Compile Include="Api\SimpleTextReceiverTest.cs" />
     <Compile Include="ResourceType.cs" />
+    <Compile Include="Receivers\SimpleTextReceiverTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -47,7 +47,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\" />
+    <Folder Include="Receivers\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\SimpleTextReceiver\" />
   </ItemGroup>

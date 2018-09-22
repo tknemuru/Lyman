@@ -5,7 +5,7 @@ using Lyman.Models;
 using System.Diagnostics;
 using Lyman.Di;
 
-namespace Lyman.Api.Receivers
+namespace Lyman.Receivers
 {
     /// <summary>
     /// Lymanにおける標準テキスト形式文字列の受信機能を提供します。
