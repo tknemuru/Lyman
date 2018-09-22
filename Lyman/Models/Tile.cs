@@ -146,6 +146,16 @@ namespace Lyman.Models
         private const uint KindMask = 0b1111;
 
         /// <summary>
+        /// 数のマスク量
+        /// </summary>
+        private const uint NumberMask = 0b11110000;
+
+        /// <summary>
+        /// 赤ドラのマスク量
+        /// </summary>
+        private const uint RedFiveMask = 0b100000000;
+
+        /// <summary>
         /// 数のリスト
         /// </summary>
         private static readonly IEnumerable<int> Numbers = Enumerable.Range(1, 9);
@@ -191,6 +201,26 @@ namespace Lyman.Models
         }
 
         /// <summary>
+        /// 数を取得します。
+        /// </summary>
+        /// <returns>数</returns>
+        /// <param name="tile">牌</param>
+        public static int GetNumber(this uint tile)
+        {
+            return (int)((tile & NumberMask) >> NumberShift);
+        }
+
+        /// <summary>
+        /// 赤ドラかどうか
+        /// </summary>
+        /// <returns>赤ドラかどうか</returns>
+        /// <param name="tile">牌</param>
+        public static bool IsRed(this uint tile)
+        {
+            return ((tile & RedFiveMask) >> RedFiveShift) != 0;
+        }
+
+        /// <summary>
         /// 牌を組み立てます。
         /// </summary>
         /// <returns>牌</returns>
@@ -233,6 +263,19 @@ namespace Lyman.Models
             var kind = JapaneseName.Get(_str.Substring(1, 1));
             var num = int.Parse(_str.Substring(0, 1));
             return BuildTile(kind, num, isRed);
+        }
+
+        /// <summary>
+        /// 牌を示す文字列に変換します。
+        /// </summary>
+        /// <returns>牌の文字列</returns>
+        /// <param name="tile">牌</param>
+        public static string ToStringTile(this uint tile)
+        {
+            var kind = JapaneseName.Get(tile.GetKind());
+            var number = tile.GetKind().GetGroup() == Group.Suits ? tile.GetNumber().ToString() : string.Empty;
+            var isRed = tile.IsRed() ? RedFive : string.Empty;
+            return $"{number}{kind}{isRed}";
         }
     }
 }

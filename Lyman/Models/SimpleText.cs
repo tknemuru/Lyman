@@ -9,6 +9,16 @@ namespace Lyman.Models
     public static class SimpleText
     {
         /// <summary>
+        /// キーと値を分離する文字
+        /// </summary>
+        public const char KeyValueSeparator = ':';
+
+        /// <summary>
+        /// 値を分離する文字
+        /// </summary>
+        public const char ValueSeparator = '|';
+
+        /// <summary>
         /// キー
         /// </summary>
         public static class Key

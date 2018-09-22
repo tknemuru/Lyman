@@ -35,10 +35,12 @@
     <Compile Include="BaseUnitTest.cs" />
     <Compile Include="ResourceType.cs" />
     <Compile Include="Receivers\SimpleTextReceiverTest.cs" />
+    <Compile Include="Senders\SimpleTextSenderTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\SimpleTextReceiver\001-001-in.txt" />
+    <None Include="Resources\SimpleTextSender\001-001-out.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lyman\Lyman.csproj">
@@ -50,6 +52,8 @@
     <Folder Include="Receivers\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\SimpleTextReceiver\" />
+    <Folder Include="Senders\" />
+    <Folder Include="Resources\SimpleTextSender\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

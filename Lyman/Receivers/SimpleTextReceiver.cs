@@ -4,6 +4,7 @@ using System;
 using Lyman.Models;
 using System.Diagnostics;
 using Lyman.Di;
+using System.Diagnostics.Contracts;
 
 namespace Lyman.Receivers
 {
@@ -13,30 +14,21 @@ namespace Lyman.Receivers
     public sealed class SimpleTextReceiver : IReceivable<IEnumerable<string>, FieldContext>
     {
         /// <summary>
-        /// キーと値を分離する文字
-        /// </summary>
-        private const char KeyValueSeparator = ':';
-
-        /// <summary>
-        /// 値を分離する文字
-        /// </summary>
-        private const char ValueSeparator = '|';
-
-        /// <summary>
         /// 標準テキストファイルを受信しフィールドの状態に変換します。
         /// </summary>
         /// <param name="source">標準テキストファイルパス</param>
         /// <returns>フィールドの状態</returns>
         public FieldContext Receive(IEnumerable<string> source)
         {
+            Contract.Ensures(Contract.Result<FieldContext>() != null);
             var context = DiProvider.GetContainer().GetInstance<FieldContext>();
 
             foreach(var s in source)
             {
-                var keyValue = s.Split(KeyValueSeparator);
+                var keyValue = s.Split(SimpleText.KeyValueSeparator);
                 Debug.Assert(keyValue.Count() == 2, "要素数が不正です。");
 
-                var keys = keyValue[0].Split(ValueSeparator);
+                var keys = keyValue[0].Split(SimpleText.ValueSeparator);
                 Debug.Assert(keys.Count() <= 2, "キーの数が不正です。");
 
                 switch(keys[0])
@@ -58,7 +50,7 @@ namespace Lyman.Receivers
         /// <param name="str">手牌を示す文字列</param>
         private static uint[] ParseHand(string str)
         {
-            var hand = str.Split(ValueSeparator).Select(Tile.BuildTile).ToArray();
+            var hand = str.Split(SimpleText.ValueSeparator).Select(Tile.BuildTile).ToArray();
             Debug.Assert(hand.Length == Hand.Length, $"手牌の数が不正です。{hand.Length}/{str}");
             return hand;
         }
