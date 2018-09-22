@@ -94,6 +94,47 @@ namespace Lyman.Tests
                 expected.Walls[wind.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
             });
             Assert.AreEqual(expected, actual);
+
+            // 002:一部の風のみ存在する
+            input = FileHelper.ReadTextLines(this.GetResourcePath(2, 2, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.Walls[Wind.Index.North.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            expected.Walls[Wind.Index.North.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            expected.Walls[Wind.Index.North.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            expected.Walls[Wind.Index.North.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            expected.Walls[Wind.Index.North.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Walls[Wind.Index.North.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Walls[Wind.Index.North.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Walls[Wind.Index.North.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            expected.Walls[Wind.Index.North.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            expected.Walls[Wind.Index.North.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            expected.Walls[Wind.Index.North.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            expected.Walls[Wind.Index.North.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            expected.Walls[Wind.Index.North.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            expected.Walls[Wind.Index.North.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+            expected.Walls[Wind.Index.North.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+            expected.Walls[Wind.Index.North.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+            expected.Walls[Wind.Index.North.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+            Assert.AreEqual(expected, actual);
+
+            // 003:一部の牌のみ存在する
+            input = FileHelper.ReadTextLines(this.GetResourcePath(2, 3, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.Walls[Wind.Index.North.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            expected.Walls[Wind.Index.North.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            expected.Walls[Wind.Index.North.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            expected.Walls[Wind.Index.North.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            expected.Walls[Wind.Index.North.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Walls[Wind.Index.North.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Walls[Wind.Index.North.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Walls[Wind.Index.North.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            expected.Walls[Wind.Index.North.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            expected.Walls[Wind.Index.North.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            expected.Walls[Wind.Index.North.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            Assert.AreEqual(expected, actual);
+
         }
     }
 }

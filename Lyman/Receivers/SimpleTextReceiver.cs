@@ -66,6 +66,7 @@ namespace Lyman.Receivers
         private static uint[] ParseWall(string str)
         {
             var tiles = ParseTileArray(str);
+            tiles = tiles.Concat(Enumerable.Range(0, Wall.Length - tiles.Length).Select(i => 0u)).ToArray();
             Debug.Assert(tiles.Length <= Wall.Length, $"壁牌の数が不正です。{tiles.Length}/{str}");
             return tiles;
         }
