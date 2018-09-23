@@ -29,15 +29,16 @@ namespace Lyman.Receivers
                 Debug.Assert(keyValue.Count() == 2, "要素数が不正です。");
 
                 var keys = keyValue[0].Split(SimpleText.ValueSeparator);
-                Debug.Assert(keys.Count() <= 2, "キーの数が不正です。");
 
                 switch(keys[0])
                 {
                     case SimpleText.Key.Hand:
+                        Debug.Assert(keys.Count() == Hand.KeyLength, "キーの数が不正です。");
                         context.Hands[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseHand(keyValue[1]);
                         break;
                     case SimpleText.Key.Wall:
-                        context.Walls[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseWall(keyValue[1]);
+                        Debug.Assert(keys.Count() == Wall.KeyLength, "キーの数が不正です。");
+                        context.Walls[Wind.JapaneseName.Get(keys[Wall.Key.Wind.ToInt()]).ToInt()][Wall.RankJapaneseName.Get(keys[Wall.Key.Rank.ToInt()]).ToInt()] = ParseWall(keyValue[1]);
                         break;
                     default:
                         throw new ArgumentException($"キーが不正です。{keys[0]}");

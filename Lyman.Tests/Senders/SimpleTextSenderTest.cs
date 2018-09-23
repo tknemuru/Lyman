@@ -40,7 +40,7 @@ namespace Lyman.Tests
                 context.Hands[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             });
             var actual = this.Target.Send(context);
-            var expected = StringHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 1, ResourceType.Out)));
+            var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 1, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
             // 002:一部の風のみ存在する
@@ -59,7 +59,7 @@ namespace Lyman.Tests
             context.Hands[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
             context.Hands[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             actual = this.Target.Send(context);
-            expected = StringHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.Out)));
+            expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
         }
     }

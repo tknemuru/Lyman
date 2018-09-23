@@ -17,7 +17,7 @@ namespace Lyman.Models
         /// <summary>
         /// 壁牌
         /// </summary>
-        public uint[][] Walls { get; set; }
+        public uint[][][] Walls { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -25,12 +25,16 @@ namespace Lyman.Models
         public FieldContext()
         {
             this.Hands = new uint[Wind.Length][];
-            this.Walls = new uint[Wind.Length][];
+            this.Walls = new uint[Wind.Length][][];
 
-            Wind.ForEach((wind) =>
+            Wind.ForEach(wind =>
             {
                 this.Hands[wind.ToInt()] = new uint[Hand.Length];
-                this.Walls[wind.ToInt()] = new uint[Wall.Length];
+                this.Walls[wind.ToInt()] = new uint[Wall.RankLength][];
+                Wall.ForEachRank(rank =>
+                {
+                    this.Walls[wind.ToInt()][rank.ToInt()] = new uint[Wall.Length];
+                });
             });
         }
 
@@ -55,11 +59,11 @@ namespace Lyman.Models
                 {
                     equals.Add($"Hands{wind}{i}", this.Hands[wind.ToInt()][i] == context.Hands[wind.ToInt()][i]);
                 });
+            });
 
-                Wall.ForEach(i =>
-                {
-                    equals.Add($"Walls{wind}{i}", this.Walls[wind.ToInt()][i] == context.Walls[wind.ToInt()][i]);
-                });
+            Wall.ForEach((wind, rank, i) =>
+            {
+                equals.Add($"Walls{wind}{rank}{i}", this.Walls[wind.ToInt()][rank.ToInt()][i] == context.Walls[wind.ToInt()][rank.ToInt()][i]);
             });
 
             return equals.All(e => e.Value);
