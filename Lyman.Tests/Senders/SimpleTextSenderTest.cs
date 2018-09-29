@@ -62,5 +62,41 @@ namespace Lyman.Tests
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// 002:壁牌の書き込みができる
+        /// </summary>
+        [TestMethod]
+        public void 壁牌の書き込みができる()
+        {
+            // 001:全ての風が存在している
+            var context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            Wind.ForEach(wind =>
+            {
+                Wall.ForEachRank(rank =>
+                {
+                    context.Walls[wind.ToInt()][rank.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+                    context.Walls[wind.ToInt()][rank.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+                    context.Walls[wind.ToInt()][rank.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+                    context.Walls[wind.ToInt()][rank.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+                    context.Walls[wind.ToInt()][rank.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                    context.Walls[wind.ToInt()][rank.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                    context.Walls[wind.ToInt()][rank.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                    context.Walls[wind.ToInt()][rank.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+                    context.Walls[wind.ToInt()][rank.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+                    context.Walls[wind.ToInt()][rank.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+                    context.Walls[wind.ToInt()][rank.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+                    context.Walls[wind.ToInt()][rank.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+                    context.Walls[wind.ToInt()][rank.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+                    context.Walls[wind.ToInt()][rank.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+                    context.Walls[wind.ToInt()][rank.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+                    context.Walls[wind.ToInt()][rank.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+                    context.Walls[wind.ToInt()][rank.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+                });
+            });
+            var actual = this.Target.Send(context);
+            var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 1, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

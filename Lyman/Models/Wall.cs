@@ -32,13 +32,13 @@ namespace Lyman.Models
         (
             new[]
             {
+                Rank.Upper,
                 Rank.Lower,
-                Rank.Upper
             },
             new[]
             {
+                "上",
                 "下",
-                "上"
             }
         );
 
@@ -48,14 +48,14 @@ namespace Lyman.Models
         public enum Rank
         {
             /// <summary>
-            /// 下段
-            /// </summary>
-            Lower,
-
-            /// <summary>
             /// 上段
             /// </summary>
             Upper,
+
+            /// <summary>
+            /// 下段
+            /// </summary>
+            Lower,
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Lyman.Models
         {
             for (var wind = Wind.Index.East; wind.ToInt() < Wind.Length; wind++)
             {
-                for (var rank = Rank.Lower; (int)rank < RankLength; rank++)
+                for (var rank = Rank.Upper; (int)rank < RankLength; rank++)
                 {
                     for (var i = 0; i < Length; i++)
                     {
@@ -123,7 +123,7 @@ namespace Lyman.Models
         /// <param name="action">Action.</param>
         public static void ForEachRank(Action<Rank> action)
         {
-            for (var rank = Rank.Lower; (int)rank < RankLength; rank++)
+            for (var rank = Rank.Upper; (int)rank < RankLength; rank++)
             {
                 action(rank);
             }

@@ -46,6 +46,7 @@
     <None Include="Resources\SimpleTextReceiver\001-001-in.txt" />
     <None Include="Resources\SimpleTextReceiver\002-001-in.txt" />
     <None Include="Resources\SimpleTextReceiver\002-003-in.txt" />
+    <None Include="Resources\SimpleTextSender\002-001-out.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lyman\Lyman.csproj">
