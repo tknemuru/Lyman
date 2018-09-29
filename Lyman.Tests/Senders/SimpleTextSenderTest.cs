@@ -97,6 +97,46 @@ namespace Lyman.Tests
             var actual = this.Target.Send(context);
             var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 1, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
+
+            // 002:一部の風が存在している
+            context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+            actual = this.Target.Send(context);
+            expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 2, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+
+            // 003:一部の牌のみ存在する
+            context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            actual = this.Target.Send(context);
+            expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 3, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
         }
     }
 }

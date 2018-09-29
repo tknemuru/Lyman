@@ -75,6 +75,10 @@ namespace Lyman.Senders
                     wall.Append(SimpleText.KeyValueSeparator);
                     for (var i = 0; i < Wall.Length; i++)
                     {
+                        if (context.Walls[wind][rank][i].GetKind() == Tile.Kind.Undefined)
+                        {
+                            break;
+                        }
                         if (i > 0)
                         {
                             wall.Append(SimpleText.ValueSeparator);
