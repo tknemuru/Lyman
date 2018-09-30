@@ -20,12 +20,19 @@ namespace Lyman.Models
         public uint[][][] Walls { get; set; }
 
         /// <summary>
+        /// 河
+        /// </summary>
+        /// <value>The rivers.</value>
+        public uint[][] Rivers { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public FieldContext()
         {
             this.Hands = new uint[Wind.Length][];
             this.Walls = new uint[Wind.Length][][];
+            this.Rivers = new uint[Wind.Length][];
 
             Wind.ForEach(wind =>
             {
@@ -35,6 +42,7 @@ namespace Lyman.Models
                 {
                     this.Walls[wind.ToInt()][rank.ToInt()] = new uint[Wall.Length];
                 });
+                this.Rivers[wind.ToInt()] = new uint[River.Length];
             });
         }
 
@@ -59,6 +67,10 @@ namespace Lyman.Models
                 {
                     equals.Add($"Hands{wind}{i}", this.Hands[wind.ToInt()][i] == context.Hands[wind.ToInt()][i]);
                 });
+                River.ForEach(i =>
+                {
+                    equals.Add($"Rivers{wind}{i}", this.Rivers[wind.ToInt()][i] == context.Rivers[wind.ToInt()][i]);
+                });
             });
 
             Wall.ForEach((wind, rank, i) =>
@@ -75,7 +87,7 @@ namespace Lyman.Models
         /// <returns>現在のオブジェクトのハッシュ コード。</returns>
         public override int GetHashCode()
         {
-            return this.Hands.GetHashCode() ^ this.Walls.GetHashCode();
+            return this.Hands.GetHashCode() ^ this.Walls.GetHashCode() ^ this.Rivers.GetHashCode();
         }
     }
 }

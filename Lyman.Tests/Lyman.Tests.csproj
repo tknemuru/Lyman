@@ -43,12 +43,14 @@
     <None Include="packages.config" />
     <None Include="Resources\SimpleTextReceiver\001-002-in.txt" />
     <None Include="Resources\SimpleTextSender\001-002-out.txt" />
-    <None Include="Resources\SimpleTextReceiver\001-001-in.txt" />
+    <None Include="Resources\SimpleTextReceiver\003-001-in.txt" />
     <None Include="Resources\SimpleTextReceiver\002-001-in.txt" />
     <None Include="Resources\SimpleTextReceiver\002-003-in.txt" />
     <None Include="Resources\SimpleTextSender\002-001-out.txt" />
     <None Include="Resources\SimpleTextSender\002-002-out.txt" />
     <None Include="Resources\SimpleTextSender\002-003-out.txt" />
+    <None Include="Resources\SimpleTextReceiver\001-001-in.txt" />
+    <None Include="Resources\SimpleTextReceiver\003-002-in.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lyman\Lyman.csproj">

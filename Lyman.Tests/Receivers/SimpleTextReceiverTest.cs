@@ -137,7 +137,71 @@ namespace Lyman.Tests
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
             Assert.AreEqual(expected, actual);
+        }
 
+        /// <summary>
+        /// 003:河の読み込みができる
+        /// </summary>
+        [TestMethod]
+        public void 河の読み込みができる()
+        {
+            // 001:全ての風が存在する
+            var input = FileHelper.ReadTextLines(this.GetResourcePath(3, 1, ResourceType.In));
+            var actual = this.Target.Receive(input);
+            var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            Wind.ForEach((wind) =>
+            {
+                expected.Rivers[wind.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+                expected.Rivers[wind.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+                expected.Rivers[wind.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+                expected.Rivers[wind.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+                expected.Rivers[wind.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                expected.Rivers[wind.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                expected.Rivers[wind.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                expected.Rivers[wind.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+                expected.Rivers[wind.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+                expected.Rivers[wind.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+                expected.Rivers[wind.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+                expected.Rivers[wind.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+                expected.Rivers[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+                expected.Rivers[wind.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+                expected.Rivers[wind.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+                expected.Rivers[wind.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+                expected.Rivers[wind.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+                expected.Rivers[wind.ToInt()][17] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                expected.Rivers[wind.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                expected.Rivers[wind.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                expected.Rivers[wind.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            });
+            Assert.AreEqual(expected, actual);
+
+            // 002:一部の風のみ存在する
+            input = FileHelper.ReadTextLines(this.GetResourcePath(3, 2, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            expected.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            expected.Rivers[Wind.Index.South.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            expected.Rivers[Wind.Index.South.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            expected.Rivers[Wind.Index.South.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Rivers[Wind.Index.South.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Rivers[Wind.Index.South.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Rivers[Wind.Index.South.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            expected.Rivers[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            expected.Rivers[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            expected.Rivers[Wind.Index.South.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+            expected.Rivers[Wind.Index.South.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+            expected.Rivers[Wind.Index.South.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+            expected.Rivers[Wind.Index.South.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+            expected.Rivers[Wind.Index.South.ToInt()][17] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Rivers[Wind.Index.South.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Rivers[Wind.Index.South.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Rivers[Wind.Index.South.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

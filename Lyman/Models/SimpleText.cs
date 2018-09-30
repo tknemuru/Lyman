@@ -32,6 +32,11 @@ namespace Lyman.Models
             /// 壁牌
             /// </summary>
             public const string Wall = "壁牌";
+
+            /// <summary>
+            /// 河
+            /// </summary>
+            public const string River = "河";
         }
     }
 }

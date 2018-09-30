@@ -20,7 +20,6 @@ namespace Lyman.Receivers
         /// <returns>フィールドの状態</returns>
         public FieldContext Receive(IEnumerable<string> source)
         {
-            Contract.Ensures(Contract.Result<FieldContext>() != null);
             var context = DiProvider.GetContainer().GetInstance<FieldContext>();
 
             foreach(var s in source)
@@ -39,6 +38,10 @@ namespace Lyman.Receivers
                     case SimpleText.Key.Wall:
                         Debug.Assert(keys.Count() == Wall.KeyLength, "キーの数が不正です。");
                         context.Walls[Wind.JapaneseName.Get(keys[Wall.Key.Wind.ToInt()]).ToInt()][Wall.RankJapaneseName.Get(keys[Wall.Key.Rank.ToInt()]).ToInt()] = ParseWall(keyValue[1]);
+                        break;
+                    case SimpleText.Key.River:
+                        Debug.Assert(keys.Count() == River.KeyLength, "キーの数が不正です。");
+                        context.Rivers[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseRiver(keyValue[1]);
                         break;
                     default:
                         throw new ArgumentException($"キーが不正です。{keys[0]}");
@@ -69,6 +72,19 @@ namespace Lyman.Receivers
             var tiles = ParseTileArray(str);
             tiles = tiles.Concat(Enumerable.Range(0, Wall.Length - tiles.Length).Select(i => 0u)).ToArray();
             Debug.Assert(tiles.Length <= Wall.Length, $"壁牌の数が不正です。{tiles.Length}/{str}");
+            return tiles;
+        }
+
+        /// <summary>
+        /// 河への変換を行います。
+        /// </summary>
+        /// <returns>河</returns>
+        /// <param name="str">河を示す文字列</param>
+        private static uint[] ParseRiver(string str)
+        {
+            var tiles = ParseTileArray(str);
+            tiles = tiles.Concat(Enumerable.Range(0, River.Length - tiles.Length).Select(i => 0u)).ToArray();
+            Debug.Assert(tiles.Length <= River.Length, $"河の数が不正です。{tiles.Length}/{str}");
             return tiles;
         }
 
