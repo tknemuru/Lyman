@@ -18,6 +18,7 @@ namespace Lyman.Senders
             var contextSb = new StringBuilder();
             contextSb.Append(this.HandToString(context));
             contextSb.Append(this.WallToString(context));
+            contextSb.Append(this.RiverToString(context));
             return contextSb.ToString();
         }
 
@@ -48,6 +49,39 @@ namespace Lyman.Senders
                 hand.AppendLine(string.Empty);
             }
             return hand.ToString();
+        }
+
+        /// <summary>
+        /// 河を文字列に変換します。
+        /// </summary>
+        /// <returns>文字列化した河</returns>
+        /// <param name="context">フィールド状態</param>
+        private string RiverToString(FieldContext context)
+        {
+            var river = new StringBuilder();
+            for (var wind = 0; wind < Wind.Length; wind++)
+            {
+                if (context.Rivers[wind].All(tile => tile <= 0))
+                {
+                    continue;
+                }
+
+                river.Append($"{SimpleText.Key.River}{SimpleText.ValueSeparator}{Wind.JapaneseName.Get((Wind.Index)wind)}{SimpleText.KeyValueSeparator}");
+                for (var i = 0; i < River.Length; i++)
+                {
+                    if (context.Rivers[wind][i].GetKind() == Tile.Kind.Undefined)
+                    {
+                        break;
+                    }
+                    if (i > 0)
+                    {
+                        river.Append(SimpleText.ValueSeparator);
+                    }
+                    river.Append(context.Rivers[wind][i].ToStringTile());
+                }
+                river.AppendLine(string.Empty);
+            }
+            return river.ToString();
         }
 
         /// <summary>

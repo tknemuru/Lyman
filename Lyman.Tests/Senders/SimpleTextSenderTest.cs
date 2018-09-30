@@ -138,5 +138,93 @@ namespace Lyman.Tests
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 3, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// 003:河の書き込みができる
+        /// </summary>
+        [TestMethod]
+        public void 河の書き込みができる()
+        {
+            // 001:全ての風が存在している
+            var context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            Wind.ForEach((wind) =>
+            {
+                context.Rivers[wind.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+                context.Rivers[wind.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+                context.Rivers[wind.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+                context.Rivers[wind.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+                context.Rivers[wind.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                context.Rivers[wind.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                context.Rivers[wind.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                context.Rivers[wind.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+                context.Rivers[wind.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+                context.Rivers[wind.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+                context.Rivers[wind.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+                context.Rivers[wind.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+                context.Rivers[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+                context.Rivers[wind.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+                context.Rivers[wind.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+                context.Rivers[wind.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+                context.Rivers[wind.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+                context.Rivers[wind.ToInt()][17] = Tile.BuildTile(Tile.Kind.Characters, 1);
+                context.Rivers[wind.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+                context.Rivers[wind.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
+                context.Rivers[wind.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            });
+            var actual = this.Target.Send(context);
+            var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 1, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+
+            // 002:一部の風のみ存在する
+            context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            context.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            context.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            context.Rivers[Wind.Index.South.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            context.Rivers[Wind.Index.South.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            context.Rivers[Wind.Index.South.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            context.Rivers[Wind.Index.South.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            context.Rivers[Wind.Index.South.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            context.Rivers[Wind.Index.South.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            context.Rivers[Wind.Index.South.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            context.Rivers[Wind.Index.South.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            context.Rivers[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            context.Rivers[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            context.Rivers[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            context.Rivers[Wind.Index.South.ToInt()][13] = Tile.BuildTile(Tile.Kind.East);
+            context.Rivers[Wind.Index.South.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
+            context.Rivers[Wind.Index.South.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
+            context.Rivers[Wind.Index.South.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
+            context.Rivers[Wind.Index.South.ToInt()][17] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            context.Rivers[Wind.Index.South.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            context.Rivers[Wind.Index.South.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            context.Rivers[Wind.Index.South.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            actual = this.Target.Send(context);
+            expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 2, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+
+            // 003:一部の牌のみ存在する
+            context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            context.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            context.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            context.Rivers[Wind.Index.South.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            context.Rivers[Wind.Index.South.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            context.Rivers[Wind.Index.South.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            context.Rivers[Wind.Index.South.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            context.Rivers[Wind.Index.South.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            context.Rivers[Wind.Index.South.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            context.Rivers[Wind.Index.South.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            context.Rivers[Wind.Index.South.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            context.Rivers[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            context.Rivers[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            context.Rivers[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            actual = this.Target.Send(context);
+            expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 3, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+
+            // 004:牌が一つも存在しない
+            context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            actual = this.Target.Send(context);
+            Assert.AreEqual(string.Empty, actual);
+        }
     }
 }
