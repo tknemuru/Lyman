@@ -200,7 +200,31 @@ namespace Lyman.Tests
             expected.Rivers[Wind.Index.South.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
             expected.Rivers[Wind.Index.South.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
             expected.Rivers[Wind.Index.South.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            Assert.AreEqual(expected, actual);
 
+            // 003:一部の牌のみ存在している
+            input = FileHelper.ReadTextLines(this.GetResourcePath(3, 3, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
+            expected.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
+            expected.Rivers[Wind.Index.South.ToInt()][2] = Tile.BuildTile(Tile.Kind.South);
+            expected.Rivers[Wind.Index.South.ToInt()][3] = Tile.BuildTile(Tile.Kind.North);
+            expected.Rivers[Wind.Index.South.ToInt()][4] = Tile.BuildTile(Tile.Kind.Characters, 1);
+            expected.Rivers[Wind.Index.South.ToInt()][5] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
+            expected.Rivers[Wind.Index.South.ToInt()][6] = Tile.BuildTile(Tile.Kind.Circles, 3);
+            expected.Rivers[Wind.Index.South.ToInt()][7] = Tile.BuildTile(Tile.Kind.WhiteDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
+            expected.Rivers[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
+            expected.Rivers[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
+            expected.Rivers[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
+            Assert.AreEqual(expected, actual);
+
+            // 004:牌が一つも存在しない
+            input = FileHelper.ReadTextLines(this.GetResourcePath(3, 4, ResourceType.In));
+            actual = this.Target.Receive(input);
+            expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Assert.AreEqual(expected, actual);
         }
     }

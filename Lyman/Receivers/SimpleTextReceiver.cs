@@ -95,7 +95,7 @@ namespace Lyman.Receivers
         /// <param name="str">牌の配列を示す文字列</param>
         private static uint[] ParseTileArray(string str)
         {
-            return str.Split(SimpleText.ValueSeparator).Select(Tile.BuildTile).ToArray();
+            return str.Split(SimpleText.ValueSeparator).Where(s => s != string.Empty).Select(Tile.BuildTile).ToArray();
         }
     }
 }
