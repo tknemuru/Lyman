@@ -1,4 +1,4 @@
-﻿using Lyman.Receivers;
+﻿using Lyman.Converters;
 using Lyman.Di;
 using Lyman.Helpers;
 using Lyman.Models;
@@ -10,10 +10,10 @@ using System;
 namespace Lyman.Tests
 {
     /// <summary>
-    /// SimpleTextReceiverのテスト機能を提供します。
+    /// TextToContextConverterのテスト機能を提供します。
     /// </summary>
     [TestClass]
-    public class SimpleTextReceiverTest : BaseUnitTest<SimpleTextReceiver>
+    public class TextToContextConverterTest : BaseUnitTest<TextToContextConverter>
     {
         /// <summary>
         /// 001:手牌の読み込みができる
@@ -23,7 +23,7 @@ namespace Lyman.Tests
         {
             // 001:全ての風が存在する
             var input = FileHelper.ReadTextLines(this.GetResourcePath(1, 1, ResourceType.In));
-            var actual = this.Target.Receive(input);
+            var actual = this.Target.Convert(input);
             var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Wind.ForEach((wind) =>
             {
@@ -45,7 +45,7 @@ namespace Lyman.Tests
 
             // 002:一部の風のみ存在する
             input = FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             expected.Hands[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
             expected.Hands[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
@@ -71,7 +71,7 @@ namespace Lyman.Tests
         {
             // 001:全ての風が存在する
             var input = FileHelper.ReadTextLines(this.GetResourcePath(2, 1, ResourceType.In));
-            var actual = this.Target.Receive(input);
+            var actual = this.Target.Convert(input);
             var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Wind.ForEach(wind =>
             {
@@ -100,7 +100,7 @@ namespace Lyman.Tests
 
             // 002:一部の風のみ存在する
             input = FileHelper.ReadTextLines(this.GetResourcePath(2, 2, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
@@ -123,7 +123,7 @@ namespace Lyman.Tests
 
             // 003:一部の牌のみ存在する
             input = FileHelper.ReadTextLines(this.GetResourcePath(2, 3, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
             expected.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
@@ -147,7 +147,7 @@ namespace Lyman.Tests
         {
             // 001:全ての風が存在する
             var input = FileHelper.ReadTextLines(this.GetResourcePath(3, 1, ResourceType.In));
-            var actual = this.Target.Receive(input);
+            var actual = this.Target.Convert(input);
             var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Wind.ForEach((wind) =>
             {
@@ -177,7 +177,7 @@ namespace Lyman.Tests
 
             // 002:一部の風のみ存在する
             input = FileHelper.ReadTextLines(this.GetResourcePath(3, 2, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             expected.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
             expected.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
@@ -204,7 +204,7 @@ namespace Lyman.Tests
 
             // 003:一部の牌のみ存在している
             input = FileHelper.ReadTextLines(this.GetResourcePath(3, 3, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             expected.Rivers[Wind.Index.South.ToInt()][0] = Tile.BuildTile(Tile.Kind.East);
             expected.Rivers[Wind.Index.South.ToInt()][1] = Tile.BuildTile(Tile.Kind.West);
@@ -223,7 +223,7 @@ namespace Lyman.Tests
 
             // 004:牌が一つも存在しない
             input = FileHelper.ReadTextLines(this.GetResourcePath(3, 4, ResourceType.In));
-            actual = this.Target.Receive(input);
+            actual = this.Target.Convert(input);
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Assert.AreEqual(expected, actual);
         }

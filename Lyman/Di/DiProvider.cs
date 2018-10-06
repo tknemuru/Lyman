@@ -2,6 +2,7 @@
 // using System.Linq;
 using System;
 using System.Diagnostics;
+using Lyman.Converters;
 
 namespace Lyman.Di
 {
@@ -58,6 +59,7 @@ namespace Lyman.Di
         /// </summary>
         private static void Register()
         {
+            MyContainer.Register<ContextToTextConverter>(Lifestyle.Singleton);
         }
     }
 }

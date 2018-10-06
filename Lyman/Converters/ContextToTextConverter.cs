@@ -4,16 +4,19 @@ using System;
 using System.Text;
 using Lyman.Models;
 
-namespace Lyman.Senders
+namespace Lyman.Converters
 {
-    public class SimpleTextSender : ISendable<FieldContext, string>
+    /// <summary>
+    /// フィールド状態をLymanにおける標準テキスト形式文字列に変換する機能を提供します。
+    /// </summary>
+    public class ContextToTextConverter : IConvertible<FieldContext, string>
     {
         /// <summary>
-        /// 状態を文字列に変換し送信します。
+        /// 状態を文字列に変換します。
         /// </summary>
         /// <param name="context">フィールドの状態</param>
         /// <returns>フィールドの状態を表した文字列</returns>
-        public string Send(FieldContext context)
+        public string Convert(FieldContext context)
         {
             var contextSb = new StringBuilder();
             contextSb.Append(this.HandToString(context));

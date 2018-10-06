@@ -2,7 +2,10 @@
 // using System.Linq;
 using System;
 using System.Text;
+using Lyman.Converters;
 using Lyman.Di;
+using Lyman.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lyman.Tests
 {
@@ -36,6 +39,18 @@ namespace Lyman.Tests
         protected string GetResourcePath(int index, int childIndex, ResourceType type, string extension = "txt")
         {
             return $"../../Resources/{this.Target.GetType().Name}/{index.ToString().PadLeft(3, '0')}-{childIndex.ToString().PadLeft(3, '0')}-{type.ToString().ToLower()}.{extension}";
+        }
+
+        /// <summary>
+        /// フィールドの状態が同一であることを検証します。
+        /// </summary>
+        /// <param name="expected">期待値</param>
+        /// <param name="actual">実際値</param>
+        public static void AssertEqualsFieldContext(FieldContext expected, FieldContext actual)
+        {
+            Assert.IsTrue(expected.Equals(actual),
+                Environment.NewLine + "[expected] :" + Environment.NewLine + "{0}" + Environment.NewLine + " [actual] :" + Environment.NewLine + "{1}",
+                          DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(expected), DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(actual));
         }
     }
 }

@@ -1,18 +1,18 @@
 ﻿// using System.Collections.Generic;
 // using System.Linq;
 using System;
-namespace Lyman.Senders
+namespace Lyman.Converters
 {
     /// <summary>
-    /// 送信機能を提供します。
+    /// 変換機能を提供します。
     /// </summary>
-    public interface ISendable<in TIn, out TOut>
+    public interface IConvertible<in TIn, out TOut>
     {
         /// <summary>
-        /// ソースを送信します。
+        /// ソースを変換します。
         /// </summary>
         /// <param name="source">ソース</param>
         /// <returns>送信結果</returns>
-        TOut Send(TIn source);
+        TOut Convert(TIn source);
     }
 }

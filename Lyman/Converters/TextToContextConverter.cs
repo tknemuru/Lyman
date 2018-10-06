@@ -6,19 +6,19 @@ using System.Diagnostics;
 using Lyman.Di;
 using System.Diagnostics.Contracts;
 
-namespace Lyman.Receivers
+namespace Lyman.Converters
 {
     /// <summary>
-    /// Lymanにおける標準テキスト形式文字列の受信機能を提供します。
+    /// Lymanにおける標準テキスト形式文字列をフィールド状態に変換する機能を提供します。
     /// </summary>
-    public sealed class SimpleTextReceiver : IReceivable<IEnumerable<string>, FieldContext>
+    public sealed class TextToContextConverter : IConvertible<IEnumerable<string>, FieldContext>
     {
         /// <summary>
-        /// 標準テキストファイルを受信しフィールドの状態に変換します。
+        /// 標準テキストファイルをフィールドの状態に変換します。
         /// </summary>
         /// <param name="source">標準テキストファイルパス</param>
         /// <returns>フィールドの状態</returns>
-        public FieldContext Receive(IEnumerable<string> source)
+        public FieldContext Convert(IEnumerable<string> source)
         {
             var context = DiProvider.GetContainer().GetInstance<FieldContext>();
 

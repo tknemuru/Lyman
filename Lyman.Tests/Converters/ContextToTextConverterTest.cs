@@ -5,15 +5,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 // using System.Collections.Generic;
 // using System.Linq;
 using System;
-using Lyman.Senders;
+using Lyman.Converters;
 
 namespace Lyman.Tests
 {
     /// <summary>
-    /// SimpleTextSenderのテスト機能を提供します。
+    /// ContextToTextConverterのテスト機能を提供します。
     /// </summary>
     [TestClass]
-    public class SimpleTextSenderTest : BaseUnitTest<SimpleTextSender>
+    public class ContextToTextConverterTest : BaseUnitTest<ContextToTextConverter>
     {
         /// <summary>
         /// 001:手牌の書き込みができる
@@ -39,7 +39,7 @@ namespace Lyman.Tests
                 context.Hands[wind.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
                 context.Hands[wind.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
             });
-            var actual = this.Target.Send(context);
+            var actual = this.Target.Convert(context);
             var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 1, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
@@ -58,7 +58,7 @@ namespace Lyman.Tests
             context.Hands[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
             context.Hands[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
             context.Hands[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(1, 2, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
         }
@@ -94,7 +94,7 @@ namespace Lyman.Tests
                     context.Walls[wind.ToInt()][rank.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
                 });
             });
-            var actual = this.Target.Send(context);
+            var actual = this.Target.Convert(context);
             var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 1, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
@@ -117,7 +117,7 @@ namespace Lyman.Tests
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][14] = Tile.BuildTile(Tile.Kind.West);
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][15] = Tile.BuildTile(Tile.Kind.South);
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][16] = Tile.BuildTile(Tile.Kind.North);
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 2, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
@@ -134,7 +134,7 @@ namespace Lyman.Tests
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][8] = Tile.BuildTile(Tile.Kind.GreenDragon);
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][9] = Tile.BuildTile(Tile.Kind.RedDragon);
             context.Walls[Wind.Index.North.ToInt()][Wall.Rank.Upper.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(2, 3, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
         }
@@ -171,7 +171,7 @@ namespace Lyman.Tests
                 context.Rivers[wind.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
                 context.Rivers[wind.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
             });
-            var actual = this.Target.Send(context);
+            var actual = this.Target.Convert(context);
             var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 1, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
@@ -198,7 +198,7 @@ namespace Lyman.Tests
             context.Rivers[Wind.Index.South.ToInt()][18] = Tile.BuildTile(Tile.Kind.Bamboos, 2);
             context.Rivers[Wind.Index.South.ToInt()][19] = Tile.BuildTile(Tile.Kind.Circles, 3);
             context.Rivers[Wind.Index.South.ToInt()][20] = Tile.BuildTile(Tile.Kind.WhiteDragon);
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 2, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
@@ -217,13 +217,13 @@ namespace Lyman.Tests
             context.Rivers[Wind.Index.South.ToInt()][10] = Tile.BuildTile(Tile.Kind.Characters, 4);
             context.Rivers[Wind.Index.South.ToInt()][11] = Tile.BuildTile(Tile.Kind.Bamboos, 5, true);
             context.Rivers[Wind.Index.South.ToInt()][12] = Tile.BuildTile(Tile.Kind.Circles, 6);
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(3, 3, ResourceType.Out)));
             Assert.AreEqual(expected, actual);
 
             // 004:牌が一つも存在しない
             context = DiProvider.GetContainer().GetInstance<FieldContext>();
-            actual = this.Target.Send(context);
+            actual = this.Target.Convert(context);
             Assert.AreEqual(string.Empty, actual);
         }
     }
