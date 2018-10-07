@@ -13,7 +13,7 @@ namespace Lyman.Models.Responses
         /// <summary>
         /// 要求種別
         /// </summary>
-        public RequestType RequestType { get; set; }
+        public RequestType RequestType { get; protected set; }
 
         /// <summary>
         /// コンストラクタ

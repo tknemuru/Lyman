@@ -15,26 +15,10 @@ namespace Lyman.Models.Responses
         public uint Tile { get; set; }
 
         /// <summary>
-        /// 次ツモの風
+        /// 次ツモの位置
         /// </summary>
-        public Wind.Index NextWind { get; set; }
-
-        /// <summary>
-        /// 次ツモの段
-        /// </summary>
-        /// <value>The rank.</value>
-        public Wall.Rank NextRank { get; set; }
-
-        /// <summary>
-        /// 次ツモのインデックス
-        /// </summary>
-        /// <value>The index.</value>
-        public int NextIndex { get; set; }
-
-        /// <summary>
-        /// 次ツモが海底牌かどうか
-        /// </summary>
-        public bool NextSeafloor { get; set; }
+        /// <value>The next position.</value>
+        public WallPosition NextPosition { get; set; }
 
         /// <summary>
         /// 要求種別の初期化を行います。

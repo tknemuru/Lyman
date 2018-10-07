@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lyman.Di;
 
 namespace Lyman.Models
 {
@@ -9,6 +10,12 @@ namespace Lyman.Models
     /// </summary>
     public sealed class FieldContext
     {
+        /// <summary>
+        /// 開門位置
+        /// </summary>
+        /// <value>The open gate position.</value>
+        public WallPosition OpenGatePosition { get; set; }
+
         /// <summary>
         /// 手牌
         /// </summary>
@@ -30,6 +37,10 @@ namespace Lyman.Models
         /// </summary>
         public FieldContext()
         {
+            this.OpenGatePosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            this.OpenGatePosition.Wind = Wind.Index.Undefined;
+            this.OpenGatePosition.Rank = Wall.Rank.Upper;
+            this.OpenGatePosition.Index = -1;
             this.Hands = new uint[Wind.Length][];
             this.Walls = new uint[Wind.Length][][];
             this.Rivers = new uint[Wind.Length][];

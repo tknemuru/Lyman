@@ -60,6 +60,7 @@ namespace Lyman.Di
         private static void Register()
         {
             MyContainer.Register<ContextToTextConverter>(Lifestyle.Singleton);
+            MyContainer.Register<TextToContextConverter>(Lifestyle.Singleton);
         }
     }
 }

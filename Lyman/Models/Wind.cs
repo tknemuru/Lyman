@@ -87,5 +87,25 @@ namespace Lyman.Models
                 action(wind);
             }
         }
+
+        /// <summary>
+        /// 次の風に移動します。
+        /// </summary>
+        /// <returns>次の風</returns>
+        /// <param name="index">風</param>
+        public static Index Next(this Index index)
+        {
+            return index == Index.North ? Index.East : (Index)(index.ToInt() + 1);
+        }
+
+        /// <summary>
+        /// 前の風に移動します。
+        /// </summary>
+        /// <returns>前の風</returns>
+        /// <param name="index">風</param>
+        public static Index Prev(this Index index)
+        {
+            return index == Index.East ? Index.North : (Index)(index.ToInt() - 1);
+        }
     }
 }

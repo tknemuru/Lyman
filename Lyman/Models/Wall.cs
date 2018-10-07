@@ -23,7 +23,7 @@ namespace Lyman.Models
         /// <summary>
         /// 段の長さ
         /// </summary>
-        public static readonly int RankLength = IEnumerableHelper.GetEnums<Rank>().Count();
+        public static readonly int RankLength = IEnumerableHelper.GetEnums<Rank>().Where(r => r != Rank.Undefined).Count();
 
         /// <summary>
         /// The name of the rank japanese.
@@ -47,6 +47,11 @@ namespace Lyman.Models
         /// </summary>
         public enum Rank
         {
+            /// <summary>
+            /// 未確定
+            /// </summary>
+            Undefined = -1,
+
             /// <summary>
             /// 上段
             /// </summary>
@@ -127,6 +132,16 @@ namespace Lyman.Models
             {
                 action(rank);
             }
+        }
+
+        /// <summary>
+        /// 次の段に移動します。
+        /// </summary>
+        /// <returns>次の段</returns>
+        /// <param name="rank">段</param>
+        public static Rank Next(this Rank rank)
+        {
+            return rank == Rank.Lower ? Rank.Upper : Rank.Lower;
         }
     }
 }

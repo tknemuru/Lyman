@@ -191,6 +191,16 @@ namespace Lyman.Models
         }
 
         /// <summary>
+        /// 牌の種別を uint に変換します。
+        /// </summary>
+        /// <returns>uintに変換した牌の種別</returns>
+        /// <param name="kind">牌の種別</param>
+        public static uint ToUint(this Kind kind)
+        {
+            return (uint)kind;
+        }
+
+        /// <summary>
         /// 牌の種類を取得します。
         /// </summary>
         /// <returns>牌の種類</returns>
