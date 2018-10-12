@@ -41,6 +41,78 @@ namespace Lyman.Tests
             var actual = this.Target.Receive(request);
             Assert.AreEqual(WallPosition.Type.Default, expected.NextPosition.GetPositionType(request.Context.OpenGatePosition));
             this.AssertAreEqual(expected, actual);
+
+            // 002:西/下/壁の一部が存在
+            request = DiProvider.GetContainer().GetInstance<DrawRequest>();
+            request.Context = this.LoadFieldContext(1, 2, ResourceType.In);
+            request.Position = DiProvider.GetContainer().GetInstance<WallPosition>();
+            request.Position.Wind = Wind.Index.West;
+            request.Position.Rank = Wall.Rank.Lower;
+            request.Position.Index = 6;
+            expected = DiProvider.GetContainer().GetInstance<DrawResponse>();
+            expected.Tile = Tile.BuildTile("3筒");
+            expected.Context = this.LoadFieldContext(1, 2, ResourceType.Out);
+            expected.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            expected.NextPosition.Wind = Wind.Index.West;
+            expected.NextPosition.Rank = Wall.Rank.Upper;
+            expected.NextPosition.Index = 5;
+            actual = this.Target.Receive(request);
+            Assert.AreEqual(WallPosition.Type.Default, expected.NextPosition.GetPositionType(request.Context.OpenGatePosition));
+            this.AssertAreEqual(expected, actual);
+
+            // 003:西から北に切り替わる
+            request = DiProvider.GetContainer().GetInstance<DrawRequest>();
+            request.Context = this.LoadFieldContext(1, 3, ResourceType.In);
+            request.Position = DiProvider.GetContainer().GetInstance<WallPosition>();
+            request.Position.Wind = Wind.Index.West;
+            request.Position.Rank = Wall.Rank.Lower;
+            request.Position.Index = 0;
+            expected = DiProvider.GetContainer().GetInstance<DrawResponse>();
+            expected.Tile = Tile.BuildTile("1萬");
+            expected.Context = this.LoadFieldContext(1, 3, ResourceType.Out);
+            expected.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            expected.NextPosition.Wind = Wind.Index.North;
+            expected.NextPosition.Rank = Wall.Rank.Upper;
+            expected.NextPosition.Index = 16;
+            actual = this.Target.Receive(request);
+            Assert.AreEqual(WallPosition.Type.Default, expected.NextPosition.GetPositionType(request.Context.OpenGatePosition));
+            this.AssertAreEqual(expected, actual);
+
+            // 004:次ツモが海底牌
+            request = DiProvider.GetContainer().GetInstance<DrawRequest>();
+            request.Context = this.LoadFieldContext(1, 4, ResourceType.In);
+            request.Position = DiProvider.GetContainer().GetInstance<WallPosition>();
+            request.Position.Wind = Wind.Index.North;
+            request.Position.Rank = Wall.Rank.Upper;
+            request.Position.Index = 0;
+            expected = DiProvider.GetContainer().GetInstance<DrawResponse>();
+            expected.Tile = Tile.BuildTile("4萬");
+            expected.Context = this.LoadFieldContext(1, 4, ResourceType.Out);
+            expected.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            expected.NextPosition.Wind = Wind.Index.North;
+            expected.NextPosition.Rank = Wall.Rank.Lower;
+            expected.NextPosition.Index = 0;
+            actual = this.Target.Receive(request);
+            Assert.AreEqual(WallPosition.Type.SeaFloor, expected.NextPosition.GetPositionType(request.Context.OpenGatePosition));
+            this.AssertAreEqual(expected, actual);
+
+            // 005:次ツモが王牌
+            request = DiProvider.GetContainer().GetInstance<DrawRequest>();
+            request.Context = this.LoadFieldContext(1, 5, ResourceType.In);
+            request.Position = DiProvider.GetContainer().GetInstance<WallPosition>();
+            request.Position.Wind = Wind.Index.North;
+            request.Position.Rank = Wall.Rank.Lower;
+            request.Position.Index = 0;
+            expected = DiProvider.GetContainer().GetInstance<DrawResponse>();
+            expected.Tile = Tile.BuildTile("6索");
+            expected.Context = this.LoadFieldContext(1, 5, ResourceType.Out);
+            expected.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            expected.NextPosition.Wind = Wind.Index.East;
+            expected.NextPosition.Rank = Wall.Rank.Upper;
+            expected.NextPosition.Index = 16;
+            actual = this.Target.Receive(request);
+            Assert.AreEqual(WallPosition.Type.Dead, expected.NextPosition.GetPositionType(request.Context.OpenGatePosition));
+            this.AssertAreEqual(expected, actual);
         }
 
         /// <summary>

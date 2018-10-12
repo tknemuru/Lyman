@@ -99,6 +99,7 @@ namespace Lyman.Models
         /// <param name="openGatePosition">開門位置</param>
         public Type GetPositionType(WallPosition openGatePosition)
         {
+            Debug.Assert(openGatePosition != null && openGatePosition.Wind != Models.Wind.Index.Undefined && openGatePosition.Index > 0, $"開門位置が不正です。{openGatePosition}");
             var type = Type.Default;
             if (this.Wind == openGatePosition.Wind.Prev() && this.Index == 0 && this.Rank == Wall.Rank.Lower)
             {

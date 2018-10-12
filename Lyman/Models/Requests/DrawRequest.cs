@@ -8,6 +8,10 @@ namespace Lyman.Models.Requests
     /// </summary>
     public sealed class DrawRequest : FieldAttachedRequest
     {
+        /// <summary>
+        /// ツモを行う壁牌の位置
+        /// </summary>
+        /// <value>The position.</value>
         public WallPosition Position { get; set; }
 
         /// <summary>

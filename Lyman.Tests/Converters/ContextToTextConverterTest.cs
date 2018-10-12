@@ -226,5 +226,21 @@ namespace Lyman.Tests
             actual = this.Target.Convert(context);
             Assert.AreEqual(string.Empty, actual);
         }
+
+        /// <summary>
+        /// 004:開門位置の書き込みができる
+        /// </summary>
+        [TestMethod]
+        public void 開門位置の書き込みができる()
+        {
+            // 001:南/上/4
+            var context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            context.OpenGatePosition.Wind = Wind.Index.South;
+            context.OpenGatePosition.Rank = Wall.Rank.Upper;
+            context.OpenGatePosition.Index = 4;
+            var actual = this.Target.Convert(context);
+            var expected = IEnumerableHelper.IEnumerableToString(FileHelper.ReadTextLines(this.GetResourcePath(4, 1, ResourceType.Out)));
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

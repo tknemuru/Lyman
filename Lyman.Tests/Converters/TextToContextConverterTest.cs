@@ -227,5 +227,21 @@ namespace Lyman.Tests
             expected = DiProvider.GetContainer().GetInstance<FieldContext>();
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// 004:開門位置の読み込みができる
+        /// </summary>
+        [TestMethod]
+        public void 開門位置の読み込みができる()
+        {
+            // 001:南/上/4
+            var input = FileHelper.ReadTextLines(this.GetResourcePath(4, 1, ResourceType.In));
+            var actual = this.Target.Convert(input);
+            var expected = DiProvider.GetContainer().GetInstance<FieldContext>();
+            expected.OpenGatePosition.Wind = Wind.Index.South;
+            expected.OpenGatePosition.Rank = Wall.Rank.Upper;
+            expected.OpenGatePosition.Index = 4;
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

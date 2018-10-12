@@ -24,6 +24,21 @@ namespace Lyman.Models
         public static class Key
         {
             /// <summary>
+            /// 開門位置
+            /// </summary>
+            public const string OpenGatePosition = "開門位置";
+
+            /// <summary>
+            /// 開門位置の風
+            /// </summary>
+            public const string OpenGatePostionWind = "開門位置|風";
+
+            /// <summary>
+            /// 開門位置のインデックス
+            /// </summary>
+            public const string OpenGatePostionIndex = "開門位置|インデックス";
+
+            /// <summary>
             /// 手牌
             /// </summary>
             public const string Hand = "手牌";

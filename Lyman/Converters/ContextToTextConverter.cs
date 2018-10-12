@@ -19,10 +19,30 @@ namespace Lyman.Converters
         public string Convert(FieldContext context)
         {
             var contextSb = new StringBuilder();
+            contextSb.Append(this.OpenGatePositionToString(context));
             contextSb.Append(this.HandToString(context));
             contextSb.Append(this.WallToString(context));
             contextSb.Append(this.RiverToString(context));
             return contextSb.ToString();
+        }
+
+        /// <summary>
+        /// 開門位置を文字列に変換します。
+        /// </summary>
+        /// <returns>文字列化した開門位置</returns>
+        /// <param name="context">フィールド状態</param>
+        private string OpenGatePositionToString(FieldContext context)
+        {
+            if (context.OpenGatePosition.Wind == Wind.Index.Undefined ||
+               context.OpenGatePosition.Index < 0)
+            {
+                return string.Empty;
+            }
+
+            var position = new StringBuilder();
+            position.AppendLine($"{SimpleText.Key.OpenGatePostionWind}{SimpleText.KeyValueSeparator}{Wind.JapaneseName.Get(context.OpenGatePosition.Wind)}");
+            position.AppendLine($"{SimpleText.Key.OpenGatePostionIndex}{SimpleText.KeyValueSeparator}{context.OpenGatePosition.Index}");
+            return position.ToString();
         }
 
         /// <summary>

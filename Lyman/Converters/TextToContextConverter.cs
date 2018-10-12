@@ -31,6 +31,19 @@ namespace Lyman.Converters
 
                 switch(keys[0])
                 {
+                    case SimpleText.Key.OpenGatePosition:
+                        switch(keyValue[0])
+                        {
+                            case SimpleText.Key.OpenGatePostionWind:
+                                context.OpenGatePosition.Wind = Wind.JapaneseName.Get(keyValue[1]);
+                                break;
+                            case SimpleText.Key.OpenGatePostionIndex:
+                                context.OpenGatePosition.Index = int.Parse(keyValue[1]);
+                                break;
+                            default:
+                                throw new ArgumentException($"キーが不正です。{keyValue[0]}");
+                        }
+                        break;
                     case SimpleText.Key.Hand:
                         Debug.Assert(keys.Count() == Hand.KeyLength, "キーの数が不正です。");
                         context.Hands[Wind.JapaneseName.Get(keys[1]).ToInt()] = ParseHand(keyValue[1]);
