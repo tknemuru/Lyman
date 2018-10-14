@@ -13,13 +13,12 @@ namespace Lyman.Models
         /// <summary>
         /// 開門位置
         /// </summary>
-        /// <value>The open gate position.</value>
         public WallPosition OpenGatePosition { get; set; }
 
         /// <summary>
         /// 手牌
         /// </summary>
-        public uint[][] Hands { get; set; }
+        public List<uint>[] Hands { get; set; }
 
         /// <summary>
         /// 壁牌
@@ -30,7 +29,7 @@ namespace Lyman.Models
         /// 河
         /// </summary>
         /// <value>The rivers.</value>
-        public uint[][] Rivers { get; set; }
+        public List<uint>[] Rivers { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -41,19 +40,19 @@ namespace Lyman.Models
             this.OpenGatePosition.Wind = Wind.Index.Undefined;
             this.OpenGatePosition.Rank = Wall.Rank.Upper;
             this.OpenGatePosition.Index = -1;
-            this.Hands = new uint[Wind.Length][];
+            this.Hands = new List<uint>[Wind.Length];
             this.Walls = new uint[Wind.Length][][];
-            this.Rivers = new uint[Wind.Length][];
+            this.Rivers = new List<uint>[Wind.Length];
 
             Wind.ForEach(wind =>
             {
-                this.Hands[wind.ToInt()] = new uint[Hand.Length];
+                this.Hands[wind.ToInt()] = new List<uint>();
                 this.Walls[wind.ToInt()] = new uint[Wall.RankLength][];
                 Wall.ForEachRank(rank =>
                 {
                     this.Walls[wind.ToInt()][rank.ToInt()] = new uint[Wall.Length];
                 });
-                this.Rivers[wind.ToInt()] = new uint[River.Length];
+                this.Rivers[wind.ToInt()] = new List<uint>();
             });
         }
 
@@ -72,16 +71,29 @@ namespace Lyman.Models
             var context = (FieldContext)obj;
             var equals = new Dictionary<string, bool>();
 
+            equals.Add("OpenGatePosition", this.OpenGatePosition.Equals(context.OpenGatePosition));
+
             Wind.ForEach((wind) =>
             {
-                Hand.ForEach(i =>
+                var countEqual = this.Hands[wind.ToInt()].Count() == context.Hands[wind.ToInt()].Count();
+                equals.Add($"HandsCount{wind}", countEqual);
+                if (countEqual)
                 {
-                    equals.Add($"Hands{wind}{i}", this.Hands[wind.ToInt()][i] == context.Hands[wind.ToInt()][i]);
-                });
-                River.ForEach(i =>
+                    for (var i = 0; i < this.Hands[wind.ToInt()].Count(); i++)
+                    {
+                        equals.Add($"Hands{wind}{i}", this.Hands[wind.ToInt()][i] == context.Hands[wind.ToInt()][i]);
+                    }
+                }
+
+                countEqual = this.Rivers[wind.ToInt()].Count() == context.Rivers[wind.ToInt()].Count();
+                equals.Add($"RiversCount{wind}", countEqual);
+                if (countEqual)
                 {
-                    equals.Add($"Rivers{wind}{i}", this.Rivers[wind.ToInt()][i] == context.Rivers[wind.ToInt()][i]);
-                });
+                    for (var i = 0; i < this.Rivers[wind.ToInt()].Count(); i++)
+                    {
+                        equals.Add($"Rivers{wind}{i}", this.Rivers[wind.ToInt()][i] == context.Rivers[wind.ToInt()][i]);
+                    }
+                }
             });
 
             Wall.ForEach((wind, rank, i) =>
@@ -98,7 +110,7 @@ namespace Lyman.Models
         /// <returns>現在のオブジェクトのハッシュ コード。</returns>
         public override int GetHashCode()
         {
-            return this.Hands.GetHashCode() ^ this.Walls.GetHashCode() ^ this.Rivers.GetHashCode();
+            return this.OpenGatePosition.GetHashCode() ^ this.Hands.GetHashCode() ^ this.Walls.GetHashCode() ^ this.Rivers.GetHashCode();
         }
     }
 }

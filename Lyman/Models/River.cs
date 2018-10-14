@@ -35,17 +35,5 @@ namespace Lyman.Models
             /// </summary>
             Wind,
         }
-
-        /// <summary>
-        /// 河の各牌に対して戻り値を持たないメソッドを繰り返し実行します。
-        /// </summary>
-        /// <param name="action">戻り値を持たないメソッド</param>
-        public static void ForEach(Action<int> action)
-        {
-            for (var i = 0; i < Length; i++)
-            {
-                action(i);
-            }
-        }
     }
 }

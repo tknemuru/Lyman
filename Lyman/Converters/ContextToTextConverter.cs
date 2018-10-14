@@ -55,20 +55,24 @@ namespace Lyman.Converters
             var hand = new StringBuilder();
             for (var wind = 0; wind < Wind.Length; wind++)
             {
-                if (context.Hands[wind].All(tile => tile <= 0))
+                if (context.Hands[wind].All(tile => tile <= Tile.Kind.Undefined.ToUint()))
                 {
                     continue;
                 }
 
                 hand.Append($"{SimpleText.Key.Hand}{SimpleText.ValueSeparator}{Wind.JapaneseName.Get((Wind.Index)wind)}{SimpleText.KeyValueSeparator}");
-                Hand.ForEach(i =>
+                var count = context.Hands[wind].Count();
+                for (var i = 0; i < count; i++)
                 {
-                    if (i > 0)
+                    if (context.Hands[wind][i].GetKind() != Tile.Kind.Undefined)
                     {
-                        hand.Append(SimpleText.ValueSeparator);
+                        if (i > 0)
+                        {
+                            hand.Append(SimpleText.ValueSeparator);
+                        }
+                        hand.Append(context.Hands[wind][i].ToStringTile());
                     }
-                    hand.Append(context.Hands[wind][i].ToStringTile());
-                });
+                }
                 hand.AppendLine(string.Empty);
             }
             return hand.ToString();
@@ -84,13 +88,14 @@ namespace Lyman.Converters
             var river = new StringBuilder();
             for (var wind = 0; wind < Wind.Length; wind++)
             {
-                if (context.Rivers[wind].All(tile => tile <= 0))
+                if (context.Rivers[wind].All(tile => tile.GetKind() == Tile.Kind.Undefined))
                 {
                     continue;
                 }
 
                 river.Append($"{SimpleText.Key.River}{SimpleText.ValueSeparator}{Wind.JapaneseName.Get((Wind.Index)wind)}{SimpleText.KeyValueSeparator}");
-                for (var i = 0; i < River.Length; i++)
+                var count = context.Rivers[wind].Count();
+                for (var i = 0; i < count; i++)
                 {
                     if (context.Rivers[wind][i].GetKind() == Tile.Kind.Undefined)
                     {
@@ -119,7 +124,7 @@ namespace Lyman.Converters
             {
                 for (var rank = 0; rank < Wall.RankLength; rank++)
                 {
-                    if (context.Walls[wind][rank].All(tile => tile <= 0))
+                    if (context.Walls[wind][rank].All(tile => tile.GetKind() == Tile.Kind.Undefined))
                     {
                         continue;
                     }

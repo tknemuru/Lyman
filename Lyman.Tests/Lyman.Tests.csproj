@@ -37,6 +37,7 @@
     <Compile Include="Converters\ContextToTextConverterTest.cs" />
     <Compile Include="Converters\TextToContextConverterTest.cs" />
     <Compile Include="Receivers\DrawRequestReceiverTest.cs" />
+    <Compile Include="Receivers\DiscardRequestReceiverTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TextToContextConverter\002-002-in.txt" />
@@ -69,6 +70,10 @@
     <None Include="Resources\DrawRequestReceiver\001-004-out.txt" />
     <None Include="Resources\DrawRequestReceiver\001-005-in.txt" />
     <None Include="Resources\DrawRequestReceiver\001-005-out.txt" />
+    <None Include="Resources\DiscardRequestReceiver\001-001-in.txt" />
+    <None Include="Resources\DiscardRequestReceiver\001-001-out.txt" />
+    <None Include="Resources\DiscardRequestReceiver\001-002-in.txt" />
+    <None Include="Resources\DiscardRequestReceiver\001-002-out.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lyman\Lyman.csproj">
@@ -83,6 +88,7 @@
     <Folder Include="Resources\ContextToTextConverter\" />
     <Folder Include="Receivers\" />
     <Folder Include="Resources\DrawRequestReceiver\" />
+    <Folder Include="Resources\DiscardRequestReceiver\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

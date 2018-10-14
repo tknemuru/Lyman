@@ -13,7 +13,7 @@ namespace Lyman.Models
         /// <summary>
         /// 長さ
         /// </summary>
-        public const int Length = 13;
+        public const int Length = 14;
 
         /// <summary>
         /// キーの長さ

@@ -12,5 +12,10 @@ namespace Lyman.Models.Requests
         /// ツモ
         /// </summary>
         Draw,
+
+        /// <summary>
+        /// 捨牌
+        /// </summary>
+        Discard,
     }
 }

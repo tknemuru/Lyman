@@ -68,10 +68,10 @@ namespace Lyman.Converters
         /// </summary>
         /// <returns>手牌</returns>
         /// <param name="str">手牌を示す文字列</param>
-        private static uint[] ParseHand(string str)
+        private static List<uint> ParseHand(string str)
         {
-            var hand = ParseTileArray(str);
-            Debug.Assert(hand.Length == Hand.Length, $"手牌の数が不正です。{hand.Length}/{str}");
+            var hand = ParseTileIEnumerable(str).ToList();
+            Debug.Assert(hand.Count() == Hand.Length || hand.Count() == Hand.Length - 1, $"手牌の数が不正です。{hand.Count()}/{str}");
             return hand;
         }
 
@@ -82,7 +82,7 @@ namespace Lyman.Converters
         /// <param name="str">壁牌を示す文字列</param>
         private static uint[] ParseWall(string str)
         {
-            var tiles = ParseTileArray(str);
+            var tiles = ParseTileIEnumerable(str).ToArray();
             tiles = tiles.Concat(Enumerable.Range(0, Wall.Length - tiles.Length).Select(i => 0u)).ToArray();
             Debug.Assert(tiles.Length <= Wall.Length, $"壁牌の数が不正です。{tiles.Length}/{str}");
             return tiles;
@@ -93,11 +93,10 @@ namespace Lyman.Converters
         /// </summary>
         /// <returns>河</returns>
         /// <param name="str">河を示す文字列</param>
-        private static uint[] ParseRiver(string str)
+        private static List<uint> ParseRiver(string str)
         {
-            var tiles = ParseTileArray(str);
-            tiles = tiles.Concat(Enumerable.Range(0, River.Length - tiles.Length).Select(i => 0u)).ToArray();
-            Debug.Assert(tiles.Length <= River.Length, $"河の数が不正です。{tiles.Length}/{str}");
+            var tiles = ParseTileIEnumerable(str).ToList();
+            Debug.Assert(tiles.Count() <= River.Length, $"河の数が不正です。{tiles.Count()}/{str}");
             return tiles;
         }
 
@@ -106,9 +105,9 @@ namespace Lyman.Converters
         /// </summary>
         /// <returns>牌の配列</returns>
         /// <param name="str">牌の配列を示す文字列</param>
-        private static uint[] ParseTileArray(string str)
+        private static IEnumerable<uint> ParseTileIEnumerable(string str)
         {
-            return str.Split(SimpleText.ValueSeparator).Where(s => s != string.Empty).Select(Tile.BuildTile).ToArray();
+            return str.Split(SimpleText.ValueSeparator).Where(s => s != string.Empty).Select(Tile.BuildTile);
         }
     }
 }

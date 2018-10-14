@@ -60,7 +60,7 @@ namespace Lyman.Tests
         /// </summary>
         /// <param name="expected">期待値</param>
         /// <param name="actual">実際値</param>
-        public static void AssertEqualsFieldContext(FieldContext expected, FieldContext actual)
+        public void AssertEqualsFieldContext(FieldContext expected, FieldContext actual)
         {
             Assert.IsTrue(expected.Equals(actual),
                 Environment.NewLine + "[expected] :" + Environment.NewLine + "{0}" + Environment.NewLine + " [actual] :" + Environment.NewLine + "{1}",
