@@ -64,7 +64,7 @@ namespace Lyman.Tests
         {
             Assert.IsTrue(expected.Equals(actual),
                 Environment.NewLine + "[expected] :" + Environment.NewLine + "{0}" + Environment.NewLine + " [actual] :" + Environment.NewLine + "{1}",
-                          DiProvider.GetContainer().GetInstance<Converters.ContextToTextConverter>().Convert(expected), DiProvider.GetContainer().GetInstance<Converters.ContextToTextConverter>().Convert(actual));
+                          DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(expected), DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(actual));
         }
     }
 }

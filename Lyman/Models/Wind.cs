@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Diagnostics;
 
 namespace Lyman.Models
 {
@@ -99,6 +100,23 @@ namespace Lyman.Models
         }
 
         /// <summary>
+        /// 指定した回数分、次の風に移動します。
+        /// </summary>
+        /// <returns>次の風</returns>
+        /// <param name="index">風</param>
+        /// <param name="count">進む回数</param>
+        public static Index Next(this Index index, int count)
+        {
+            Debug.Assert(count >= 0, $"countが0未満です。{count}");
+            Index _index = index;
+            for (var i = 0; i < count; i++)
+            {
+                _index = _index.Next();
+            }
+            return _index;
+        }
+
+        /// <summary>
         /// 前の風に移動します。
         /// </summary>
         /// <returns>前の風</returns>
@@ -106,6 +124,23 @@ namespace Lyman.Models
         public static Index Prev(this Index index)
         {
             return index == Index.East ? Index.North : (Index)(index.ToInt() - 1);
+        }
+
+        /// <summary>
+        /// 指定した回数分、前の風に移動します。
+        /// </summary>
+        /// <returns>前の風</returns>
+        /// <param name="index">風</param>
+        /// <param name="count">戻る回数</param>
+        public static Index Prev(this Index index, int count)
+        {
+            Debug.Assert(count >= 0, $"countが0未満です。{count}");
+            Index _index = index;
+            for (var i = 0; i < count; i++)
+            {
+                _index = _index.Prev();
+            }
+            return _index;
         }
     }
 }

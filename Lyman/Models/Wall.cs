@@ -16,6 +16,11 @@ namespace Lyman.Models
         public const int Length = 17;
 
         /// <summary>
+        /// 王牌の長さ
+        /// </summary>
+        public const int DeadLength = 7;
+
+        /// <summary>
         /// キーの長さ
         /// </summary>
         public static readonly int KeyLength = IEnumerableHelper.GetEnums<Key>().Count();

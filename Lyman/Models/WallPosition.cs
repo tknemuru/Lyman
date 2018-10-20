@@ -74,22 +74,21 @@ namespace Lyman.Models
         public WallPosition Next()
         {
             Debug.Assert(this.Index >= 0 && this.Index < Wall.Length, $"インデックスが不正です。{this.Index}");
-            var next = this.DeepCopy();
-            var requiredChangeWind = (next.Index == 0 && next.Rank == Wall.Rank.Lower);
+            var requiredChangeWind = (this.Index == 0 && this.Rank == Wall.Rank.Lower);
             if (!requiredChangeWind)
             {
-                if (next.Rank == Wall.Rank.Lower)
+                if (this.Rank == Wall.Rank.Lower)
                 {
-                    next.Index--;
+                    this.Index--;
                 }
-                next.Rank = next.Rank.Next();
-                return next;
+                this.Rank = this.Rank.Next();
+                return this;
             }
 
-            next.Wind = next.Wind.Next();
-            next.Rank = next.Rank.Next();
-            next.Index = Wall.Length - 1;
-            return next;
+            this.Wind = this.Wind.Next();
+            this.Rank = this.Rank.Next();
+            this.Index = Wall.Length - 1;
+            return this;
         }
 
         /// <summary>

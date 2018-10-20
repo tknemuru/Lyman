@@ -26,6 +26,11 @@ namespace Lyman.Models
             Undefined,
 
             /// <summary>
+            /// 空
+            /// </summary>
+            Empty,
+
+            /// <summary>
             /// 萬子
             /// </summary>
             Characters,
@@ -95,6 +100,11 @@ namespace Lyman.Models
             /// 字牌(ジハイ)
             /// </summary>
             Honours,
+
+            /// <summary>
+            /// 空
+            /// </summary>
+            Empty,
         }
 
         /// <summary>
@@ -114,6 +124,7 @@ namespace Lyman.Models
                 Kind.South,
                 Kind.West,
                 Kind.WhiteDragon,
+                Kind.Empty,
             },
             new[]
             {
@@ -127,6 +138,7 @@ namespace Lyman.Models
                 "南",
                 "西",
                 "白",
+                "○",
             }
         );
 
@@ -184,6 +196,9 @@ namespace Lyman.Models
                 case Kind.WhiteDragon:
                     group = Group.Honours;
                     break;
+                case Kind.Empty:
+                    group = Group.Empty;
+                    break;
                 default:
                     throw new ArgumentException("牌が不正です。");
             }
@@ -240,7 +255,8 @@ namespace Lyman.Models
         public static uint BuildTile(Kind kind, int number = 0, bool isRed = false)
         {
             Debug.Assert((kind.GetGroup() == Group.Honours && number == 0) ||
-             (kind.GetGroup() == Group.Suits && Numbers.Contains(number)),
+                         (kind.GetGroup() == Group.Suits && Numbers.Contains(number) ||
+                         (kind.GetGroup() == Group.Empty && number == 0)),
              $"数が不正です。{number}");
             return (uint)kind | ((uint)number << Tile.NumberShift) | ((isRed ? 1u : 0u) << Tile.RedFiveShift);
         }

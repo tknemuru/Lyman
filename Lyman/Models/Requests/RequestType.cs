@@ -17,5 +17,10 @@ namespace Lyman.Models.Requests
         /// 捨牌
         /// </summary>
         Discard,
+
+        /// <summary>
+        /// 配牌
+        /// </summary>
+        DealtTiles,
     }
 }

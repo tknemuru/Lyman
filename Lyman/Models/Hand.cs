@@ -11,9 +11,14 @@ namespace Lyman.Models
     public static class Hand
     {
         /// <summary>
+        /// ツモ牌を含んだ長さ
+        /// </summary>
+        public const int DrawLength = 14;
+
+        /// <summary>
         /// 長さ
         /// </summary>
-        public const int Length = 14;
+        public const int Length = 13;
 
         /// <summary>
         /// キーの長さ
@@ -34,18 +39,6 @@ namespace Lyman.Models
             /// 風
             /// </summary>
             Wind,
-        }
-
-        /// <summary>
-        /// 各手牌に対して戻り値を持たないメソッドを繰り返し実行します。
-        /// </summary>
-        /// <param name="action">戻り値を持たないメソッド</param>
-        public static void ForEach(Action<int> action)
-        {
-            for (var i = 0; i < Length; i++)
-            {
-                action(i);
-            }
         }
     }
 }

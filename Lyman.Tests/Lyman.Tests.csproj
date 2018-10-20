@@ -38,6 +38,9 @@
     <Compile Include="Converters\TextToContextConverterTest.cs" />
     <Compile Include="Receivers\DrawRequestReceiverTest.cs" />
     <Compile Include="Receivers\DiscardRequestReceiverTest.cs" />
+    <Compile Include="Receivers\DealtTilesReceiverTest.cs" />
+    <Compile Include="Models\WindTest.cs" />
+    <Compile Include="Models\WallPositionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TextToContextConverter\002-002-in.txt" />
@@ -74,6 +77,7 @@
     <None Include="Resources\DiscardRequestReceiver\001-001-out.txt" />
     <None Include="Resources\DiscardRequestReceiver\001-002-in.txt" />
     <None Include="Resources\DiscardRequestReceiver\001-002-out.txt" />
+    <None Include="Resources\StableDealtTilesReceiver\001-001-out.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lyman\Lyman.csproj">
@@ -89,6 +93,8 @@
     <Folder Include="Receivers\" />
     <Folder Include="Resources\DrawRequestReceiver\" />
     <Folder Include="Resources\DiscardRequestReceiver\" />
+    <Folder Include="Models\" />
+    <Folder Include="Resources\StableDealtTilesReceiver\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

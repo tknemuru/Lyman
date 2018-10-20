@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Lyman.Converters;
 using Lyman.Di;
 
 namespace Lyman.Models
@@ -54,6 +56,41 @@ namespace Lyman.Models
                 });
                 this.Rivers[wind.ToInt()] = new List<uint>();
             });
+        }
+
+        /// <summary>
+        /// 指定した位置の壁牌を取得します。
+        /// </summary>
+        /// <returns>指定した位置の壁牌</returns>
+        /// <param name="position">壁牌の位置</param>
+        public uint GetWallTile(WallPosition position)
+        {
+            Debug.Assert(position.Wind != Wind.Index.Undefined, "風が未定義です。");
+            Debug.Assert(position.Rank != Wall.Rank.Undefined, "段が未定義です。");
+            Debug.Assert(position.Index >= 0 && position.Index < Wall.Length, "インデックスが不正です。");
+            return this.Walls[position.Wind.ToInt()][position.Rank.ToInt()][position.Index];
+        }
+
+        /// <summary>
+        /// 指定した位置に牌を配置します。
+        /// </summary>
+        /// <param name="position">配置する位置</param>
+        /// <param name="tile">牌</param>
+        public void SetWallTile(WallPosition position, uint tile)
+        {
+            Debug.Assert(position.Wind != Wind.Index.Undefined, "風が未定義です。");
+            Debug.Assert(position.Rank != Wall.Rank.Undefined, "段が未定義です。");
+            Debug.Assert(position.Index >= 0 && position.Index < Wall.Length, "インデックスが不正です。");
+            this.Walls[position.Wind.ToInt()][position.Rank.ToInt()][position.Index] = tile;
+        }
+
+        /// <summary>
+        /// 文字列に変換します。
+        /// </summary>
+        /// <returns>文字列化したフィールド状態</returns>
+        public override string ToString()
+        {
+            return DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(this);
         }
 
         /// <summary>
