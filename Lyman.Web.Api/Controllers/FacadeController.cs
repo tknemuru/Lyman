@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lyman.Di;
+using Lyman.Models.Requests;
+using Lyman.Models.Responses;
+using Lyman.Receivers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lyman.Web.Api.Controllers
@@ -11,9 +15,12 @@ namespace Lyman.Web.Api.Controllers
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public DealtTilesResponse Get()
         {
-            return new string[] { "value1", "value2" };
+            var receiver = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>();
+            var request = DiProvider.GetContainer().GetInstance<DealtTilesRequest>();
+            var response = receiver.Receive(request);
+            return response;
         }
 
         // GET api/values/5
