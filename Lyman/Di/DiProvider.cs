@@ -25,12 +25,6 @@ namespace Lyman.Di
         {
             MyContainer = new SimpleContainer();
             Register();
-#if DEBUG
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
-            {
-                Debug.Listeners.Add(new DebugListener());
-            }
-#endif
         }
 
         /// <summary>
