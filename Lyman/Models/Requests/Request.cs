@@ -8,19 +8,5 @@ namespace Lyman.Models.Requests
     /// </summary>
     public abstract class Request
     {
-        /// <summary>
-        /// 要求種別
-        /// </summary>
-        public RequestType RequestType { get; set; }
-
-        /// <summary>
-        /// コンストラクタ
-        /// </summary>
-        protected Request() => this.InitRequestType();
-
-        /// <summary>
-        /// 要求種別を初期化します。
-        /// </summary>
-        protected abstract void InitRequestType();
     }
 }

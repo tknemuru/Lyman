@@ -9,6 +9,11 @@ namespace Lyman.Models.Requests
     public enum RequestType
     {
         /// <summary>
+        /// 部屋作成
+        /// </summary>
+        CreateRoom,
+
+        /// <summary>
         /// ツモ
         /// </summary>
         Draw,

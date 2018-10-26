@@ -9,12 +9,5 @@ namespace Lyman.Models.Responses
     /// </summary>
     public class DealtTilesResponse : FieldAttachedResponse
     {
-        /// <summary>
-        /// 要求種別の初期化を行います。
-        /// </summary>
-        protected override void InitRequestType()
-        {
-            this.RequestType = RequestType.DealtTiles;
-        }
     }
 }

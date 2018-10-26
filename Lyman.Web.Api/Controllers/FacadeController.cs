@@ -13,7 +13,7 @@ namespace Lyman.Web.Api.Controllers
     [Route("api")]
     public class FacadeController : Controller
     {
-        // GET: api/values
+        // GET: api/
         [HttpGet]
         public DealtTilesResponse Get()
         {

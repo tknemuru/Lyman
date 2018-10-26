@@ -8,12 +8,5 @@ namespace Lyman.Models.Requests
     /// </summary>
     public class DealtTilesRequest : FieldAttachedRequest
     {
-        /// <summary>
-        /// 要求種別の初期化を行います。
-        /// </summary>
-        protected override void InitRequestType()
-        {
-            this.RequestType = RequestType.DealtTiles;
-        }
     }
 }

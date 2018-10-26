@@ -35,8 +35,12 @@ namespace Lyman.Web.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(builder =>
-                        builder.WithOrigins("http://localhost:8080"));
+            app.UseCors((builder) =>
+            {
+                builder.AllowAnyOrigin();
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
 
             app.UseMvc();
         }

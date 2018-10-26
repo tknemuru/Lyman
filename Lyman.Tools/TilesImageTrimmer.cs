@@ -119,7 +119,7 @@ namespace Lyman.Tools
         private static string BuildTileFileName(Tile.Kind kind, int number = 0, bool isRed = false)
         {
             var _isRed = isRed ? 1 : 0;
-            return $"{kind.ToString().ToLower()}-{number}-{_isRed}.png";
+            return $"{Tile.BuildTile(kind, number, isRed)}.png";
         }
     }
 }

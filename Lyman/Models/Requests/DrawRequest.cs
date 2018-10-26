@@ -13,13 +13,5 @@ namespace Lyman.Models.Requests
         /// </summary>
         /// <value>The position.</value>
         public WallPosition Position { get; set; }
-
-        /// <summary>
-        /// 要求種別の初期化を行います。
-        /// </summary>
-        protected override void InitRequestType()
-        {
-            this.RequestType = RequestType.Draw;
-        }
     }
 }

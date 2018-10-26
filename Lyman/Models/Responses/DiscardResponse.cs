@@ -20,13 +20,5 @@ namespace Lyman.Models.Responses
         /// </summary>
         /// <value>The tile.</value>
         public uint Tile { get; set; }
-
-        /// <summary>
-        /// 要求種別の初期化を行います。
-        /// </summary>
-        protected override void InitRequestType()
-        {
-            this.RequestType = RequestType.Discard;
-        }
     }
 }
