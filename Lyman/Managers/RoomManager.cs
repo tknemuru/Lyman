@@ -33,5 +33,15 @@ namespace Lyman.Managers
         {
             Rooms.Add(key, room);
         }
+
+        /// <summary>
+        /// 部屋を取得します。
+        /// </summary>
+        /// <returns>部屋</returns>
+        /// <param name="key">部屋のキー</param>
+        public static Room Get(Guid key)
+        {
+            return Rooms[key];
+        }
     }
 }

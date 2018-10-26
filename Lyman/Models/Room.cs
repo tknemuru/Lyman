@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using Lyman.Helpers;
+using System.Diagnostics;
+
 namespace Lyman.Models
 {
     /// <summary>
@@ -27,13 +30,33 @@ namespace Lyman.Models
         private Dictionary<Wind.Index, string> Players { get; set; }
 
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Room()
+        {
+            this.Players = new Dictionary<Wind.Index, string>();
+        }
+
+        /// <summary>
         /// プレイヤを追加します。
         /// </summary>
         /// <param name="wind">風</param>
         /// <param name="name">プレイヤ名</param>
         public void AddPlayer(Wind.Index wind, string name)
         {
+            Debug.Assert(wind != Wind.Index.Undefined, "風が不正です。");
             this.Players.Add(wind, name);
+        }
+
+        /// <summary>
+        /// 使用可能な風のリストを取得します。
+        /// </summary>
+        /// <returns>使用可能な風のリスト</returns>
+        public IEnumerable<Wind.Index> GetAvailableWinds()
+        {
+            return IEnumerableHelper.GetEnums<Wind.Index>().
+                                    Where(w => w != Wind.Index.Undefined).
+                                    Except(this.Players.Select(p => p.Key));
         }
     }
 }

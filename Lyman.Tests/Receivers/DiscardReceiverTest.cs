@@ -13,10 +13,10 @@ using Lyman.Models.Responses;
 namespace Lyman.Tests
 {
     /// <summary>
-    /// DiscardRequestReceiverのテスト機能を提供します。
+    /// DiscardReceiverのテスト機能を提供します。
     /// </summary>
     [TestClass]
-    public class DiscardRequestReceiverTest : BaseUnitTest<DiscardRequestReceiver>
+    public class DiscardReceiverTest : BaseUnitTest<DiscardReceiver>
     {
         /// <summary>
         /// 001:捨牌ができる

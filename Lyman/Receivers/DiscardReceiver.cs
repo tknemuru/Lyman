@@ -11,7 +11,7 @@ namespace Lyman.Receivers
     /// <summary>
     /// 捨牌要求の応答機能を提供します。
     /// </summary>
-    public class DiscardRequestReceiver : IReceivable<DiscardRequest, DiscardResponse>
+    public class DiscardReceiver : IReceivable<DiscardRequest, DiscardResponse>
     {
         /// <summary>
         /// 捨牌要求の受信処理を行います。

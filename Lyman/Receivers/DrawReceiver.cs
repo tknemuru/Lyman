@@ -11,7 +11,7 @@ namespace Lyman.Receivers
     /// <summary>
     /// ツモ要求の受信機能を提供します。
     /// </summary>
-    public sealed class DrawRequestReceiver : IReceivable<DrawRequest, DrawResponse>
+    public sealed class DrawReceiver : IReceivable<DrawRequest, DrawResponse>
     {
         /// <summary>
         /// ツモ要求の受信処理を行います。

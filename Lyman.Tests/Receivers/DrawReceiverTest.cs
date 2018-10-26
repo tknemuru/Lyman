@@ -13,10 +13,10 @@ using Lyman.Models.Responses;
 namespace Lyman.Tests
 {
     /// <summary>
-    /// DrawRequestReceiverのテスト機能を提供します。
+    /// DrawReceiverのテスト機能を提供します。
     /// </summary>
     [TestClass]
-    public class DrawRequestReceiverTest : BaseUnitTest<DrawRequestReceiver>
+    public class DrawReceiverTest : BaseUnitTest<DrawReceiver>
     {
         /// <summary>
         /// 001:ツモができる

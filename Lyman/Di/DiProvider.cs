@@ -56,8 +56,8 @@ namespace Lyman.Di
         {
             MyContainer.Register<ContextToTextConverter>(Lifestyle.Singleton);
             MyContainer.Register<TextToContextConverter>(Lifestyle.Singleton);
-            MyContainer.Register<DrawRequestReceiver>(Lifestyle.Singleton);
-            MyContainer.Register<DiscardRequestReceiver>(Lifestyle.Singleton);
+            MyContainer.Register<DrawReceiver>(Lifestyle.Singleton);
+            MyContainer.Register<DiscardReceiver>(Lifestyle.Singleton);
             MyContainer.Register<DealtTilesReceiver>(() => new RandomDealtTilesReceiver(), Lifestyle.Singleton);
         }
     }
