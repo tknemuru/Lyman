@@ -58,5 +58,14 @@ namespace Lyman.Models
                                     Where(w => w != Wind.Index.Undefined).
                                     Except(this.Players.Select(p => p.Key));
         }
+
+        /// <summary>
+        /// プレイヤのリストを取得します。
+        /// </summary>
+        /// <returns>プレイヤのリスト</returns>
+        public IEnumerable<KeyValuePair<Wind.Index, string>> GetPlayers()
+        {
+            return this.Players.ToList();
+        }
     }
 }
