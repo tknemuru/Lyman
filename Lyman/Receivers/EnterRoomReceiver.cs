@@ -5,6 +5,7 @@ using Lyman.Managers;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
 using Lyman.Di;
+using Lyman.Models;
 
 namespace Lyman.Receivers
 {
@@ -22,9 +23,10 @@ namespace Lyman.Receivers
         {
             var room = RoomManager.Get(request.RoomKey);
             var wind = room.GetAvailableWinds().OrderBy(w => Guid.NewGuid()).First();
-            room.AddPlayer(wind, request.PlayerName);
             var response = DiProvider.GetContainer().GetInstance<EnterRoomResponse>();
-            response.Wind = wind;
+            response.PlayerKey = room.AddPlayer(wind, request.PlayerName);
+            response.WindIndex = wind;
+            response.Wind = Wind.JapaneseName.Get(wind);
             return response;
         }
     }

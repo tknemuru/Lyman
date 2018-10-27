@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using Lyman.Helpers;
 using System.Diagnostics;
+using Lyman.Di;
 
 namespace Lyman.Models
 {
@@ -18,6 +19,25 @@ namespace Lyman.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// 状態
+        /// </summary>
+        public RoomState State { get
+            {
+                var state = RoomState.Undefined;
+                if (this.Players.Count() < Wind.Length)
+                {
+                    state = RoomState.Entering;
+                } else if (this.Context.Hands[Wind.Index.East.ToInt()].Count() < Hand.Length)
+                {
+                    state = RoomState.Entered;
+                } else {
+                    state = RoomState.Dealted;
+                }
+                return state;
+            }
+        }
+
+        /// <summary>
         /// フィールド状態
         /// </summary>
         /// <value>The context.</value>
@@ -26,15 +46,15 @@ namespace Lyman.Models
         /// <summary>
         /// プレイヤ
         /// </summary>
-        /// <value>The players.</value>
-        private Dictionary<Wind.Index, string> Players { get; set; }
+        public Dictionary<Wind.Index, Player> Players { get; private set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public Room()
         {
-            this.Players = new Dictionary<Wind.Index, string>();
+            this.Players = new Dictionary<Wind.Index, Player>();
+            this.Context = DiProvider.GetContainer().GetInstance<FieldContext>();
         }
 
         /// <summary>
@@ -42,10 +62,14 @@ namespace Lyman.Models
         /// </summary>
         /// <param name="wind">風</param>
         /// <param name="name">プレイヤ名</param>
-        public void AddPlayer(Wind.Index wind, string name)
+        public Guid AddPlayer(Wind.Index wind, string name)
         {
             Debug.Assert(wind != Wind.Index.Undefined, "風が不正です。");
-            this.Players.Add(wind, name);
+            var player = DiProvider.GetContainer().GetInstance<Player>();
+            player.Key = Guid.NewGuid();
+            player.Name = name;
+            this.Players.Add(wind, player);
+            return player.Key;
         }
 
         /// <summary>
@@ -60,12 +84,13 @@ namespace Lyman.Models
         }
 
         /// <summary>
-        /// プレイヤのリストを取得します。
+        /// プレイヤを取得します。
         /// </summary>
-        /// <returns>プレイヤのリスト</returns>
-        public IEnumerable<KeyValuePair<Wind.Index, string>> GetPlayers()
+        /// <returns>プレイヤ</returns>
+        /// <param name="key">プレイヤの識別キー</param>
+        public KeyValuePair<Wind.Index, Player> GetPlayer(Guid key)
         {
-            return this.Players.ToList();
+            return this.Players.First(p => p.Value.Key == key);
         }
     }
 }

@@ -12,6 +12,18 @@ namespace Lyman.Models.Responses
         /// 風
         /// </summary>
         /// <value>The wind.</value>
-        public Wind.Index Wind { get; set; }
+        public Wind.Index WindIndex { get; set; }
+
+        /// <summary>
+        /// 風（日本語名）
+        /// </summary>
+        /// <value>The wind.</value>
+        public string Wind { get; set; }
+
+        /// <summary>
+        /// プレイヤの識別キー
+        /// </summary>
+        /// <value>The player key.</value>
+        public Guid PlayerKey { get; set; }
     }
 }

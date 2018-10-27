@@ -17,9 +17,17 @@ namespace Lyman.Web.Api.Controllers
         [HttpGet]
         public DealtTilesResponse Get()
         {
-            var receiver = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>();
-            var request = DiProvider.GetContainer().GetInstance<DealtTilesRequest>();
-            var response = receiver.Receive(request);
+            DealtTilesResponse response = null;
+            try
+            {
+                var receiver = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>();
+                var request = DiProvider.GetContainer().GetInstance<DealtTilesRequest>();
+                response = receiver.Receive(request);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             return response;
         }
 

@@ -1,6 +1,8 @@
 ﻿// using System.Collections.Generic;
 // using System.Linq;
 using System;
+using Lyman.Managers;
+
 namespace Lyman.Models.Responses
 {
     /// <summary>
@@ -12,5 +14,14 @@ namespace Lyman.Models.Responses
         /// フィールド状態
         /// </summary>
         public FieldContext Context { get; set; }
+
+        /// <summary>
+        /// フィールド状態を引き離します。
+        /// </summary>
+        public void DetachContext(Guid roomKey)
+        {
+            RoomManager.Get(roomKey).Context = this.Context;
+            this.Context = null;
+        }
     }
 }

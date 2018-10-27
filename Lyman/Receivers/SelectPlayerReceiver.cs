@@ -22,7 +22,7 @@ namespace Lyman.Receivers
         {
             var room = RoomManager.Get(request.RoomKey);
             var response = DiProvider.GetContainer().GetInstance<SelectPlayerResponse>();
-            response.Players = room.GetPlayers().Select(p => p.Value);
+            response.Players = room.Players.Select(p => p.Value.Name);
             return response;
         }
     }
