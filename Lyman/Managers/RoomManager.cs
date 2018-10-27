@@ -14,7 +14,7 @@ namespace Lyman.Managers
         /// 部屋
         /// </summary>
         /// <value>The rooms.</value>
-        private static Dictionary<Guid, Room> Rooms { get; set; }
+        public static Dictionary<Guid, Room> Rooms { get; private set; }
 
         /// <summary>
         /// コンストラクタ

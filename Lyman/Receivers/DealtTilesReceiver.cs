@@ -58,8 +58,6 @@ namespace Lyman.Receivers
                 });
             });
 
-            FileHelper.WriteLine(context.ToString());
-
             // 手牌
             var range = 0;
             var position = openGatePosition.DeepCopy();
