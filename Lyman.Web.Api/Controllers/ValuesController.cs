@@ -2,33 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Lyman.Di;
-using Lyman.Models.Requests;
-using Lyman.Models.Responses;
-using Lyman.Receivers;
 using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Lyman.Web.Api.Controllers
 {
-    [Route("api")]
-    public class FacadeController : Controller
+    [Route("api/[controller]")]
+    public class ValuesController : Controller
     {
-        // GET: api/
+        // GET: api/values
         [HttpGet]
-        public DealtTilesResponse Get()
+        public IEnumerable<string> Get()
         {
-            DealtTilesResponse response = null;
-            try
-            {
-                var receiver = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>();
-                var request = DiProvider.GetContainer().GetInstance<DealtTilesRequest>();
-                response = receiver.Receive(request);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-            return response;
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5

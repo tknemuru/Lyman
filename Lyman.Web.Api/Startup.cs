@@ -41,7 +41,6 @@ namespace Lyman.Web.Api
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
             });
-
             app.UseMvc();
         }
     }
