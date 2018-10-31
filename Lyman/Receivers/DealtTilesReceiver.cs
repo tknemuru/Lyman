@@ -72,6 +72,9 @@ namespace Lyman.Receivers
                     context.SetWallTile(position, Tile.BuildTile(Tile.Kind.Empty));
                     position.Next();
                 }
+                context.Hands[wind.ToInt()] = context.Hands[wind.ToInt()].
+                    OrderBy(h => h.GetKind()).
+                    ThenBy(h => h.GetNumber()).ToList();
             });
 
             return response;
