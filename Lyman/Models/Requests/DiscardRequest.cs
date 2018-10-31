@@ -9,12 +9,6 @@ namespace Lyman.Models.Requests
     public class DiscardRequest : FieldAttachedRequest
     {
         /// <summary>
-        /// 捨牌対象の風
-        /// </summary>
-        /// <value>The wind.</value>
-        public Wind.Index Wind { get; set; }
-
-        /// <summary>
         /// 捨てる牌
         /// </summary>
         /// <value>The tile.</value>

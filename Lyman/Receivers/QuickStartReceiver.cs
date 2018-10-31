@@ -4,6 +4,7 @@ using System;
 using Lyman.Di;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
+using Lyman.Managers;
 
 namespace Lyman.Receivers
 {
@@ -19,47 +20,43 @@ namespace Lyman.Receivers
         /// <param name="request">即時ゲーム開始要求</param>
         public QuickStartResponse Receive(QuickStartRequest request)
         {
-            //var response = DiProvider.GetContainer().GetInstance<QuickStartResponse>();
-            //response.CreateRoomResponse = DiProvider.GetContainer().GetInstance<CreateRoomReceiver>().
-            //    Receive(request.CreateRoomRequest);
-            //var roomKey = response.CreateRoomResponse.RoomKey;
-            //response.EnterRoomResponses = request.EnterRoomRequests.Select(req =>
-            //{
-            //    req.RoomKey = roomKey;
-            //    return DiProvider.GetContainer().GetInstance<EnterRoomReceiver>().Receive(req);
-            //});
-            //var playerKey = response.EnterRoomResponses.First().PlayerKey;
-            //request.DealtTilesRequest.RoomKey = roomKey;
-            //request.DealtTilesRequest.AttachContext();
-            //response.DealtTilesResponse = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().
-            //    Receive(request.DealtTilesRequest);
-            //response.DealtTilesResponse.DetachContext(roomKey);
-            //request.SelectRoomRequest.RoomKey = roomKey;
-            //request.SelectRoomRequest.PlayerKey = playerKey;
-            //response.SelectRoomResponse = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().
-            //    Receive(request.SelectRoomRequest);
-            //return response;
-
+            // 部屋作成
             var response = DiProvider.GetContainer().GetInstance<QuickStartResponse>();
             var createRoomResponse = DiProvider.GetContainer().GetInstance<CreateRoomReceiver>().
                 Receive(request.CreateRoomRequest);
             var roomKey = createRoomResponse.RoomKey;
+            response.RoomKey = roomKey;
+            response.RoomName = request.CreateRoomRequest.RoomName;
+
+            // 入室
             var enterRoomResponses = request.EnterRoomRequests.Select(req =>
             {
                 req.RoomKey = roomKey;
                 return DiProvider.GetContainer().GetInstance<EnterRoomReceiver>().Receive(req);
             });
-            var playerKey = enterRoomResponses.First().PlayerKey;
+            var room = RoomManager.Get(roomKey);
+            response.Players = room.Players.ToDictionary(p => p.Key, p => p.Value.Name);
+            var first = enterRoomResponses.First();
+            response.PlayerKey = first.PlayerKey;
+            response.PlayerName = room.GetPlayer(first.PlayerKey).Value.Name;
+            response.Wind = first.Wind;
+            response.WindIndex = first.WindIndex;
+            var playerKey = first.PlayerKey;
+
+            // 配牌
             request.DealtTilesRequest.RoomKey = roomKey;
-            request.DealtTilesRequest.AttachContext();
+            request.DealtTilesRequest.PlayerKey = playerKey;
+            request.DealtTilesRequest.Attach();
             var dealtTilesResponse = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().
                 Receive(request.DealtTilesRequest);
-            dealtTilesResponse.DetachContext(roomKey);
+            dealtTilesResponse.Detach(roomKey);
             request.SelectRoomRequest.RoomKey = roomKey;
             request.SelectRoomRequest.PlayerKey = playerKey;
             var selectRoomResponse = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().
                 Receive(request.SelectRoomRequest);
             response.Hand = selectRoomResponse.Hand;
+            response.State = room.State.ToString();
+
             return response;
         }
     }

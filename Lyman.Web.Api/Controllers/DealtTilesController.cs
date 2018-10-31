@@ -18,9 +18,9 @@ namespace Lyman.Web.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]DealtTilesRequest request)
         {
-            request.AttachContext();
+            request.Attach();
             var response = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().Receive(request);
-            response.DetachContext(request.RoomKey);
+            response.Detach(request.RoomKey);
             return Ok(response);
         }
     }

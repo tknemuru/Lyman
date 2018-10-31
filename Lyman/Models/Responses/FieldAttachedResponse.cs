@@ -18,7 +18,7 @@ namespace Lyman.Models.Responses
         /// <summary>
         /// フィールド状態を引き離します。
         /// </summary>
-        public void DetachContext(Guid roomKey)
+        public void Detach(Guid roomKey)
         {
             RoomManager.Get(roomKey).Context = this.Context;
             this.Context = null;

@@ -9,31 +9,59 @@ namespace Lyman.Models.Responses
     public class QuickStartResponse : Response
     {
         /// <summary>
-        /// 部屋作成応答
+        /// 部屋のキー
         /// </summary>
-        //public CreateRoomResponse CreateRoomResponse { get; set; }
+        public Guid RoomKey { get; set; }
 
         /// <summary>
-        /// 入室応答
+        /// 部屋名
         /// </summary>
-        //public IEnumerable<EnterRoomResponse> EnterRoomResponses { get; set; }
+        /// <value>The name.</value>
+        public string RoomName { get; set; }
 
         /// <summary>
-        /// 配牌応答
+        /// 風
         /// </summary>
-        /// <value>The dealt tiles response.</value>
-        //public DealtTilesResponse DealtTilesResponse { get; set; }
+        /// <value>The wind.</value>
+        public Wind.Index WindIndex { get; set; }
 
         /// <summary>
-        /// 部屋取得応答
+        /// 風（日本語名）
         /// </summary>
-        /// <value>The select room response.</value>
-        //public SelectRoomResponse SelectRoomResponse { get; set; }
+        /// <value>The wind.</value>
+        public string Wind { get; set; }
+
+        /// <summary>
+        /// プレイヤの識別キー
+        /// </summary>
+        /// <value>The player key.</value>
+        public Guid PlayerKey { get; set; }
+
+        /// <summary>
+        /// プレイヤ名
+        /// </summary>
+        /// <value>The name of the player.</value>
+        public string PlayerName { get; set; }
+
+        /// <summary>
+        /// 部屋の状態
+        /// </summary>
+        public string State { get; set; }
+
+        /// <summary>
+        /// プレイヤ
+        /// </summary>
+        public Dictionary<Wind.Index, string> Players { get; set; }
 
         /// <summary>
         /// 手牌
         /// </summary>
         /// <value>The hand.</value>
         public IEnumerable<uint> Hand { get; set; }
+
+        /// <summary>
+        /// 河牌
+        /// </summary>
+        public IEnumerable<IEnumerable<uint>> Rivers { get; set; }
     }
 }

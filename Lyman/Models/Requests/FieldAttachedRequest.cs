@@ -17,20 +17,30 @@ namespace Lyman.Models.Requests
         public Guid RoomKey { get; set; }
 
         /// <summary>
+        /// プレイヤの識別キー
+        /// </summary>
+        /// <value>The player key.</value>
+        public Guid PlayerKey { get; set; }
+
+        /// <summary>
         /// フィールド状態
         /// </summary>
         public FieldContext Context { get; set; }
 
         /// <summary>
+        /// プレイヤの風
+        /// </summary>
+        /// <value>The wind.</value>
+        public Wind.Index Wind { get; set; }
+
+        /// <summary>
         /// フィールド情報を紐付けます。
         /// </summary>
-        public void AttachContext()
+        public void Attach()
         {
-            if (this.RoomKey == null)
-            {
-                return;
-            }
-            this.Context = RoomManager.Get(this.RoomKey).Context;
+            var room = RoomManager.Get(this.RoomKey);
+            this.Context = room.Context;
+            this.Wind = room.GetPlayer(this.PlayerKey).Key;
         }
     }
 }
