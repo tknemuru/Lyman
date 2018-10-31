@@ -55,6 +55,7 @@ namespace Lyman.Receivers
             var selectRoomResponse = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().
                 Receive(request.SelectRoomRequest);
             response.Hand = selectRoomResponse.Hand;
+            response.Rivers = selectRoomResponse.Rivers;
             response.State = room.State.ToString();
 
             return response;
