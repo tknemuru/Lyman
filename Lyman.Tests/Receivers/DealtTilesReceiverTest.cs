@@ -32,7 +32,7 @@ namespace Lyman.Tests.Receivers
             var expectedPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
             expectedPosition.Wind = Wind.Index.West;
             expectedPosition.Index = 3;
-            expectedPosition.Rank = Wall.Rank.Lower;
+            expectedPosition.Rank = Wall.Rank.Upper;
             Assert.AreEqual(expectedPosition, actual.NextDrawPosition);
         }
     }

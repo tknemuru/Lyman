@@ -59,12 +59,10 @@ namespace Lyman.Receivers
             });
 
             // 手牌
-            var range = 0;
             var position = openGatePosition.DeepCopy();
             Wind.ForEach(wind =>
             {
-                range = this.IsLeader(wind) ? Hand.DrawLength : Hand.Length;
-                for (var i = 0; i < range; i++)
+                for (var i = 0; i < Hand.Length; i++)
                 {
                     var tile = context.GetWallTile(position);
                     Debug.Assert(tile.GetKind() != Tile.Kind.Undefined && tile.GetKind() != Tile.Kind.Empty, $"牌が未定義か空は有り得ません。{position}");
@@ -95,16 +93,6 @@ namespace Lyman.Receivers
         /// 牌をシャッフルします。
         /// </summary>
         protected abstract IEnumerable<uint> ShuffleTiles();
-
-        /// <summary>
-        /// 親かどうかを返却します。
-        /// </summary>
-        /// <returns>親かどうか</returns>
-        /// <param name="wind">風</param>
-        private bool IsLeader(Wind.Index wind)
-        {
-            return wind == Wind.Index.East;
-        }
 
         /// <summary>
         /// 全ての牌のリストを組み立てます
