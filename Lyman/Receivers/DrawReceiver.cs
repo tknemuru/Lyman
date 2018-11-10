@@ -30,6 +30,9 @@ namespace Lyman.Receivers
             context.Walls[request.Position.Wind.ToInt()][request.Position.Rank.ToInt()][request.Position.Index] = Tile.Kind.Undefined.ToUint();
             response.Context = context;
 
+            // 手牌に追加
+            context.Hands[request.Wind.ToInt()].Add(response.Tile);
+
             // 次ツモの情報を作成
             response.NextPosition = request.Position.Next();
 

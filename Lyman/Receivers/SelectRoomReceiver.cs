@@ -25,6 +25,7 @@ namespace Lyman.Receivers
             var room = RoomManager.Get(request.RoomKey);
             response.Name = room.Name;
             response.State = room.State.ToString().ToLower();
+            response.Turn = room.Turn;
             response.Players = room.Players.ToDictionary(p => p.Key, p => p.Value.Name);
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);

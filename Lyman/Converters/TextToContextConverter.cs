@@ -71,7 +71,7 @@ namespace Lyman.Converters
         private static List<uint> ParseHand(string str)
         {
             var hand = ParseTileIEnumerable(str).ToList();
-            Debug.Assert(hand.Count() == Hand.DrawLength || hand.Count() == Hand.DrawLength - 1, $"手牌の数が不正です。{hand.Count()}/{str}");
+            //Debug.Assert(hand.Count() == Hand.DrawLength || hand.Count() == Hand.DrawLength - 1, $"手牌の数が不正です。{hand.Count()}/{str}");
             return hand;
         }
 

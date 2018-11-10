@@ -42,6 +42,7 @@ namespace Lyman.Receivers
             response.Wind = first.Wind;
             response.WindIndex = first.WindIndex;
             var playerKey = first.PlayerKey;
+            response.FirstPlayer = room.IsFirstPlayer(playerKey);
 
             // 配牌
             request.DealtTilesRequest.RoomKey = roomKey;
@@ -49,6 +50,7 @@ namespace Lyman.Receivers
             request.DealtTilesRequest.Attach();
             var dealtTilesResponse = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().
                 Receive(request.DealtTilesRequest);
+            room.NextPosition = dealtTilesResponse.NextDrawPosition;
             dealtTilesResponse.Detach(roomKey);
             request.SelectRoomRequest.RoomKey = roomKey;
             request.SelectRoomRequest.PlayerKey = playerKey;

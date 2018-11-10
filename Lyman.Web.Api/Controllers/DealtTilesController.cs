@@ -6,6 +6,7 @@ using Lyman.Models.Requests;
 using Lyman.Receivers;
 using Lyman.Di;
 using Microsoft.AspNetCore.Mvc;
+using Lyman.Managers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,6 +21,7 @@ namespace Lyman.Web.Api.Controllers
         {
             request.Attach();
             var response = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().Receive(request);
+            RoomManager.Get(request.RoomKey).NextPosition = response.NextDrawPosition;
             response.Detach(request.RoomKey);
             return Ok(response);
         }

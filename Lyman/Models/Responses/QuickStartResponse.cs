@@ -44,6 +44,11 @@ namespace Lyman.Models.Responses
         public string PlayerName { get; set; }
 
         /// <summary>
+        /// 最初のプレイヤかどうか
+        /// </summary>
+        public bool FirstPlayer { get; set; }
+
+        /// <summary>
         /// 部屋の状態
         /// </summary>
         public string State { get; set; }

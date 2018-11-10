@@ -27,6 +27,7 @@ namespace Lyman.Receivers
             response.PlayerKey = room.AddPlayer(wind, request.PlayerName);
             response.WindIndex = wind;
             response.Wind = Wind.JapaneseName.Get(wind);
+            response.FirstPlayer = room.IsFirstPlayer(response.PlayerKey);
             return response;
         }
     }

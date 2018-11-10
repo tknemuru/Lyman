@@ -38,6 +38,12 @@ namespace Lyman.Models
         }
 
         /// <summary>
+        /// 次ツモの位置
+        /// </summary>
+        /// <value>The next position.</value>
+        public WallPosition NextPosition { get; set; }
+
+        /// <summary>
         /// フィールド状態
         /// </summary>
         /// <value>The context.</value>
@@ -47,6 +53,12 @@ namespace Lyman.Models
         /// プレイヤ
         /// </summary>
         public Dictionary<Wind.Index, Player> Players { get; private set; }
+
+        /// <summary>
+        /// ターン
+        /// </summary>
+        /// <value>The turn.</value>
+        public Wind.Index Turn { get; set; } = Wind.Index.East;
 
         /// <summary>
         /// コンストラクタ
@@ -70,6 +82,20 @@ namespace Lyman.Models
             player.Name = name;
             this.Players.Add(wind, player);
             return player.Key;
+        }
+
+        /// <summary>
+        /// 最初のプレイヤかどうか
+        /// </summary>
+        /// <param name="key">プレイヤの識別キー</param>
+        public bool IsFirstPlayer(Guid key)
+        {
+            if (!this.Players.Any())
+            {
+                return false;
+            }
+
+            return this.Players.First().Value.Key == key;
         }
 
         /// <summary>

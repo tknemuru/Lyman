@@ -29,6 +29,7 @@ namespace Lyman.Receivers
             // 手牌から牌を削除
             var index = context.Hands[request.Wind.ToInt()].LastIndexOf(request.Tile);
             context.Hands[request.Wind.ToInt()].RemoveAt(index);
+            context.Hands[request.Wind.ToInt()] = Tile.Order(context.Hands[request.Wind.ToInt()]).ToList();
 
             response.Context = context;
             response.Wind = request.Wind;

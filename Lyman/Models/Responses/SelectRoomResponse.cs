@@ -20,6 +20,12 @@ namespace Lyman.Models.Responses
         public string State { get; set; }
 
         /// <summary>
+        /// ターン
+        /// </summary>
+        /// <value>The turn.</value>
+        public Wind.Index Turn { get; set; }
+
+        /// <summary>
         /// プレイヤ
         /// </summary>
         public Dictionary<Wind.Index, string> Players { get; set; }

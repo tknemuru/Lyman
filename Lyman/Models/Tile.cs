@@ -303,5 +303,16 @@ namespace Lyman.Models
             var isRed = tile.IsRed() ? RedFive : string.Empty;
             return $"{number}{kind}{isRed}";
         }
+
+        /// <summary>
+        /// 牌を整列します。
+        /// </summary>
+        /// <returns>整列された牌</returns>
+        /// <param name="tiles">牌のリスト</param>
+        public static IEnumerable<uint> Order(IEnumerable<uint> tiles)
+        {
+            return tiles.OrderBy(h => h.GetKind()).
+                 ThenBy(h => h.GetNumber());
+        }
     }
 }

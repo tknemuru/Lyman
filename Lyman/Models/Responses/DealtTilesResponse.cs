@@ -9,5 +9,9 @@ namespace Lyman.Models.Responses
     /// </summary>
     public class DealtTilesResponse : FieldAttachedResponse
     {
+        /// <summary>
+        /// 次のツモ位置
+        /// </summary>
+        public WallPosition NextDrawPosition { get; set; }
     }
 }

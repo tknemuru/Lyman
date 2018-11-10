@@ -25,5 +25,10 @@ namespace Lyman.Models.Responses
         /// </summary>
         /// <value>The player key.</value>
         public Guid PlayerKey { get; set; }
+
+        /// <summary>
+        /// 最初のプレイヤかどうか
+        /// </summary>
+        public bool FirstPlayer { get; set; }
     }
 }

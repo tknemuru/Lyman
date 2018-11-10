@@ -29,6 +29,11 @@ namespace Lyman.Tests.Receivers
             var actual = this.Target.Receive(request);
             var expected = this.LoadFieldContext(1, 1, ResourceType.Out);
             this.AssertEqualsFieldContext(expected, actual.Context);
+            var expectedPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            expectedPosition.Wind = Wind.Index.West;
+            expectedPosition.Index = 3;
+            expectedPosition.Rank = Wall.Rank.Lower;
+            Assert.AreEqual(expectedPosition, actual.NextDrawPosition);
         }
     }
 }
