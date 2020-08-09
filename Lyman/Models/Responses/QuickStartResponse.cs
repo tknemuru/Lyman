@@ -68,5 +68,11 @@ namespace Lyman.Models.Responses
         /// 河牌
         /// </summary>
         public IEnumerable<IEnumerable<uint>> Rivers { get; set; }
+
+        /// <summary>
+        /// ターン
+        /// </summary>
+        /// <value>The turn.</value>
+        public Wind.Index Turn { get; set; }
     }
 }

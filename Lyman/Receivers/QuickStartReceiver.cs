@@ -59,7 +59,7 @@ namespace Lyman.Receivers
             response.Hand = selectRoomResponse.Hand;
             response.Rivers = selectRoomResponse.Rivers;
             response.State = room.State.ToString();
-
+            response.Turn = selectRoomResponse.Turn;
             return response;
         }
     }
