@@ -21,9 +21,9 @@ log/
 /.gem/
 
 # visual studio
-*.csproj
+#*.csproj
 *.csproj.user
-*.sln
+#*.sln
 *.sln.ide/
 *.suo
 obj/
@@ -76,10 +76,10 @@ Library/
 ExportedObj/
 *.svd
 *.userprefs
-*.csproj
+#*.csproj
 *.pidb
 *.suo
-*.sln
+#*.sln
 *.user
 *.unityproj
 *.booproj
