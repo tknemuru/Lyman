@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using Lyman.Analyzers;
 namespace Lyman.Models.Responses
 {
     /// <summary>
@@ -40,5 +41,10 @@ namespace Lyman.Models.Responses
         /// 河牌
         /// </summary>
         public IEnumerable<IEnumerable<uint>> Rivers { get; set; }
+
+        /// <summary>
+        /// 分析結果
+        /// </summary>
+        public Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>> AnalyzeResult { get; set; }
     }
 }

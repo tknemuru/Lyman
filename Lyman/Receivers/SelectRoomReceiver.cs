@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
+using Lyman.Analyzers;
 using Lyman.Di;
 using Lyman.Models;
 using Lyman.Managers;
@@ -30,7 +31,25 @@ namespace Lyman.Receivers
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];
+            response.AnalyzeResult = this.Analyze(request);
             return response;
+        }
+
+        /// <summary>
+        /// 分析を行います。
+        /// </summary>
+        /// <returns>分析結果</returns>
+        private Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>> Analyze(SelectRoomRequest request)
+        {
+            var analyzeRequest = DiProvider.GetContainer().GetInstance<AnalyzeRequest>();
+            analyzeRequest.RoomKey = request.RoomKey;
+            analyzeRequest.PlayerKey = request.PlayerKey;
+            analyzeRequest.Attach();
+            var results = new Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>>();
+            results = DiProvider.GetContainer().GetInstance<ReachAnalyzer>().Analyze(analyzeRequest).Result
+                    .Concat(DiProvider.GetContainer().GetInstance<AllSimplesAnalyzer>().Analyze(analyzeRequest).Result)
+                    .ToDictionary(keyValue => keyValue.Key, keyValue => keyValue.Value);
+            return results;
         }
     }
 }
