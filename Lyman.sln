@@ -1,0 +1,40 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyman.Web.Api", "Lyman.Web.Api\Lyman.Web.Api.csproj", "{C826FCA4-821E-4ACD-9598-B8212910AF63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyman", "Lyman\Lyman.csproj", "{070D50E4-39B2-469F-B733-3CA381F9E42D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyman.Tests", "Lyman.Tests\Lyman.Tests.csproj", "{31921708-5B98-4E6A-94A4-240C1FE9C346}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyman.Tools", "Lyman.Tools\Lyman.Tools.csproj", "{D1B59FE4-F172-49D7-9ADE-115D3AEDAC1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C826FCA4-821E-4ACD-9598-B8212910AF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C826FCA4-821E-4ACD-9598-B8212910AF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C826FCA4-821E-4ACD-9598-B8212910AF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C826FCA4-821E-4ACD-9598-B8212910AF63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{070D50E4-39B2-469F-B733-3CA381F9E42D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{070D50E4-39B2-469F-B733-3CA381F9E42D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{070D50E4-39B2-469F-B733-3CA381F9E42D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{070D50E4-39B2-469F-B733-3CA381F9E42D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31921708-5B98-4E6A-94A4-240C1FE9C346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31921708-5B98-4E6A-94A4-240C1FE9C346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31921708-5B98-4E6A-94A4-240C1FE9C346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31921708-5B98-4E6A-94A4-240C1FE9C346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1B59FE4-F172-49D7-9ADE-115D3AEDAC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1B59FE4-F172-49D7-9ADE-115D3AEDAC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1B59FE4-F172-49D7-9ADE-115D3AEDAC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1B59FE4-F172-49D7-9ADE-115D3AEDAC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.StandardHeader = $1
+		$1.Text = @using System.Collections.Generic;\nusing System.Linq;
+	EndGlobalSection
+EndGlobal
