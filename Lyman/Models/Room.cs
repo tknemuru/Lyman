@@ -61,6 +61,11 @@ namespace Lyman.Models
         public Wind.Index Turn { get; set; } = Wind.Index.East;
 
         /// <summary>
+        /// 最後に捨牌した河の位置
+        /// </summary>
+        public RiverPosition LastDiscardPosition { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         public Room()

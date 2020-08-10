@@ -5,6 +5,7 @@ using Lyman.Di;
 using Lyman.Models;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
+using Lyman.Managers;
 
 namespace Lyman.Receivers
 {
@@ -25,6 +26,13 @@ namespace Lyman.Receivers
 
             // 捨牌を河に追加
             context.Rivers[request.Wind.ToInt()].Add(request.Tile);
+
+            // 最後の捨牌位置を記録
+            var lastPosition = DiProvider.GetContainer().GetInstance<RiverPosition>();
+            lastPosition.Wind = request.Wind;
+            lastPosition.Index = context.Rivers[request.Wind.ToInt()].Count() - 1;
+            var room = RoomManager.GetOrDefault(request.RoomKey);
+            room.LastDiscardPosition = lastPosition;
 
             // 手牌から牌を削除
             var index = context.Hands[request.Wind.ToInt()].LastIndexOf(request.Tile);

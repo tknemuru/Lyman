@@ -9,6 +9,7 @@ using Lyman.Converters;
 using Lyman.Receivers;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
+using Lyman.Managers;
 
 namespace Lyman.Tests
 {
@@ -50,11 +51,32 @@ namespace Lyman.Tests
         }
 
         /// <summary>
-        /// 妥当性を検証します。
+        /// 002:最後の捨牌の位置を記録できる
         /// </summary>
-        /// <param name="expected">期待する状態</param>
-        /// <param name="actual">実際の状態</param>
-        private void AssertAreEqual(DiscardResponse expected, DiscardResponse actual)
+        [TestMethod]
+        public void 最後の捨牌の位置を記録できる()
+        {
+            var key = Guid.NewGuid();
+            var room = DiProvider.GetContainer().GetInstance<Room>();
+            RoomManager.Add(key, room);
+            var request = DiProvider.GetContainer().GetInstance<DiscardRequest>();
+            request.RoomKey = key;
+            request.Context = this.LoadFieldContext(2, 1, ResourceType.In);
+            request.Wind = Wind.Index.East;
+            request.Tile = Tile.BuildTile("1萬");
+            var expected = DiProvider.GetContainer().GetInstance<RiverPosition>();
+            expected.Wind = Wind.Index.East;
+            expected.Index = 8;
+            this.Target.Receive(request);
+            Assert.AreEqual(expected, room.LastDiscardPosition);
+        }
+
+            /// <summary>
+            /// 妥当性を検証します。
+            /// </summary>
+            /// <param name="expected">期待する状態</param>
+            /// <param name="actual">実際の状態</param>
+            private void AssertAreEqual(DiscardResponse expected, DiscardResponse actual)
         {
             Assert.AreEqual(expected.Wind, actual.Wind);
             Assert.AreEqual(expected.Tile, actual.Tile);

@@ -31,7 +31,7 @@ namespace Lyman.Receivers
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];
-            response.AnalyzeResult = this.Analyze(request);
+            this.Analyze(request, response);
             return response;
         }
 
@@ -39,17 +39,14 @@ namespace Lyman.Receivers
         /// 分析を行います。
         /// </summary>
         /// <returns>分析結果</returns>
-        private Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>> Analyze(SelectRoomRequest request)
+        private void Analyze(SelectRoomRequest request, SelectRoomResponse response)
         {
-            var analyzeRequest = DiProvider.GetContainer().GetInstance<AnalyzeRequest>();
-            analyzeRequest.RoomKey = request.RoomKey;
-            analyzeRequest.PlayerKey = request.PlayerKey;
-            analyzeRequest.Attach();
-            var results = new Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>>();
-            results = DiProvider.GetContainer().GetInstance<ReachAnalyzer>().Analyze(analyzeRequest).Result
-                    .Concat(DiProvider.GetContainer().GetInstance<AllSimplesAnalyzer>().Analyze(analyzeRequest).Result)
-                    .ToDictionary(keyValue => keyValue.Key, keyValue => keyValue.Value);
-            return results;
+            var fieldAttachedRequest = DiProvider.GetContainer().GetInstance<FieldAttachedRequest>();
+            fieldAttachedRequest.RoomKey = request.RoomKey;
+            fieldAttachedRequest.PlayerKey = request.PlayerKey;
+            fieldAttachedRequest.Attach();
+            response.ReachableInfo = DiProvider.GetContainer().GetInstance<ReachableAnalyzeReceiver>().Receive(fieldAttachedRequest);
+            response.Ronable = DiProvider.GetContainer().GetInstance<RonableAnalyzeReceiver>().Receive(fieldAttachedRequest);
         }
     }
 }

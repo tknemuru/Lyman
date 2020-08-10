@@ -43,8 +43,18 @@ namespace Lyman.Models.Responses
         public IEnumerable<IEnumerable<uint>> Rivers { get; set; }
 
         /// <summary>
-        /// 分析結果
+        /// 最後に捨牌した河の位置
         /// </summary>
-        public Dictionary<AnalyzeType, Dictionary<Wind.Index, bool>> AnalyzeResult { get; set; }
+        public RiverPosition LastDiscardPosition { get; set; }
+
+        /// <summary>
+        /// リーチ可能性情報
+        /// </summary>
+        public ReachableAnalyzeResponse ReachableInfo { get; set; }
+
+        /// <summary>
+        /// ロンできるかどうか
+        /// </summary>
+        public bool Ronable { get; set; }
     }
 }

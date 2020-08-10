@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using Lyman.Models;
+using Lyman.Di;
 
 namespace Lyman.Managers
 {
@@ -41,6 +42,21 @@ namespace Lyman.Managers
         /// <param name="key">部屋のキー</param>
         public static Room Get(Guid key)
         {
+            return Rooms[key];
+        }
+
+        /// <summary>
+        /// 部屋を取得します。
+        /// </summary>
+        /// <returns>部屋</returns>
+        /// <param name="key">部屋のキー</param>
+        public static Room GetOrDefault(Guid key)
+        {
+            if (!Rooms.ContainsKey(key))
+            {
+                // 存在しない場合はデフォルトの部屋を返す
+                return DiProvider.GetContainer().GetInstance<Room>();
+            }
             return Rooms[key];
         }
     }

@@ -8,7 +8,7 @@ namespace Lyman.Models.Requests
     /// <summary>
     /// フィールド状態が付随した要求
     /// </summary>
-    public abstract class FieldAttachedRequest : Request
+    public class FieldAttachedRequest : Request
     {
         /// <summary>
         /// 部屋のキー
