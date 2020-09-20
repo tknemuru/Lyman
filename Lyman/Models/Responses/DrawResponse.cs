@@ -19,5 +19,10 @@ namespace Lyman.Models.Responses
         /// </summary>
         /// <value>The next position.</value>
         public WallPosition NextPosition { get; set; }
+
+        /// <summary>
+        /// ツモ上がり可能性情報
+        /// </summary>
+        public DrawWinnableAnalyzeResponse DrawWinnableInfo { get; set; }
     }
 }

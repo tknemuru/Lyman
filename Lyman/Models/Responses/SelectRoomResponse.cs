@@ -53,8 +53,8 @@ namespace Lyman.Models.Responses
         public ReachableAnalyzeResponse ReachableInfo { get; set; }
 
         /// <summary>
-        /// ロンできるかどうか
+        /// ロン可能性情報
         /// </summary>
-        public bool Ronable { get; set; }
+        public RonableAnalyzeResponse RonableInfo { get; set; }
     }
 }

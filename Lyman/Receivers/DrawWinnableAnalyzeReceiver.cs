@@ -11,31 +11,30 @@ using Lyman.Providers;
 namespace Lyman.Receivers
 {
     /// <summary>
-    /// ロン可能性の分析要求の受信機能を提供します。
+    /// ツモ可能性の分析要求の受信機能を提供します。
     /// </summary>
-    public class RonableAnalyzeReceiver : IReceivable<FieldAttachedRequest, RonableAnalyzeResponse>
+    public class DrawWinnableAnalyzeReceiver : IReceivable<DrawWinnableAnalyzeRequest, DrawWinnableAnalyzeResponse>
     {
         /// <summary>
-        /// ロン可能性分析要求の受信処理を実行します。
+        /// ツモ可能性分析要求の受信処理を実行します。
         /// </summary>
-        /// <returns>ロン可能性分析結果</returns>
+        /// <returns>ロンできるかどうか</returns>
         /// <param name="request">ロン可能性分析要求</param>
-        public RonableAnalyzeResponse Receive(FieldAttachedRequest request)
+        public DrawWinnableAnalyzeResponse Receive(DrawWinnableAnalyzeRequest request)
         {
             request.Attach();
-            var response = DiProvider.GetContainer().GetInstance<RonableAnalyzeResponse>();
+            var response = DiProvider.GetContainer().GetInstance<DrawWinnableAnalyzeResponse>();
             response.YakuCandidates = new List<Yaku>();
             var hand = request.Context.Hands[request.Wind.ToInt()]
                 .Select(h => h).ToList();
-            // 手牌に最後の捨牌を追加する
-            var room = RoomManager.Get(request.RoomKey);
-            var lastPosition = room.LastDiscardPosition;
-            if (lastPosition == null)
+            // 手牌にツモ牌を追加する
+            var drawTile = request.DrawTile;
+            if (drawTile == 0)
             {
-                response.Ronable = false;
+                response.DrawWinnable = false;
                 return response;
             }
-            hand.Add(request.Context.Rivers[lastPosition.Wind.ToInt()][lastPosition.Index]);
+            hand.Add(drawTile);
             var ableYakus = DiProvider.GetContainer().GetInstance<YakuAnalyzerProvider>()
                 .GetYakuAnalyzers()
                 .Select(analy => analy.Receive(hand).HasCompleted)
@@ -43,7 +42,7 @@ namespace Lyman.Receivers
                 .Select(result => result.Key)
                 .ToList();
             response.YakuCandidates = ableYakus;
-            response.Ronable = ableYakus.Count > 0;
+            response.DrawWinnable = ableYakus.Count > 0;
             return response;
         }
     }

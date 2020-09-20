@@ -42,5 +42,18 @@ namespace Lyman.Models.Requests
             this.Context = room.Context;
             this.Wind = room.GetPlayer(this.PlayerKey).Key;
         }
+
+        /// <summary>
+        /// 他のリクエストインスタンスから情報を取り込みます。<br>
+        /// 元の参照情報を維持します。
+        /// </summary>
+        /// <param name="from">取り込み元リクエストインスタンス</param>
+        public void ShallowImport(FieldAttachedRequest from)
+        {
+            this.RoomKey = from.RoomKey;
+            this.PlayerKey = from.PlayerKey;
+            this.Context = from.Context;
+            this.Wind = from.Wind;
+        }
     }
 }

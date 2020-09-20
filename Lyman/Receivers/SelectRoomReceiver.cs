@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using Lyman.Analyzers;
 using Lyman.Di;
 using Lyman.Models;
 using Lyman.Managers;
@@ -31,22 +30,7 @@ namespace Lyman.Receivers
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];
-            this.Analyze(request, response);
             return response;
-        }
-
-        /// <summary>
-        /// 分析を行います。
-        /// </summary>
-        /// <returns>分析結果</returns>
-        private void Analyze(SelectRoomRequest request, SelectRoomResponse response)
-        {
-            var fieldAttachedRequest = DiProvider.GetContainer().GetInstance<FieldAttachedRequest>();
-            fieldAttachedRequest.RoomKey = request.RoomKey;
-            fieldAttachedRequest.PlayerKey = request.PlayerKey;
-            fieldAttachedRequest.Attach();
-            response.ReachableInfo = DiProvider.GetContainer().GetInstance<ReachableAnalyzeReceiver>().Receive(fieldAttachedRequest);
-            response.Ronable = DiProvider.GetContainer().GetInstance<RonableAnalyzeReceiver>().Receive(fieldAttachedRequest);
         }
     }
 }

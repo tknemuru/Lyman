@@ -3,6 +3,7 @@
 using System;
 using System.Diagnostics;
 using Lyman.Converters;
+using Lyman.Providers;
 using Lyman.Receivers;
 
 namespace Lyman.Di
@@ -59,6 +60,7 @@ namespace Lyman.Di
             MyContainer.Register<DrawReceiver>(Lifestyle.Singleton);
             MyContainer.Register<DiscardReceiver>(Lifestyle.Singleton);
             MyContainer.Register<DealtTilesReceiver>(() => new RandomDealtTilesReceiver(), Lifestyle.Singleton);
+            MyContainer.Register<YakuAnalyzerProvider>(Lifestyle.Singleton);
         }
     }
 }
