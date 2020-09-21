@@ -11,8 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lyman.Web.Api.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class CreateRoomController : Controller
+    public class CreateRoomController : ControllerBase
     {
         // POST api/values
         [HttpPost]

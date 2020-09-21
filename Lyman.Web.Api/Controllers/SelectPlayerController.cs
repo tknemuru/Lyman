@@ -12,8 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lyman.Web.Api.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class SelectPlayerController : Controller
+    public class SelectPlayerController : ControllerBase
     {
         // POST api/values
         [HttpPost]

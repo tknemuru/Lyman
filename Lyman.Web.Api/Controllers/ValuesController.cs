@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Lyman.Web.Api.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class ValuesController : ControllerBase
     {
         // GET: api/values
         [HttpGet]

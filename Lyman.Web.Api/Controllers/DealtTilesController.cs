@@ -12,8 +12,9 @@ using Lyman.Managers;
 
 namespace Lyman.Web.Api.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class DealtTilesController : Controller
+    public class DealtTilesController : ControllerBase
     {
         // POST api/values
         [HttpPost]

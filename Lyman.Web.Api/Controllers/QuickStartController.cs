@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Lyman.Di;
+using Lyman.Helpers;
 using Lyman.Models.Requests;
 using Lyman.Receivers;
 using Microsoft.AspNetCore.Mvc;
@@ -13,15 +14,24 @@ using Newtonsoft.Json;
 
 namespace Lyman.Web.Api.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
-    public class QuickStartController : Controller
+    public class QuickStartController : ControllerBase
     {
         // POST api/values
         [HttpPost]
         public IActionResult Post([FromBody]QuickStartRequest request)
         {
-            var response = DiProvider.GetContainer().GetInstance<QuickStartReceiver>().Receive(request);
-            return Ok(response);
+            try
+            {
+                var response = DiProvider.GetContainer().GetInstance<QuickStartReceiver>().Receive(request);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                FileHelper.WriteLine(ex.ToString());
+                throw ex;
+            }
         }
     }
 }
