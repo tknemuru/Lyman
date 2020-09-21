@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using Lyman.Di;
+using Lyman.Managers;
 using Lyman.Models.Requests;
 using Lyman.Receivers;
 using Lyman.Web.Api.Hubs;
@@ -40,16 +41,21 @@ namespace Lyman.Web.Api.Controllers
         {
             var request = DiProvider.GetContainer().GetInstance<SelectRoomRequest>();
             request.RoomKey = roomKey;
-            var response = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().Receive(request);
-            //this.ContextHub.Clients.All.SendAsync("SendRoomContext", response);
-            var json = JsonConvert.SerializeObject(
-                response,
-                new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            );
-            this.ContextHub.Clients.All.SendAsync("ReceiveMessage", json);
+            var room = RoomManager.Get(roomKey);
+            var players = room.GetConnectedPlayers();
+            foreach (var player in players)
+            {
+                request.PlayerKey = player.Value.Key;
+                var response = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().Receive(request);
+                var json = JsonConvert.SerializeObject(
+                    response,
+                    new JsonSerializerSettings
+                    {
+                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    }
+                );
+                this.ContextHub.Clients.Client(player.Value.ConnectionId).SendAsync("notifyRoomContext", json);
+            }
         }
     }
 }

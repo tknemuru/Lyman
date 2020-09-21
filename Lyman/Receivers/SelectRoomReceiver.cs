@@ -29,11 +29,6 @@ namespace Lyman.Receivers
             response.Turn = room.Turn;
             response.Players = room.Players.ToDictionary(p => p.Key, p => p.Value.Name);
             response.Rivers = room.Context.Rivers;
-            // プレイヤ未指定の場合は処理終了
-            if (request.PlayerKey == Guid.Empty)
-            {
-                return response;
-            }
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];
             this.Analyze(request, response);

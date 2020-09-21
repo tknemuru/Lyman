@@ -24,7 +24,7 @@ namespace Lyman.Receivers
             var room = RoomManager.Get(request.RoomKey);
             var wind = room.GetAvailableWinds().OrderBy(w => Guid.NewGuid()).First();
             var response = DiProvider.GetContainer().GetInstance<EnterRoomResponse>();
-            response.PlayerKey = room.AddPlayer(wind, request.PlayerName);
+            response.PlayerKey = room.AddPlayer(wind, request.PlayerName, request.ConnectionId);
             response.WindIndex = wind;
             response.Wind = Wind.JapaneseName.Get(wind);
             response.FirstPlayer = room.IsFirstPlayer(response.PlayerKey);

@@ -4,9 +4,9 @@ using System;
 namespace Lyman.Models.Requests
 {
     /// <summary>
-    /// 入室要求
+    /// コネクションID更新要求
     /// </summary>
-    public class EnterRoomRequest : Request
+    public class UpdateConnectionIdRequest : Request
     {
         /// <summary>
         /// 部屋のキー
@@ -15,9 +15,9 @@ namespace Lyman.Models.Requests
         public Guid RoomKey { get; set; }
 
         /// <summary>
-        /// プレイヤ名
+        /// プレイヤの識別キー
         /// </summary>
-        public string PlayerName { get; set; }
+        public Guid PlayerKey { get; set; }
 
         /// <summary>
         /// コネクションID

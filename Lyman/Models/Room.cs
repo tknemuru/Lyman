@@ -79,12 +79,14 @@ namespace Lyman.Models
         /// </summary>
         /// <param name="wind">風</param>
         /// <param name="name">プレイヤ名</param>
-        public Guid AddPlayer(Wind.Index wind, string name)
+        /// <param name="connectionId">コネクションID</param>
+        public Guid AddPlayer(Wind.Index wind, string name, string connectionId = null)
         {
             Debug.Assert(wind != Wind.Index.Undefined, "風が不正です。");
             var player = DiProvider.GetContainer().GetInstance<Player>();
             player.Key = Guid.NewGuid();
             player.Name = name;
+            player.ConnectionId = connectionId;
             this.Players.Add(wind, player);
             return player.Key;
         }
@@ -122,6 +124,16 @@ namespace Lyman.Models
         public KeyValuePair<Wind.Index, Player> GetPlayer(Guid key)
         {
             return this.Players.First(p => p.Value.Key == key);
+        }
+
+        /// <summary>
+        /// SignalR接続済のプレイヤを取得します。
+        /// </summary>
+        /// <returns>プレイヤ</returns>
+        /// <param name="key">プレイヤの識別キー</param>
+        public IEnumerable<KeyValuePair<Wind.Index, Player>> GetConnectedPlayers()
+        {
+            return this.Players.Where(p => !string.IsNullOrEmpty(p.Value.ConnectionId));
         }
     }
 }
