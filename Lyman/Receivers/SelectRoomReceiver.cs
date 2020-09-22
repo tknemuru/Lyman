@@ -25,9 +25,14 @@ namespace Lyman.Receivers
             var response = DiProvider.GetContainer().GetInstance<SelectRoomResponse>();
             var room = RoomManager.Get(request.RoomKey);
             response.Name = room.Name;
-            response.State = room.State.ToString().ToLower();
+            response.State = room.State.ToInt();
             response.Turn = room.Turn;
-            response.Players = room.Players.ToDictionary(p => p.Key, p => p.Value.Name);
+            response.Players = room.Players.ToDictionary(p => p.Key.ToInt(), p => {
+                var modPlayer = p.Value.DeepCopy();
+                modPlayer.Key = Guid.Empty;
+                modPlayer.ConnectionId = string.Empty;
+                return modPlayer;
+            });
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];

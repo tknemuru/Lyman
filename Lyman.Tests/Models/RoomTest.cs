@@ -26,14 +26,14 @@ namespace Lyman.Tests.Models
             Assert.AreEqual(4, actual);
 
             // 002:3人空き
-            room.AddPlayer(Wind.Index.East, "aaa");
+            room.AddPlayer(Wind.Index.East, PlayerType.Human, "aaa");
             actual = room.GetAvailableWinds().Count();
             Assert.AreEqual(3, actual);
 
             // 003:空き無し
-            room.AddPlayer(Wind.Index.North, "bbb");
-            room.AddPlayer(Wind.Index.South, "ccc");
-            room.AddPlayer(Wind.Index.West, "ddd");
+            room.AddPlayer(Wind.Index.North, PlayerType.Human, "bbb");
+            room.AddPlayer(Wind.Index.South, PlayerType.Human, "ccc");
+            room.AddPlayer(Wind.Index.West, PlayerType.Human, "ddd");
             actual = room.GetAvailableWinds().Count();
             Assert.AreEqual(0, actual);
         }

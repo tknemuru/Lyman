@@ -15,6 +15,11 @@ namespace Lyman.Models.Requests
         public Guid RoomKey { get; set; }
 
         /// <summary>
+        /// プレイヤ種別
+        /// </summary>
+        public PlayerType PlayerType { get; set; }
+
+        /// <summary>
         /// プレイヤ名
         /// </summary>
         public string PlayerName { get; set; }

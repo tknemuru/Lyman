@@ -79,13 +79,15 @@ namespace Lyman.Models
         /// プレイヤを追加します。
         /// </summary>
         /// <param name="wind">風</param>
+        /// <param name="playerType">風</param>
         /// <param name="name">プレイヤ名</param>
         /// <param name="connectionId">コネクションID</param>
-        public Guid AddPlayer(Wind.Index wind, string name, string connectionId = null)
+        public Guid AddPlayer(Wind.Index wind, PlayerType playerType, string name, string connectionId = null)
         {
             Debug.Assert(wind != Wind.Index.Undefined, "風が不正です。");
             var player = DiProvider.GetContainer().GetInstance<Player>();
             player.Key = Guid.NewGuid();
+            player.PlayerType = playerType;
             player.Name = name;
             player.ConnectionId = connectionId;
             this.Players.AddOrUpdate(wind, player, (key, old) => player);
@@ -102,9 +104,7 @@ namespace Lyman.Models
             var playerKeyValue = this.GetPlayer(playerKey);
             var wind = playerKeyValue.Key;
             var player = playerKeyValue.Value;
-            var newPlayer = DiProvider.GetContainer().GetInstance<Player>();
-            newPlayer.Key = player.Key;
-            newPlayer.Name = Name;
+            var newPlayer = player.DeepCopy();
             newPlayer.ConnectionId = connectionId;
             this.Players.AddOrUpdate(wind, newPlayer, (key, old) => newPlayer);
         }

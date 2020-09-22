@@ -28,4 +28,20 @@ namespace Lyman.Models
         /// </summary>
         Dealted,
     }
+
+    /// <summary>
+    /// 部屋状態の拡張機能を提供します。
+    /// </summary>
+    public static class RoomStateExt
+    {
+        /// <summary>
+        /// インデックスを数値に変換します。
+        /// </summary>
+        /// <returns>数値</returns>
+        /// <param name="index">インデックス</param>
+        public static int ToInt(this RoomState index)
+        {
+            return (int)index;
+        }
+    }
 }

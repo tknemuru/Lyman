@@ -18,7 +18,7 @@ namespace Lyman.Models.Responses
         /// <summary>
         /// 部屋の状態
         /// </summary>
-        public string State { get; set; }
+        public int State { get; set; }
 
         /// <summary>
         /// ターン
@@ -29,7 +29,7 @@ namespace Lyman.Models.Responses
         /// <summary>
         /// プレイヤ
         /// </summary>
-        public Dictionary<Wind.Index, string> Players { get; set; }
+        public Dictionary<int, Player> Players { get; set; }
 
         /// <summary>
         /// 手牌

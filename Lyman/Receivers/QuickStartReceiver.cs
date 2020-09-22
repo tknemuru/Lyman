@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using Lyman.Di;
+using Lyman.Models;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
 using Lyman.Managers;
@@ -34,15 +35,20 @@ namespace Lyman.Receivers
                 req.RoomKey = roomKey;
                 return DiProvider.GetContainer().GetInstance<EnterRoomReceiver>().Receive(req);
             });
+            var first = enterRoomResponses.ToList().First();
             var room = RoomManager.Get(roomKey);
-            response.Players = room.Players.ToDictionary(p => p.Key, p => p.Value.Name);
-            var first = enterRoomResponses.First();
+            response.Players = room.Players.ToDictionary(p => p.Key.ToInt(), p => {
+                var modPlayer = p.Value.DeepCopy();
+                modPlayer.Key = Guid.Empty;
+                modPlayer.ConnectionId = string.Empty;
+                return modPlayer;
+            });
             response.PlayerKey = first.PlayerKey;
             response.PlayerName = room.GetPlayer(first.PlayerKey).Value.Name;
             response.Wind = first.Wind;
             response.WindIndex = first.WindIndex;
             var playerKey = first.PlayerKey;
-            response.FirstPlayer = room.IsFirstPlayer(playerKey);
+            response.FirstPlayer = true;
 
             // 配牌
             request.DealtTilesRequest.RoomKey = roomKey;
@@ -58,7 +64,7 @@ namespace Lyman.Receivers
                 Receive(request.SelectRoomRequest);
             response.Hand = selectRoomResponse.Hand;
             response.Rivers = selectRoomResponse.Rivers;
-            response.State = room.State.ToString();
+            response.State = room.State.ToInt();
             response.Turn = selectRoomResponse.Turn;
             return response;
         }
