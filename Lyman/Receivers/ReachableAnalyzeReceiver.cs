@@ -28,7 +28,7 @@ namespace Lyman.Analyzers
             if (request.Context.Rivers[request.Wind.ToInt()].Count > 0)
             {
                 response.DiscardCandidates.Add(request.Context.Rivers[request.Wind.ToInt()].First());
-                response.Reachable = true;
+                response.Reachable = false;
             }
             return response;
         }

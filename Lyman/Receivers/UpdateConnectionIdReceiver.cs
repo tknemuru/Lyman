@@ -18,8 +18,7 @@ namespace Lyman.Receivers
         public UpdateConnectionIdResponse Receive(UpdateConnectionIdRequest request)
         {
             var room = RoomManager.Get(request.RoomKey);
-            var player = room.GetPlayer(request.PlayerKey);
-            player.Value.ConnectionId = request.ConnectionId;
+            room.UpdatePlayerConnectionId(request.PlayerKey, request.ConnectionId);
             var response = DiProvider.GetContainer().GetInstance<UpdateConnectionIdResponse>();
             return response;
         }

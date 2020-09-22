@@ -21,7 +21,7 @@ namespace Lyman.Receivers
         public YakuAnalyzeResponse Receive(List<uint> hand)
         {
             var response = DiProvider.GetContainer().GetInstance<YakuAnalyzeResponse>();
-            response.HasCompleted = new KeyValuePair<Yaku, bool>(Yaku.AllSimples, true);
+            response.HasCompleted = new KeyValuePair<Yaku, bool>(Yaku.AllSimples, false);
             return response;
         }
     }

@@ -4,6 +4,7 @@ using System;
 using Lyman.Helpers;
 using System.Diagnostics;
 using Lyman.Di;
+using System.Collections.Concurrent;
 
 namespace Lyman.Models
 {
@@ -52,7 +53,7 @@ namespace Lyman.Models
         /// <summary>
         /// プレイヤ
         /// </summary>
-        public Dictionary<Wind.Index, Player> Players { get; private set; }
+        public ConcurrentDictionary<Wind.Index, Player> Players { get; private set; }
 
         /// <summary>
         /// ターン
@@ -70,7 +71,7 @@ namespace Lyman.Models
         /// </summary>
         public Room()
         {
-            this.Players = new Dictionary<Wind.Index, Player>();
+            this.Players = new ConcurrentDictionary<Wind.Index, Player>();
             this.Context = DiProvider.GetContainer().GetInstance<FieldContext>();
         }
 
@@ -87,8 +88,25 @@ namespace Lyman.Models
             player.Key = Guid.NewGuid();
             player.Name = name;
             player.ConnectionId = connectionId;
-            this.Players.Add(wind, player);
+            this.Players.AddOrUpdate(wind, player, (key, old) => player);
             return player.Key;
+        }
+
+        /// <summary>
+        /// プレイヤのコネクションIDを更新します。
+        /// </summary>
+        /// <param name="key">プレイヤキー</param>
+        /// <param name="connectionId">コネクションID</param>
+        public void UpdatePlayerConnectionId(Guid playerKey, string connectionId)
+        {
+            var playerKeyValue = this.GetPlayer(playerKey);
+            var wind = playerKeyValue.Key;
+            var player = playerKeyValue.Value;
+            var newPlayer = DiProvider.GetContainer().GetInstance<Player>();
+            newPlayer.Key = player.Key;
+            newPlayer.Name = Name;
+            newPlayer.ConnectionId = connectionId;
+            this.Players.AddOrUpdate(wind, newPlayer, (key, old) => newPlayer);
         }
 
         /// <summary>

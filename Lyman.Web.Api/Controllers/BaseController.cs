@@ -57,5 +57,21 @@ namespace Lyman.Web.Api.Controllers
                 this.ContextHub.Clients.Client(player.Value.ConnectionId).SendAsync("notifyRoomContext", json);
             }
         }
+
+        /// <summary>
+        /// 入室を通知します。
+        /// </summary>
+        /// <param name="roomKey">通知対象のルームキー</param>
+        /// <param name="playerName">入室したプレイヤ名</param>
+        protected void NotifyEnterRoom(Guid roomKey, string playerName)
+        {
+            var room = RoomManager.Get(roomKey);
+            var players = room.GetConnectedPlayers();
+            foreach (var player in players)
+            {
+                this.ContextHub.Clients.Client(player.Value.ConnectionId)
+                    .SendAsync("notifyEnterRoom", string.Format("{0}さん が入室しました。", playerName));
+            }
+        }
     }
 }
