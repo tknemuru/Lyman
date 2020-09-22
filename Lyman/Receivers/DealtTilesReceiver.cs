@@ -7,6 +7,7 @@ using Lyman.Models.Responses;
 using Lyman.Helpers;
 using Lyman.Models;
 using System.Diagnostics;
+using Lyman.Managers;
 
 namespace Lyman.Receivers
 {
@@ -73,6 +74,9 @@ namespace Lyman.Receivers
                 context.Hands[wind.ToInt()] = Tile.Order(context.Hands[wind.ToInt()]).ToList();
             });
             response.NextDrawPosition = position;
+
+            // 配牌完了にする
+            RoomManager.Get(request.RoomKey).Dealted = true;
 
             return response;
         }

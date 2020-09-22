@@ -20,6 +20,11 @@ namespace Lyman.Models
         public string Name { get; set; }
 
         /// <summary>
+        /// 配牌が完了したたかどうか
+        /// </summary>
+        public bool Dealted { get; set; }
+
+        /// <summary>
         /// 状態
         /// </summary>
         public RoomState State { get
@@ -28,7 +33,7 @@ namespace Lyman.Models
                 if (this.Players.Count() < Wind.Length)
                 {
                     state = RoomState.Entering;
-                } else if (this.Context.Hands[Wind.Index.East.ToInt()].Count() < Hand.Length)
+                } else if (!this.Dealted)
                 {
                     state = RoomState.Entered;
                 } else {
