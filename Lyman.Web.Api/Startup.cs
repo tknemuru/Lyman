@@ -31,16 +31,16 @@ namespace Lyman.Web.Api
                     builder => builder
                         .AllowAnyMethod()
                         .AllowAnyHeader()
-                        //.AllowAnyOrigin()
+                        //.AllowAnyOrigin());
                         .AllowCredentials()
-                        //.SetIsOriginAllowed(origin => true)
-                        .WithOrigins(new string[] {
-                                "https://localhost:8080",
-                                "https://192.168.11.5:8080",
-                                "http://localhost:8080",
-                                "http://192.168.11.5:8080"
-                            })
-                        );
+                        .SetIsOriginAllowed(origin => true));
+                        //.WithOrigins(new string[] {
+                        //        "https://localhost:8080",
+                        //        "https://192.168.11.5:8080",
+                        //        "http://localhost:8080",
+                        //        "http://192.168.11.5:8080"
+                        //    })
+                        //);
             });
             services.AddControllers()
                 .AddNewtonsoftJson();
