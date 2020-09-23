@@ -75,9 +75,6 @@ namespace Lyman.Receivers
             });
             response.NextDrawPosition = position;
 
-            // 配牌完了にする
-            RoomManager.Get(request.RoomKey).Dealted = true;
-
             return response;
         }
 
