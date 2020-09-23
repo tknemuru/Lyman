@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Lyman.Analyzers;
 using Lyman.Di;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;

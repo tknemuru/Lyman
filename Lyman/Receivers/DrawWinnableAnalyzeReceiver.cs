@@ -22,7 +22,6 @@ namespace Lyman.Receivers
         /// <param name="request">ロン可能性分析要求</param>
         public DrawWinnableAnalyzeResponse Receive(DrawWinnableAnalyzeRequest request)
         {
-            request.Attach();
             var response = DiProvider.GetContainer().GetInstance<DrawWinnableAnalyzeResponse>();
             response.YakuCandidates = new List<Yaku>();
             var hand = request.Context.Hands[request.Wind.ToInt()]

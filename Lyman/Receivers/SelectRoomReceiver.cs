@@ -6,7 +6,6 @@ using Lyman.Models;
 using Lyman.Managers;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
-using Lyman.Analyzers;
 
 namespace Lyman.Receivers
 {
@@ -36,22 +35,7 @@ namespace Lyman.Receivers
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
             response.Hand = room.Context.Hands[player.Key.ToInt()];
-            this.Analyze(request, response);
             return response;
-        }
-
-        /// <summary>
-        /// 分析を行います。
-        /// </summary>
-        /// <returns>分析結果</returns>
-        private void Analyze(SelectRoomRequest request, SelectRoomResponse response)
-        {
-            var fieldAttachedRequest = DiProvider.GetContainer().GetInstance<FieldAttachedRequest>();
-            fieldAttachedRequest.RoomKey = request.RoomKey;
-            fieldAttachedRequest.PlayerKey = request.PlayerKey;
-            fieldAttachedRequest.Attach();
-            response.ReachableInfo = DiProvider.GetContainer().GetInstance<ReachableAnalyzeReceiver>().Receive(fieldAttachedRequest);
-            response.RonableInfo = DiProvider.GetContainer().GetInstance<RonableAnalyzeReceiver>().Receive(fieldAttachedRequest);
         }
     }
 }

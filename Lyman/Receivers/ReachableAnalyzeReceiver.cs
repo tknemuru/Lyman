@@ -6,9 +6,8 @@ using Lyman.Di;
 using Lyman.Models;
 using Lyman.Models.Requests;
 using Lyman.Models.Responses;
-using Lyman.Receivers;
 
-namespace Lyman.Analyzers
+namespace Lyman.Receivers
 {
     /// <summary>
     /// リーチの分析要求の受信機能を提供します。
@@ -22,7 +21,6 @@ namespace Lyman.Analyzers
         /// <param name="request">リーチ分析要求</param>
         public ReachableAnalyzeResponse Receive(FieldAttachedRequest request)
         {
-            request.Attach();
             var response = DiProvider.GetContainer().GetInstance<ReachableAnalyzeResponse>();
             response.DiscardCandidates = new List<uint>();
             if (request.Context.Rivers[request.Wind.ToInt()].Count > 0)

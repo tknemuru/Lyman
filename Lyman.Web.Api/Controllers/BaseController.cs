@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Lyman.Di;
 using Lyman.Managers;
 using Lyman.Models.Requests;
+using Lyman.Models.Responses;
 using Lyman.Receivers;
 using Lyman.Web.Api.Hubs;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,7 @@ namespace Lyman.Web.Api.Controllers
             {
                 request.PlayerKey = player.Value.Key;
                 var response = DiProvider.GetContainer().GetInstance<SelectRoomReceiver>().Receive(request);
+                this.Analyze(request, response);
                 var json = JsonConvert.SerializeObject(
                     response,
                     new JsonSerializerSettings
@@ -72,6 +74,20 @@ namespace Lyman.Web.Api.Controllers
                 this.ContextHub.Clients.Client(player.Value.ConnectionId)
                     .SendAsync("notifyEnterRoom", string.Format("{0}さん が入室しました。", playerName));
             }
+        }
+
+        /// <summary>
+        /// 分析を行います。
+        /// </summary>
+        /// <returns>分析結果</returns>
+        private void Analyze(SelectRoomRequest request, SelectRoomResponse response)
+        {
+            var fieldAttachedRequest = DiProvider.GetContainer().GetInstance<FieldAttachedRequest>();
+            fieldAttachedRequest.RoomKey = request.RoomKey;
+            fieldAttachedRequest.PlayerKey = request.PlayerKey;
+            fieldAttachedRequest.Attach();
+            response.ReachableInfo = DiProvider.GetContainer().GetInstance<ReachableAnalyzeReceiver>().Receive(fieldAttachedRequest);
+            response.RonableInfo = DiProvider.GetContainer().GetInstance<RonableAnalyzeReceiver>().Receive(fieldAttachedRequest);
         }
     }
 }

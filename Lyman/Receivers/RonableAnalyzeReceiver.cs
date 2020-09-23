@@ -22,7 +22,6 @@ namespace Lyman.Receivers
         /// <param name="request">ロン可能性分析要求</param>
         public RonableAnalyzeResponse Receive(FieldAttachedRequest request)
         {
-            request.Attach();
             var response = DiProvider.GetContainer().GetInstance<RonableAnalyzeResponse>();
             response.YakuCandidates = new List<Yaku>();
             var hand = request.Context.Hands[request.Wind.ToInt()]

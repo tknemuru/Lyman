@@ -40,6 +40,7 @@ namespace Lyman.Web.Api.Controllers
                 var analyzeRequest = DiProvider.GetContainer().GetInstance<DrawWinnableAnalyzeRequest>();
                 analyzeRequest.ShallowImport(request);
                 analyzeRequest.DrawTile = response.Tile;
+                analyzeRequest.Attach();
                 var drawWinnableInfo = DiProvider.GetContainer().GetInstance<DrawWinnableAnalyzeReceiver>().Receive(analyzeRequest);
                 response.DrawWinnableInfo = drawWinnableInfo;
 
