@@ -66,17 +66,5 @@ namespace Lyman.Tests
                 Environment.NewLine + "[expected] :" + Environment.NewLine + "{0}" + Environment.NewLine + " [actual] :" + Environment.NewLine + "{1}",
                           DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(expected), DiProvider.GetContainer().GetInstance<ContextToTextConverter>().Convert(actual));
         }
-
-        /// <summary>
-        /// プレイヤの状態が同一であることを検証します。
-        /// </summary>
-        /// <param name="expected">期待値</param>
-        /// <param name="actual">実際値</param>
-        public void AssertEqualsPlayer(Player expected, Player actual)
-        {
-            Assert.IsTrue(expected.Equals(actual),
-                Environment.NewLine + "[expected] :" + Environment.NewLine + "{0}" + Environment.NewLine + " [actual] :" + Environment.NewLine + "{1}",
-                          expected, actual);
-        }
     }
 }

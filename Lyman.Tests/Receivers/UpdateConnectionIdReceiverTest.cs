@@ -29,7 +29,7 @@ namespace Lyman.Tests
             var expected = DiProvider.GetContainer().GetInstance<Player>();
             expected.ConnectionId = "cid";
             var actual = this.Target.Receive(request).Player;
-            this.AssertEqualsPlayer(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

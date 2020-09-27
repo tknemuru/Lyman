@@ -46,6 +46,16 @@ namespace Lyman.Managers
         }
 
         /// <summary>
+        /// 部屋をセットします。
+        /// </summary>
+        /// <param name="key">部屋のキー</param>
+        /// <param name="room">部屋</param>
+        public static void Set(Guid key, Room room)
+        {
+            Rooms[key] = room;
+        }
+
+        /// <summary>
         /// 部屋を取得します。
         /// </summary>
         /// <returns>部屋</returns>

@@ -32,7 +32,7 @@ namespace Lyman.Tests
             expected.Score = 24000;
             expected.Reach = true;
             var actual = this.Target.Receive(request).Player;
-            this.AssertEqualsPlayer(expected, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

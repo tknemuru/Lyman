@@ -23,6 +23,7 @@ namespace Lyman.Receivers
         {
             var key = Guid.NewGuid();
             var room = DiProvider.GetContainer().GetInstance<Room>();
+            room.Key = key;
             room.Name = request.RoomName;
             RoomManager.Add(key, room);
             var response = DiProvider.GetContainer().GetInstance<CreateRoomResponse>();

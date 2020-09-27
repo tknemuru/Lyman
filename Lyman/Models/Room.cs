@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System;
 using Lyman.Helpers;
 using System.Diagnostics;
@@ -14,6 +15,11 @@ namespace Lyman.Models
     public class Room
     {
         /// <summary>
+        /// 部屋のキー
+        /// </summary>
+        public Guid Key { get; set; }
+
+        /// <summary>
         /// 部屋名
         /// </summary>
         /// <value>The name.</value>
@@ -22,21 +28,7 @@ namespace Lyman.Models
         /// <summary>
         /// 状態
         /// </summary>
-        public RoomState State { get
-            {
-                var state = RoomState.Undefined;
-                if (this.Players.Count() < Wind.Length)
-                {
-                    state = RoomState.Entering;
-                } else if (this.Context.Hands.All(h => h.Count < Hand.Length))
-                {
-                    state = RoomState.Entered;
-                } else {
-                    state = RoomState.Dealted;
-                }
-                return state;
-            }
-        }
+        public RoomState State { get; set; }
 
         /// <summary>
         /// 次ツモの位置
@@ -73,6 +65,8 @@ namespace Lyman.Models
         {
             this.Players = new Dictionary<Wind.Index, Player>();
             this.Context = DiProvider.GetContainer().GetInstance<FieldContext>();
+            this.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
+            this.LastDiscardPosition = DiProvider.GetContainer().GetInstance<RiverPosition>();
         }
 
         /// <summary>
@@ -138,6 +132,88 @@ namespace Lyman.Models
         public IEnumerable<KeyValuePair<Wind.Index, Player>> GetConnectedPlayers()
         {
             return this.Players.Where(p => !string.IsNullOrEmpty(p.Value.ConnectionId));
+        }
+
+        /// <summary>
+        /// 文字列に変換します。
+        /// </summary>
+        /// <returns>文字列化したフィールド状態</returns>
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Key: {this.Key}");
+            sb.AppendLine($"Name: {this.Name}");
+            sb.AppendLine($"State: {this.State}");
+            foreach (var player in this.Players)
+            {
+                sb.AppendLine($"Players{player.Key}: {player.Value}");
+            }
+            sb.AppendLine($"Turn: {this.Turn}");
+            sb.AppendLine($"LastDiscardPosition: {this.LastDiscardPosition}");
+            sb.AppendLine($"NextPosition: {this.NextPosition}");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// 指定のオブジェクトが現在のオブジェクトと等しいかどうかを判断します。
+        /// </summary>
+        /// <param name="obj">比較対象のオブジェクト</param>
+        /// <returns>指定のオブジェクトが現在のオブジェクトと等しいかどうか</returns>
+        public override bool Equals(object obj)
+        {
+            if (obj == null || this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var room = (Room)obj;
+            var equals = new Dictionary<string, bool>();
+
+            equals.Add("Key", this.Key == room.Key);
+            equals.Add("Name", this.Name == room.Name);
+            equals.Add("LastDiscardPosition", this.LastDiscardPosition.Equals(room.LastDiscardPosition));
+            equals.Add("NextPosition", this.NextPosition.Equals(room.NextPosition));
+            equals.Add("State", this.State == room.State);
+            equals.Add("Turn", this.Turn == room.Turn);
+            equals.Add("Context", this.Context.Equals(room.Context));
+            if (this.Players == null && room.Players == null)
+            {
+                equals.Add("Players", true);
+            } else if (this.Players == null || room.Players == null)
+            {
+                equals.Add("Players", false);
+            } else
+            {
+                if (this.Players.Count != room.Players.Count)
+                {
+                    equals.Add("Players", false);
+                } else
+                {
+                    foreach (var player in this.Players)
+                    {
+                        var wind = player.Key;
+                        if (!room.Players.ContainsKey(wind))
+                        {
+                            equals.Add($"Players{wind}", false);
+                            continue;
+                        }
+                        equals.Add($"Players{wind}", player.Equals(room.Players[wind]));
+                    }
+                }
+            }
+
+            return equals.All(e => e.Value);
+        }
+
+        /// <summary>
+        /// 既定のハッシュ関数として機能します。
+        /// </summary>
+        /// <returns>現在のオブジェクトのハッシュ コード。</returns>
+        public override int GetHashCode()
+        {
+            return this.Context.GetHashCode() ^ this.Key.GetHashCode() ^ this.LastDiscardPosition.GetHashCode() ^
+                this.Name.GetHashCode() ^ this.NextPosition.GetHashCode() ^ this.Players.GetHashCode() ^
+                this.State.GetHashCode() ^ this.Turn.GetHashCode();
         }
     }
 }
