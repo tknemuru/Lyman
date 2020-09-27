@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Lyman.Managers;
 using Microsoft.AspNetCore.SignalR;
 using Lyman.Web.Api.Hubs;
+using Lyman.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,10 +29,19 @@ namespace Lyman.Web.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]DealtTilesRequest request)
         {
+            // 配牌
             request.Attach();
             var response = DiProvider.GetContainer().GetInstance<DealtTilesReceiver>().Receive(request);
             RoomManager.Get(request.RoomKey).NextPosition = response.NextDrawPosition;
             response.Detach(request.RoomKey);
+
+            // 部屋の状態を更新
+            var stateReq = DiProvider.GetContainer().GetInstance<UpdateRoomStatusRequest>();
+            stateReq.RoomKey = request.RoomKey;
+            stateReq.RoomState = RoomState.Dealted;
+            stateReq.Attach();
+            var stateRes = DiProvider.GetContainer().GetInstance<UpdateRoomStatusReceiver>().Receive(stateReq);
+            stateRes.Detach();
 
             // 通知
             this.NotifyRoomContext(request.RoomKey);

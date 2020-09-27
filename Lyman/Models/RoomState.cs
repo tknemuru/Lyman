@@ -27,6 +27,11 @@ namespace Lyman.Models
         /// 配牌完了
         /// </summary>
         Dealted,
+
+        /// <summary>
+        /// 局終了
+        /// </summary>
+        Finish
     }
 
     /// <summary>

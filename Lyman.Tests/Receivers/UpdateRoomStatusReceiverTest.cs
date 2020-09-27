@@ -32,7 +32,7 @@ namespace Lyman.Tests
             var expected = DiProvider.GetContainer().GetInstance<Room>();
             expected.State = RoomState.Entering;
             var actual = this.Target.Receive(request).Room;
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.State, actual.State);
 
             // 001:3人
             request = DiProvider.GetContainer().GetInstance<UpdateRoomStatusRequest>();
@@ -44,7 +44,7 @@ namespace Lyman.Tests
             expected = DiProvider.GetContainer().GetInstance<Room>();
             expected.State = RoomState.Entering;
             actual = this.Target.Receive(request).Room;
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.State, actual.State);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Lyman.Tests
             var expected = DiProvider.GetContainer().GetInstance<Room>();
             expected.State = RoomState.Entered;
             var actual = this.Target.Receive(request).Room;
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.State, actual.State);
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Lyman.Tests
             var expected = DiProvider.GetContainer().GetInstance<Room>();
             expected.State = RoomState.Dealted;
             var actual = this.Target.Receive(request).Room;
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(expected.State, actual.State);
         }
     }
 }

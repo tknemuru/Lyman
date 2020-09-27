@@ -27,7 +27,15 @@ namespace Lyman.Web.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]EnterRoomRequest request)
         {
+            // 入室
             var response = DiProvider.GetContainer().GetInstance<EnterRoomReceiver>().Receive(request);
+
+            // 部屋の状態を更新
+            var stateReq = DiProvider.GetContainer().GetInstance<UpdateRoomStatusRequest>();
+            stateReq.RoomKey = request.RoomKey;
+            stateReq.Attach();
+            var stateRes = DiProvider.GetContainer().GetInstance<UpdateRoomStatusReceiver>().Receive(stateReq);
+            stateRes.Detach();
 
             // 通知
             this.NotifyEnterRoom(request.RoomKey, request.PlayerName);
