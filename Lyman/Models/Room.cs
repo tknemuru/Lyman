@@ -53,7 +53,7 @@ namespace Lyman.Models
         /// <summary>
         /// プレイヤ
         /// </summary>
-        public ConcurrentDictionary<Wind.Index, Player> Players { get; private set; }
+        public Dictionary<Wind.Index, Player> Players { get; set; }
 
         /// <summary>
         /// ターン
@@ -71,7 +71,7 @@ namespace Lyman.Models
         /// </summary>
         public Room()
         {
-            this.Players = new ConcurrentDictionary<Wind.Index, Player>();
+            this.Players = new Dictionary<Wind.Index, Player>();
             this.Context = DiProvider.GetContainer().GetInstance<FieldContext>();
         }
 
@@ -87,26 +87,12 @@ namespace Lyman.Models
             Debug.Assert(wind != Wind.Index.Undefined, "風が不正です。");
             var player = DiProvider.GetContainer().GetInstance<Player>();
             player.Key = Guid.NewGuid();
+            player.Wind = wind;
             player.PlayerType = playerType;
             player.Name = name;
             player.ConnectionId = connectionId;
-            this.Players.AddOrUpdate(wind, player, (key, old) => player);
+            this.Players[wind] = player;
             return player.Key;
-        }
-
-        /// <summary>
-        /// プレイヤのコネクションIDを更新します。
-        /// </summary>
-        /// <param name="key">プレイヤキー</param>
-        /// <param name="connectionId">コネクションID</param>
-        public void UpdatePlayerConnectionId(Guid playerKey, string connectionId)
-        {
-            var playerKeyValue = this.GetPlayer(playerKey);
-            var wind = playerKeyValue.Key;
-            var player = playerKeyValue.Value;
-            var newPlayer = player.DeepCopy();
-            newPlayer.ConnectionId = connectionId;
-            this.Players.AddOrUpdate(wind, newPlayer, (key, old) => newPlayer);
         }
 
         /// <summary>

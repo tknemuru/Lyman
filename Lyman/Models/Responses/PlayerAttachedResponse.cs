@@ -6,23 +6,23 @@ using Lyman.Managers;
 namespace Lyman.Models.Responses
 {
     /// <summary>
-    /// フィールド状態が付随した応答
-    /// </summary>
-    public class FieldAttachedResponse : Response
+    /// プレイヤが付随した応答
+    /// </summary> 
+    public class PlayerAttachedResponse : Response
     {
         /// <summary>
-        /// フィールド状態
+        /// プレイヤ
         /// </summary>
-        public FieldContext Context { get; set; }
+        public Player Player { get; set; }
 
         /// <summary>
-        /// フィールド状態を引き離します。
+        /// プレイヤを引き離します。
         /// </summary>
         public void Detach(Guid roomKey)
         {
             var room = RoomManager.Get(roomKey);
-            room.Context = this.Context;
-            this.Context = null;
+            room.Players[this.Player.Wind] = this.Player;
+            this.Player = null;
         }
     }
 }

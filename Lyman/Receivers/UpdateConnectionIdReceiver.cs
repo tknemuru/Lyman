@@ -8,18 +8,19 @@ using Lyman.Models.Responses;
 
 namespace Lyman.Receivers
 {
-    public class UpdateConnectionIdReceiver : IReceivable<UpdateConnectionIdRequest, UpdateConnectionIdResponse>
+    public class UpdateConnectionIdReceiver : IReceivable<UpdateConnectionIdRequest, PlayerAttachedResponse>
     {
         /// <summary>
         /// コネクションID更新要求の受信処理を実行します。
         /// </summary>
         /// <returns>コネクションID更新応答</returns>
         /// <param name="request">コネクションID更新要求</param>
-        public UpdateConnectionIdResponse Receive(UpdateConnectionIdRequest request)
+        public PlayerAttachedResponse Receive(UpdateConnectionIdRequest request)
         {
-            var room = RoomManager.Get(request.RoomKey);
-            room.UpdatePlayerConnectionId(request.PlayerKey, request.ConnectionId);
-            var response = DiProvider.GetContainer().GetInstance<UpdateConnectionIdResponse>();
+            var response = DiProvider.GetContainer().GetInstance<PlayerAttachedResponse>();
+            var player = request.Player;
+            player.ConnectionId = request.ConnectionId;
+            response.Player = player;
             return response;
         }
     }

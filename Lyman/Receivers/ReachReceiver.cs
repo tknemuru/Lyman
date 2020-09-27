@@ -13,16 +13,26 @@ namespace Lyman.Receivers
     /// <summary>
     /// リーチ要求の受信機能を提供します。
     /// </summary>
-    public class ReachReceiver : IReceivable<FieldAttachedRequest, bool>
+    public class ReachReceiver : IReceivable<PlayerAttachedRequest, PlayerAttachedResponse>
     {
+        /// <summary>
+        /// リーチ時に出す点棒
+        /// </summary>
+        private const int ReachChip = 1000;
+
         /// <summary>
         /// リーチ要求の受信処理を実行します。
         /// </summary>
         /// <returns>リーチ応答</returns>
         /// <param name="request">リーチ要求</param>
-        public bool Receive(FieldAttachedRequest request)
+        public PlayerAttachedResponse Receive(PlayerAttachedRequest request)
         {
-            return true;
+            var response = DiProvider.GetContainer().GetInstance<PlayerAttachedResponse>();
+            var player = request.Player;
+            player.Score -= ReachChip;
+            player.Reach = true;
+            response.Player = player;
+            return response;
         }
     }
 }

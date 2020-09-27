@@ -6,7 +6,7 @@ namespace Lyman.Models.Responses
     /// <summary>
     /// コネクションID更新応答
     /// </summary>
-    public class UpdateConnectionIdResponse : Response
+    public class UpdateConnectionIdResponse : PlayerAttachedResponse
     {
     }
 }

@@ -40,7 +40,8 @@ namespace Lyman.Models.Requests
         {
             var room = RoomManager.Get(this.RoomKey);
             this.Context = room.Context;
-            this.Wind = room.GetPlayer(this.PlayerKey).Key;
+            var player = room.GetPlayer(this.PlayerKey);
+            this.Wind = player.Key;
         }
 
         /// <summary>

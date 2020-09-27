@@ -19,7 +19,9 @@ namespace Lyman.Web.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] UpdateConnectionIdRequest request)
         {
+            request.Attach();
             var response = DiProvider.GetContainer().GetInstance<UpdateConnectionIdReceiver>().Receive(request);
+            response.Detach(request.RoomKey);
             return Ok(response);
         }
     }
