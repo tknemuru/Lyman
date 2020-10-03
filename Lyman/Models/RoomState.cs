@@ -8,7 +8,7 @@ namespace Lyman.Models
     /// </summary>
     public enum RoomState
     {
-        /// <summary>
+        /// <sumπmary>
         /// 未定義
         /// </summary>
         Undefined,
@@ -29,9 +29,14 @@ namespace Lyman.Models
         Dealted,
 
         /// <summary>
-        /// 局終了
+        /// 局/場終了
         /// </summary>
-        Finish
+        SingleGameFinish,
+
+        /// <summary>
+        /// 荘終了
+        /// </summary>
+        AllGameFinish
     }
 
     /// <summary>

@@ -15,6 +15,11 @@ namespace Lyman.Models
     public class Room
     {
         /// <summary>
+        /// 最大局数
+        /// </summary>
+        public const int MaxGameCount = 4;
+
+        /// <summary>
         /// 部屋のキー
         /// </summary>
         public Guid Key { get; set; }
@@ -29,6 +34,31 @@ namespace Lyman.Models
         /// 状態
         /// </summary>
         public RoomState State { get; set; }
+
+        /// <summary>
+        /// 荘
+        /// </summary>
+        public Wind.Index Round { get; set; }
+
+        /// <summary>
+        /// 局数
+        /// </summary>
+        public int GameCount { get; set; }
+
+        /// <summary>
+        /// 本場数
+        /// </summary>
+        public int HomeCount { get; set; }
+
+        /// <summary>
+        /// ツモ数
+        /// </summary>
+        public int DrawCount { get; set; }
+
+        /// <summary>
+        /// 親
+        /// </summary>
+        public Wind.Index Parent { get; set; }
 
         /// <summary>
         /// 次ツモの位置
@@ -63,7 +93,19 @@ namespace Lyman.Models
         /// </summary>
         public Room()
         {
+            this.Round = Wind.Index.East;
             this.Players = new Dictionary<Wind.Index, Player>();
+            this.GameCount = 1;
+            this.HomeCount = 0;
+            this.ClearHomeContext();
+        }
+
+        /// <summary>
+        /// 場の状態をクリアします。
+        /// </summary>
+        public void ClearHomeContext()
+        {
+            this.DrawCount = 0;
             this.Context = DiProvider.GetContainer().GetInstance<FieldContext>();
             this.NextPosition = DiProvider.GetContainer().GetInstance<WallPosition>();
             this.LastDiscardPosition = DiProvider.GetContainer().GetInstance<RiverPosition>();
@@ -143,6 +185,11 @@ namespace Lyman.Models
             var sb = new StringBuilder();
             sb.AppendLine($"Key: {this.Key}");
             sb.AppendLine($"Name: {this.Name}");
+            sb.AppendLine($"Round: {this.Round}");
+            sb.AppendLine($"GameCount: {this.GameCount}");
+            sb.AppendLine($"HomeCount: {this.HomeCount}");
+            sb.AppendLine($"DrawCount: {this.DrawCount}");
+            sb.AppendLine($"Parent: {this.Parent}");
             sb.AppendLine($"State: {this.State}");
             foreach (var player in this.Players)
             {
@@ -151,6 +198,7 @@ namespace Lyman.Models
             sb.AppendLine($"Turn: {this.Turn}");
             sb.AppendLine($"LastDiscardPosition: {this.LastDiscardPosition}");
             sb.AppendLine($"NextPosition: {this.NextPosition}");
+            sb.AppendLine($"Context: {this.Context}");
             return sb.ToString();
         }
 
@@ -171,6 +219,11 @@ namespace Lyman.Models
 
             equals.Add("Key", this.Key == room.Key);
             equals.Add("Name", this.Name == room.Name);
+            equals.Add("Round", this.Round == room.Round);
+            equals.Add("GameCount", this.GameCount == room.GameCount);
+            equals.Add("HomeCount", this.HomeCount == room.HomeCount);
+            equals.Add("DrawCount", this.DrawCount == room.DrawCount);
+            equals.Add("Parent", this.Parent == room.Parent);
             equals.Add("LastDiscardPosition", this.LastDiscardPosition.Equals(room.LastDiscardPosition));
             equals.Add("NextPosition", this.NextPosition.Equals(room.NextPosition));
             equals.Add("State", this.State == room.State);
@@ -212,6 +265,7 @@ namespace Lyman.Models
         public override int GetHashCode()
         {
             return this.Context.GetHashCode() ^ this.Key.GetHashCode() ^ this.LastDiscardPosition.GetHashCode() ^
+                this.Round.GetHashCode() ^ this.GameCount.GetHashCode() ^ this.HomeCount.GetHashCode() ^ this.DrawCount.GetHashCode() ^ this.Parent.GetHashCode() ^
                 this.Name.GetHashCode() ^ this.NextPosition.GetHashCode() ^ this.Players.GetHashCode() ^
                 this.State.GetHashCode() ^ this.Turn.GetHashCode();
         }
