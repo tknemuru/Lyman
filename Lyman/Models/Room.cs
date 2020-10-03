@@ -161,9 +161,18 @@ namespace Lyman.Models
         /// </summary>
         /// <returns>プレイヤ</returns>
         /// <param name="key">プレイヤの識別キー</param>
-        public KeyValuePair<Wind.Index, Player> GetPlayer(Guid key)
+        public Player GetPlayer(Guid key)
         {
-            return this.Players.First(p => p.Value.Key == key);
+            return this.Players.First(p => p.Value.Key == key).Value;
+        }
+
+        /// <summary>
+        /// 親プレイヤを取得します。
+        /// </summary>
+        /// <returns>親プレイヤ</returns>
+        public Player GetParentPlayer()
+        {
+            return this.Players[this.Parent];
         }
 
         /// <summary>
@@ -174,6 +183,15 @@ namespace Lyman.Models
         public IEnumerable<KeyValuePair<Wind.Index, Player>> GetConnectedPlayers()
         {
             return this.Players.Where(p => !string.IsNullOrEmpty(p.Value.ConnectionId));
+        }
+
+        /// <summary>
+        /// 最後に捨牌した牌を取得します。
+        /// </summary>
+        /// <returns>最後に捨牌した牌</returns>
+        public uint GetLastDiscardTile()
+        {
+            return this.Context.GetRiverTile(this.LastDiscardPosition);
         }
 
         /// <summary>

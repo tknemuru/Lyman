@@ -34,7 +34,7 @@ namespace Lyman.Models.Requests
         {
             var room = RoomManager.Get(this.RoomKey);
             var player = room.GetPlayer(this.PlayerKey);
-            this.Player = player.Value;
+            this.Player = player;
         }
     }
 }

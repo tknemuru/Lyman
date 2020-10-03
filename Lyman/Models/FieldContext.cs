@@ -72,6 +72,16 @@ namespace Lyman.Models
         }
 
         /// <summary>
+        /// 河から指定した位置の牌を取得します。
+        /// </summary>
+        /// <param name="position">河の位置</param>
+        /// <returns>河の牌</returns>
+        public uint GetRiverTile(RiverPosition position)
+        {
+            return this.Rivers[position.Wind.ToInt()][position.Index];
+        }
+
+        /// <summary>
         /// 指定した位置に牌を配置します。
         /// </summary>
         /// <param name="position">配置する位置</param>

@@ -34,7 +34,7 @@ namespace Lyman.Receivers
             });
             response.Rivers = room.Context.Rivers;
             var player = room.GetPlayer(request.PlayerKey);
-            response.Hand = room.Context.Hands[player.Key.ToInt()];
+            response.Hand = room.Context.Hands[player.Wind.ToInt()];
             return response;
         }
     }

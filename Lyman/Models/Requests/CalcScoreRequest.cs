@@ -11,6 +11,14 @@ namespace Lyman.Models.Requests
     public class CalcScoreRequest : RoomAttachedRequest
     {
         /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        CalcScoreRequest()
+        {
+            this.RonTargetWind = Wind.Index.Undefined;
+        }
+
+        /// <summary>
         /// アガったプレイヤの識別キー
         /// </summary>
         /// <value>The player key.</value>

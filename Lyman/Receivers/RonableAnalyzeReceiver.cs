@@ -34,7 +34,7 @@ namespace Lyman.Receivers
                 response.Ronable = false;
                 return response;
             }
-            hand.Add(request.Context.Rivers[lastPosition.Wind.ToInt()][lastPosition.Index]);
+            hand.Add(request.Context.GetRiverTile(lastPosition));
             var ableYakus = DiProvider.GetContainer().GetInstance<YakuAnalyzerProvider>()
                 .GetYakuAnalyzers()
                 .Select(analy => analy.Receive(hand).HasCompleted)

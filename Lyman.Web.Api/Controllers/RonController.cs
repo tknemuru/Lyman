@@ -16,27 +16,35 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Lyman.Web.Api.Controllers
 {
+    /// <summary>
+    /// ロンController
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
-    public class DiscardController : BaseController
+    public class RonController : BaseController
     {
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="contextHub">コンテキストハブ</param>
-        public DiscardController(IHubContext<ContextHub> contextHub) : base(contextHub) { }
+        public RonController(IHubContext<ContextHub> contextHub) : base(contextHub) { }
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody]DiscardRequest request)
+        public IActionResult Post([FromBody]CalcScoreRequest request)
         {
-            // 捨牌
             request.Attach();
-            var response = DiProvider.GetContainer().GetInstance<DiscardReceiver>().Receive(request);
-            response.Detach(request.RoomKey);
+
+            // 最後の捨牌を追加
+            var room = request.Room;
+            var player = room.GetPlayer(request.PlayerKey);
+            room.Context.Hands[player.Wind.ToInt()].Add(room.GetLastDiscardTile());
+
+            // 点数計算
+            var response = DiProvider.GetContainer().GetInstance<CalcScoreReceiver>().Receive(request);
 
             // 進行状況の更新
-            ProgressHelper.Update(request.RoomKey);
+            ProgressHelper.Update(request.RoomKey, player.Wind);
 
             // 通知
             this.NotifyRoomContext(request.RoomKey);

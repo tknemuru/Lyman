@@ -44,7 +44,7 @@ namespace Lyman.Receivers
                 return modPlayer;
             });
             response.PlayerKey = first.PlayerKey;
-            response.PlayerName = room.GetPlayer(first.PlayerKey).Value.Name;
+            response.PlayerName = room.GetPlayer(first.PlayerKey).Name;
             response.Wind = first.Wind;
             response.WindIndex = first.WindIndex;
             var playerKey = first.PlayerKey;
