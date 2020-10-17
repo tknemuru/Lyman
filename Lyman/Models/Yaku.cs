@@ -12,9 +12,15 @@ namespace Lyman.Models
         /// リーチ
         /// </summary>
         Reach,
+
         /// <summary>
         /// タンヤオ
         /// </summary>
-        AllSimples
+        AllSimples,
+
+        /// <summary>
+        /// 平和（ピンフ）
+        /// </summary>
+        AllSequenceHand,
     }
 }

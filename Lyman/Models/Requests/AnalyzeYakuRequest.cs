@@ -15,7 +15,18 @@ namespace Lyman.Models.Requests
         /// </summary>
         public AnalyzeYakuRequest()
         {
+            this.WinWind = Wind.Index.Undefined;
         }
+
+        /// <summary>
+        /// あがりの牌
+        /// </summary>
+        public uint WinTile { get; set; }
+
+        /// <summary>
+        /// あがるプレイヤの風
+        /// </summary>
+        public Wind.Index WinWind { get; set; }
 
         /// <summary>
         /// あがりの型情報

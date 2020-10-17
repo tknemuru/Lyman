@@ -17,6 +17,16 @@ namespace Lyman.Models
         private const string RedFive = "赤";
 
         /// <summary>
+        /// 三元牌
+        /// </summary>
+        private static readonly IEnumerable<Kind> Dragons = new Kind[]
+        {
+            Kind.GreenDragon,
+            Kind.RedDragon,
+            Kind.WhiteDragon,
+        };
+
+        /// <summary>
         /// 種類
         /// </summary>
         public enum Kind : uint
@@ -249,6 +259,16 @@ namespace Lyman.Models
         public static bool IsRed(this uint tile)
         {
             return ((tile & RedFiveMask) >> RedFiveShift) != 0;
+        }
+
+        /// <summary>
+        /// 三元牌かどうか
+        /// </summary>
+        /// <returns>三元牌かどうか</returns>
+        /// <param name="tile">牌</param>
+        public static bool IsDragons(this uint tile)
+        {
+            return Dragons.Contains(tile.GetKind());
         }
 
         /// <summary>
