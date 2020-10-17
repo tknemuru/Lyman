@@ -9,7 +9,7 @@ namespace Lyman.Receivers
     /// <summary>
     /// 役分析機能を提供します。
     /// </summary>
-    public interface IYakuAnalyzable : IReceivable<List<uint>, YakuAnalyzeResponse>
+    public interface IYakuAnalyzable : IReceivable<AnalyzeYakuRequest, AnalyzeYakuResponse>
     {
     }
 }

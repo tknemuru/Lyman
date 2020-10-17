@@ -32,7 +32,7 @@ namespace Lyman.Providers
         private static List<IYakuAnalyzable> BuildYakuAnalyzers()
         {
             var analyzers = new List<IYakuAnalyzable>();
-            analyzers.Add(DiProvider.GetContainer().GetInstance<AllSimplesAnalyzeReceiver>());
+            analyzers.Add(DiProvider.GetContainer().GetInstance<AnalyzeAllSimplesReceiver>());
             return analyzers;
         }
     }

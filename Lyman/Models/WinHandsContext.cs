@@ -31,6 +31,29 @@ namespace Lyman.Models
         public IEnumerable<uint> Kongs { get; set; }
 
         /// <summary>
+        /// 刻子(コーツ)と槓子(カンツ)
+        /// </summary>
+        public IEnumerable<uint> PungsAndKongs
+        {
+            get
+            {
+                return this.Pungs.Concat(this.Kongs);
+            }
+        }
+
+        /// <summary>
+        /// 雀頭と全ての面子
+        /// </summary>
+        public IEnumerable<uint> HeadAndAllSet
+        {
+            get
+            {
+                return this.Chows.Concat(this.Pungs.Concat(this.Kongs))
+                    .Append(this.Head);
+            }
+        }
+
+        /// <summary>
         /// あがることができるかどうか
         /// </summary>
         /// <returns>あがることができるかどうか</returns>

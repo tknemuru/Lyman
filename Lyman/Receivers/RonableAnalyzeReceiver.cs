@@ -35,14 +35,14 @@ namespace Lyman.Receivers
                 return response;
             }
             hand.Add(request.Context.GetRiverTile(lastPosition));
-            var ableYakus = DiProvider.GetContainer().GetInstance<YakuAnalyzerProvider>()
-                .GetYakuAnalyzers()
-                .Select(analy => analy.Receive(hand).HasCompleted)
-                .Where(result => result.Value)
-                .Select(result => result.Key)
-                .ToList();
-            response.YakuCandidates = ableYakus;
-            response.Ronable = ableYakus.Count > 0;
+            //var ableYakus = DiProvider.GetContainer().GetInstance<YakuAnalyzerProvider>()
+            //    .GetYakuAnalyzers()
+            //    .Select(analy => analy.Receive(hand).HasCompleted)
+            //    .Where(result => result.Value)
+            //    .Select(result => result.Key)
+            //    .ToList();
+            //response.YakuCandidates = ableYakus;
+            //response.Ronable = ableYakus.Count > 0;
             return response;
         }
     }
