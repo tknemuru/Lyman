@@ -16,8 +16,8 @@ namespace Lyman.Receivers
         /// <summary>
         /// 平和（ピンフ）分析要求の受信処理を実行します。
         /// </summary>
-        /// <returns>タンヤオ分析応答</returns>
-        /// <param name="request">タンヤオ分析要求</param>
+        /// <returns>平和（ピンフ）分析応答</returns>
+        /// <param name="request">平和（ピンフ）分析要求</param>
         public AnalyzeYakuResponse Receive(AnalyzeYakuRequest request)
         {
             var response = DiProvider.GetContainer().GetInstance<AnalyzeYakuResponse>();

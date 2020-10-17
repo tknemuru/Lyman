@@ -22,5 +22,10 @@ namespace Lyman.Models
         /// 平和（ピンフ）
         /// </summary>
         AllSequenceHand,
+
+        /// <summary>
+        /// 一盃口（イーペイコー）
+        /// </summary>
+        TwoIdenticalSequences,
     }
 }
