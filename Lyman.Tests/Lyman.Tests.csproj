@@ -22,5 +22,6 @@
   <ItemGroup>
     <Folder Include="Resources\AiDiscardReceiver\" />
     <Folder Include="Resources\UpdateGameProgressReceiver\" />
+    <Folder Include="Resources\WinAnalyzeReceiver\" />
   </ItemGroup>
 </Project>

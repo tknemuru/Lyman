@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using System.Diagnostics;
+using Lyman.Helpers;
 
 namespace Lyman.Models
 {
@@ -141,6 +142,11 @@ namespace Lyman.Models
                 "○",
             }
         );
+
+        /// <summary>
+        /// 数の最大値
+        /// </summary>
+        public const int MaxNumber = 9;
 
         /// <summary>
         /// 数領域のシフト量
@@ -313,6 +319,36 @@ namespace Lyman.Models
         {
             return tiles.OrderBy(h => h.GetKind()).
                  ThenBy(h => h.GetNumber());
+        }
+
+        /// <summary>
+        /// 有効な全ての牌種を取得します。
+        /// </summary>
+        /// <returns>有効な全ての牌種</returns>
+        public static IEnumerable<Kind> GetAllValidKinds()
+        {
+            return IEnumerableHelper.GetEnums<Kind>()
+                .Where(k => k != Kind.Undefined && k != Kind.Empty);
+        }
+
+        /// <summary>
+        /// 数牌(シューパイ)の牌種リストを取得します。
+        /// </summary>
+        /// <returns>数牌(シューパイ)の牌種リスト</returns>
+        public static IEnumerable<Kind> GetSuitsKinds()
+        {
+            return GetAllValidKinds()
+                .Where(k => GetGroup(k) == Group.Suits);
+        }
+
+        /// <summary>
+        /// 字牌(ジハイ)の牌種リストを取得します。
+        /// </summary>
+        /// <returns>字牌(ジハイ)の牌種リスト</returns>
+        public static IEnumerable<Kind> GetHonoursKinds()
+        {
+            return GetAllValidKinds()
+                .Where(k => GetGroup(k) == Group.Honours);
         }
     }
 }

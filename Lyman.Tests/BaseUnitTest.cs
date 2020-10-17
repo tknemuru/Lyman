@@ -1,5 +1,5 @@
-﻿// using System.Collections.Generic;
-// using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System;
 using System.Text;
 using Lyman.Converters;
@@ -53,6 +53,19 @@ namespace Lyman.Tests
         protected FieldContext LoadFieldContext(int index, int childIndex, ResourceType type, string extension = "txt")
         {
             return DiProvider.GetContainer().GetInstance<TextToContextConverter>().Convert(FileHelper.ReadTextLines(this.GetResourcePath(index, childIndex, type, extension)));
+        }
+
+        /// <summary>
+        /// 牌リストを読み込みます。
+        /// </summary>
+        /// <returns>牌リスト</returns>
+        /// <param name="index">インデックス</param>
+        /// <param name="childIndex">子インデックス</param>
+        /// <param name="type">リソース種別</param>
+        /// <param name="extension">拡張子</param>
+        protected IEnumerable<uint> LoadTiles(int index, int childIndex, ResourceType type, string extension = "txt")
+        {
+            return DiProvider.GetContainer().GetInstance<TextToTilesConverter>().Convert(FileHelper.ReadTextLines(this.GetResourcePath(index, childIndex, type, extension)).First());
         }
 
         /// <summary>
