@@ -15,6 +15,10 @@ namespace Lyman.Models
         /// <summary>
         /// 刻子(コーツ)
         /// </summary>
-        Pung
+        Pung,
+        /// <summary>
+        /// 対子(トイツ)
+        /// </summary>
+        Pair
     }
 }

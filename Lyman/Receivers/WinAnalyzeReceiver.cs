@@ -35,8 +35,19 @@ namespace Lyman.Receivers
         private IEnumerable<WinHandsContext> Analyze(IEnumerable<uint> orgHands)
         {
             List<WinHandsContext> winHands = new List<WinHandsContext>();
-            WinHandsContext winHand;
+            WinHandsContext winHand = DiProvider.GetContainer().GetInstance<WinHandsContext>();
             var hands = Tile.Order(orgHands);
+            // 七対子（チートイツ）判定
+            var allKinds = Tile.GetAllValidKinds();
+            foreach (var kind in allKinds)
+            {
+                var extractedPairs = this.ExtractPair(hands, kind);
+                winHand.Pairs = winHand.Pairs.Concat(extractedPairs);
+            }
+            if (winHand.Winnable)
+            {
+                winHands.Add(winHand);
+            }
             // 雀頭を抽出
             var heads = this.ExtractSameNumberHands(hands, 2);
             foreach (var head in heads)
@@ -53,29 +64,32 @@ namespace Lyman.Receivers
                     {
                         var kind = pattern.Key;
                         var workSets = sets;
-                        if (pattern.Value == Set.Chow)
+                        switch (pattern.Value)
                         {
-                            // 順子(シュンツ)優先
-                            // 順子(シュンツ)
-                            extractedHands = this.ExtractChow(workSets, kind);
-                            workSets = this.RemoveExtractedChows(workSets, extractedHands);
-                            winHand.Chows = winHand.Chows.Concat(extractedHands);
-                            // 刻子(コーツ)
-                            extractedHands = this.ExtractPung(workSets, kind);
-                            workSets = this.RemoveExtractedHands(workSets, 3, extractedHands);
-                            winHand.Pungs = winHand.Pungs.Concat(extractedHands);
-                        }
-                        else
-                        {
-                            // 刻子(コーツ)優先
-                            // 刻子(コーツ)
-                            extractedHands = this.ExtractPung(workSets, kind);
-                            workSets = this.RemoveExtractedHands(workSets, 3, extractedHands);
-                            winHand.Pungs = winHand.Pungs.Concat(extractedHands);
-                            // 順子(シュンツ)
-                            extractedHands = this.ExtractChow(workSets, kind);
-                            workSets = this.RemoveExtractedChows(workSets, extractedHands);
-                            winHand.Chows = winHand.Chows.Concat(extractedHands);
+                            case Set.Chow:
+                                // 順子(シュンツ)優先
+                                // 順子(シュンツ)
+                                extractedHands = this.ExtractChow(workSets, kind);
+                                workSets = this.RemoveExtractedChows(workSets, extractedHands);
+                                winHand.Chows = winHand.Chows.Concat(extractedHands);
+                                // 刻子(コーツ)
+                                extractedHands = this.ExtractPung(workSets, kind);
+                                workSets = this.RemoveExtractedHands(workSets, 3, extractedHands);
+                                winHand.Pungs = winHand.Pungs.Concat(extractedHands);
+                                break;
+                            case Set.Pung:
+                                // 刻子(コーツ)優先
+                                // 刻子(コーツ)
+                                extractedHands = this.ExtractPung(workSets, kind);
+                                workSets = this.RemoveExtractedHands(workSets, 3, extractedHands);
+                                winHand.Pungs = winHand.Pungs.Concat(extractedHands);
+                                // 順子(シュンツ)
+                                extractedHands = this.ExtractChow(workSets, kind);
+                                workSets = this.RemoveExtractedChows(workSets, extractedHands);
+                                winHand.Chows = winHand.Chows.Concat(extractedHands);
+                                break;
+                            default:
+                                throw new NotSupportedException();
                         }
                         // 槓子(カンツ)
                         //extractedHands = this.ExtractKong(workSets, kind);
@@ -181,6 +195,31 @@ namespace Lyman.Receivers
         }
 
         /// <summary>
+        /// 対子(トイツ)を抽出します。
+        /// </summary>
+        /// <param name="orgHands">抽出元の手牌</param>
+        /// <param name="kind">牌の種類</param>
+        /// <returns>対子(トイツ)のリスト</returns>
+        private IEnumerable<uint> ExtractPair(IEnumerable<uint> orgHands, Tile.Kind kind)
+        {
+            var workSets = orgHands;
+            var count = 0;
+            IEnumerable<uint> pairs = new List<uint>();
+            while (count < 2)
+            {
+                var workPairs = this.ExtractSameNumberHands(workSets, 2, kind);
+                if (workPairs.Count() <= 0)
+                {
+                    break;
+                }
+                pairs = pairs.Concat(workPairs);
+                workSets = this.RemoveExtractedHands(workSets, 2, workPairs);
+                count++;
+            }
+            return pairs;
+        }
+
+        /// <summary>
         /// 槓子(カンツ)を抽出します。
         /// </summary>
         /// <param name="orgHands">抽出元の手牌</param>
@@ -278,7 +317,7 @@ namespace Lyman.Receivers
             var suits = Tile.GetSuitsKinds();
             var allKinds = Tile.GetAllValidKinds();
             var maxCount = suits.Count();
-            // 全て順子(シュンツ)のパターンを追加しておく
+            // 全て順子(シュンツ)のパターンを追加
             patterns.Add(allKinds.ToDictionary(k => k, k => k.GetGroup() == Tile.Group.Suits ? Set.Chow : Set.Pung));
             for (var i = 0; i < maxCount; i++)
             {

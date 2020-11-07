@@ -31,6 +31,11 @@ namespace Lyman.Models
         public IEnumerable<uint> Kongs { get; set; }
 
         /// <summary>
+        /// 対子(トイツ)
+        /// </summary>
+        public IEnumerable<uint> Pairs { get; set; }
+
+        /// <summary>
         /// 刻子(コーツ)と槓子(カンツ)
         /// </summary>
         public IEnumerable<uint> PungsAndKongs
@@ -62,7 +67,7 @@ namespace Lyman.Models
             {
                 if (this.Head == 0)
                 {
-                    return false;
+                    return this.Pairs.Count() >= 7;
                 }
                 var setCount = this.Chows.Count() + this.Pungs.Count() + this.Kongs.Count();
                 return setCount >= 4;
@@ -78,6 +83,7 @@ namespace Lyman.Models
             this.Chows = new List<uint>();
             this.Pungs = new List<uint>();
             this.Kongs = new List<uint>();
+            this.Pairs = new List<uint>();
         }
 
         /// <summary>
@@ -87,8 +93,9 @@ namespace Lyman.Models
         public override string ToString()
         {
             var sb = new StringBuilder();
+            var head = this.Head > 0 ? this.Head.ToStringTile() : string.Empty;
             sb.AppendLine("");
-            sb.AppendLine($"Head: {this.Head.ToStringTile()}");
+            sb.AppendLine($"Head: {head}");
             sb.Append("Chows: ");
             foreach(var tile in this.Chows)
             {
@@ -103,6 +110,12 @@ namespace Lyman.Models
             sb.AppendLine("");
             sb.Append("Kongs: ");
             foreach (var tile in this.Kongs)
+            {
+                sb.Append($"{tile.ToStringTile()}|");
+            }
+            sb.AppendLine("");
+            sb.Append("Pairs: ");
+            foreach (var tile in this.Pairs)
             {
                 sb.Append($"{tile.ToStringTile()}|");
             }
@@ -160,6 +173,17 @@ namespace Lyman.Models
                 }
             }
 
+            countEqual = this.Pairs.Count() == context.Pairs.Count();
+            equals.Add($"PairsCount", countEqual);
+            if (countEqual)
+            {
+                var length = this.Pairs.Count();
+                for (var i = 0; i < length; i++)
+                {
+                    equals.Add($"Pairs{i}", this.Pairs.ElementAt(i) == context.Pairs.ElementAt(i));
+                }
+            }
+
             return equals.All(e => e.Value);
         }
 
@@ -169,7 +193,7 @@ namespace Lyman.Models
         /// <returns>現在のオブジェクトのハッシュ コード。</returns>
         public override int GetHashCode()
         {
-            return this.Head.GetHashCode() ^ this.Chows.GetHashCode() ^ this.Pungs.GetHashCode() ^ this.Kongs.GetHashCode();
+            return this.Head.GetHashCode() ^ this.Chows.GetHashCode() ^ this.Pungs.GetHashCode() ^ this.Kongs.GetHashCode() ^ this.Pairs.GetHashCode();
         }
     }
 }

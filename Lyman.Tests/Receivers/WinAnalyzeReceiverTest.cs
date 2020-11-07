@@ -169,5 +169,37 @@ namespace Lyman.Tests
             Assert.AreEqual(expected, actual.First());
             Assert.IsTrue(actual.First().Winnable);
         }
+
+        /// <summary>
+        /// 010:対子のあがり判定ができる
+        /// </summary>
+        [TestMethod]
+        public void 対子のあがり判定ができる()
+        {
+            // 001: 
+            var request = this.LoadTiles(10, 1, ResourceType.In);
+            var expected = DiProvider.GetContainer().GetInstance<WinHandsContext>();
+            expected.Pairs = new[] { Tile.BuildTile("3萬"), Tile.BuildTile("5萬"), Tile.BuildTile("3筒"), Tile.BuildTile("6索"), Tile.BuildTile("白"), Tile.BuildTile("中"), Tile.BuildTile("東") };
+            var actual = this.Target.Receive(request);
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(expected, actual.First());
+            Assert.IsTrue(actual.First().Winnable);
+        }
+
+        /// <summary>
+        /// 011:重複した対子のあがり判定ができる
+        /// </summary>
+        [TestMethod]
+        public void 重複した対子のあがり判定ができる()
+        {
+            // 001: 
+            var request = this.LoadTiles(11, 1, ResourceType.In);
+            var expected = DiProvider.GetContainer().GetInstance<WinHandsContext>();
+            expected.Pairs = new[] { Tile.BuildTile("3萬"), Tile.BuildTile("3萬"), Tile.BuildTile("3筒"), Tile.BuildTile("6索"), Tile.BuildTile("中"), Tile.BuildTile("中"), Tile.BuildTile("東") };
+            var actual = this.Target.Receive(request);
+            Assert.AreEqual(1, actual.Count());
+            Assert.AreEqual(expected, actual.First());
+            Assert.IsTrue(actual.First().Winnable);
+        }
     }
 }
