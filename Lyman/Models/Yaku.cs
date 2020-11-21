@@ -27,5 +27,10 @@ namespace Lyman.Models
         /// 一盃口（イーペイコー）
         /// </summary>
         TwoIdenticalSequences,
+
+        /// <summary>
+        /// 七対子（チートイツ）
+        /// </summary>
+        SevenPairs
     }
 }
